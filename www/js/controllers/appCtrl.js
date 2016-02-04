@@ -63,7 +63,6 @@ angular.module('appCtrl', [])
                 content[i].classList.toggle('has-header');
             }
         }
-
     };
 
     $scope.hideHeader = function () {
@@ -96,7 +95,6 @@ angular.module('appCtrl', [])
         } else
             $state.go('app.profile');
     }
-
 })
 
 .controller('HomeCtrl', function ($scope, $timeout, $state, $ionicLoading, ionicMaterialInk, FacebookFactory) {
@@ -194,5 +192,4 @@ angular.module('appCtrl', [])
         });
         $state.go('app.home');
     }
-
 })
