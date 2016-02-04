@@ -1,0 +1,139 @@
+angular.module('facebookFactory', [])
+    //*************************************************************************************************************************
+    .factory('FacebookFactory', function ($http, $q, $ionicPopup, $localStorage) {
+        var comun = {};
+        /*
+            Función para la autenticación de un usuario utilizando facebook
+        */
+        comun.facebookLogin = function () {
+            var info = $q.defer();
+            var authResponse = {};
+            facebookConnectPlugin.login(['email', 'public_profile', 'user_friends'],
+                function (res) {
+                    if (!res.authResponse) {
+                        alert('Error en la autenticación de Facebook\n' + error);
+                        info.reject(false);
+                    }
+                    authResponse = res.authResponse;
+                    getFacebookProfileAPI(authResponse.accessToken)
+                        .then(function (profileInfo) {
+                            setFacebookToken(authResponse.accessToken);
+                            setFacebookProfile(profileInfo);
+                            info.resolve(false);
+                        }, function (error) {
+                            info.reject(false);
+                        });
+                });
+            return info.promise;
+        }
+        /*
+            Función que verifica si hay amigos en almacenammiento local sino los busca en la
+            API de Facebook
+        */
+        comun.getFacebookFriends = function (callback) {
+            if ($localStorage.hasOwnProperty("facebookFriends") === true){
+                callback($localStorage.facebookFriends);
+            }else{
+                getFacebookFriendsAPI().then(
+                    function (res) {
+                        $localStorage.facebookFriends = res;
+                        callback(res);
+                    },
+                    function (error) {
+                        callback([]);
+                    });
+            }
+        }
+            /*
+                Función que devuelve un pérfil local de facebook
+            */
+        comun.getFacebookProfileLocal = function () {
+                return $localStorage.facebookProfile;
+            }
+            /*
+                Función que retorna si existe un facebookToken en el almacenamiento local
+            */
+        comun.existFacebookToken = function () {
+                if ($localStorage.hasOwnProperty("facebookToken") === true)
+                    return true;
+                else
+                    return false;
+            }
+            /*
+
+            */
+        comun.facebookLogout = function () {
+                deleteFacebookToken();
+                deleteFacebookProfile();
+                deleteFacebookFriends();
+            }
+            /*
+                Función que busca en la API de facebook el pérfil a un token dado
+            */
+        function getFacebookProfileAPI(facebookToken) {
+            var info = $q.defer();
+            facebookConnectPlugin.api('/me?fields=email,name,picture&access_token=' + facebookToken, null,
+                function (res) {
+                    info.resolve(res);
+                },
+                function (error) {
+                    alert("Ocurrió un problema al obtener su perfil.\nError:" + JSON.stringify(error));
+                    info.reject(error);
+                }
+            );
+            return info.promise;
+        }
+        /*
+            Función que devuelve los amigos del usuario actual
+        */
+        function getFacebookFriendsAPI() {
+            var info = $q.defer();
+            facebookConnectPlugin.api('/me/friends?fields=picture,name,email', ['public_profile', 'user_friends'],
+                function (res) {
+                    info.resolve(res.data);
+                },
+                function (error) {
+                    alert('Error al obtener amigos de Facebook\nError: ' + JSON.stringfy(error));
+                    info.reject();
+                }
+            );
+            return info.promise;
+        }
+        /*
+            Función que coloca un nuevo perfil de facebook en el almacenamiento local
+        */
+        function setFacebookProfile(newFacebookProfile) {
+            $localStorage.facebookProfile = newFacebookProfile;
+        }
+        /*
+            Función que devuelve un token de facebook almacenado localmente
+        */
+        function getFacebookToken() {
+            return $localStorage.facebookToken;
+        }
+        /*
+            Función que setea un nuevo token de facebook
+        */
+        function setFacebookToken(newFacebookToken) {
+            $localStorage.facebookToken = newFacebookToken;
+        }
+        /*
+            Función que setea un nuevo token de facebook
+        */
+        function deleteFacebookToken() {
+            delete $localStorage.facebookToken;
+        }
+        /*
+            Función que setea un nuevo token de facebook
+        */
+        function deleteFacebookProfile() {
+            delete $localStorage.facebookProfile;
+        }
+        /*
+            Función que setea un nuevo token de facebook
+        */
+        function deleteFacebookFriends() {
+            delete $localStorage.facebookFriends;
+        }
+        return comun;
+    })

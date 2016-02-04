@@ -1,0 +1,7 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/tamyg/Documentos/chaplistAppIonic/www/js/controllers.js",
+        "/home/tamyg/Documentos/chaplistAppIonic/www/js/factories/facebookFactory.js",
+        "/home/tamyg/Documentos/chaplistAppIonic/www/js/controllers/appCtrl.js"
+    ]
+}

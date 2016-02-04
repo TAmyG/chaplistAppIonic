@@ -1,0 +1,30 @@
+<ion-view view-title="Tu Perfil">
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div class="hero slide-up" style="background-image: url('img/material-graphite.jpg');">
+            <div class="content">
+                <div class="avatar" style="background-image: url({{facebookProfile.picture.data.url}});"></div>
+                <h3><a class="light">{{facebookProfile.name}}</a></h3>
+                <h4>{{facebookProfile.email}}</h4>
+            </div>
+        </div>
+        <div class="tabs tabs-dark tabs-icon-top static">
+            <a ng-click = "facebookPost()" class="tab-item">
+                <i class="icon ion-android-create"></i> Post
+            </a>
+            <a ui-sref="app.friends" class="tab-item">
+                <i class="icon ion-android-people"></i> Friends
+            </a>
+            <a ui-sref="app.gallery" class="tab-item">
+                <i class="icon ion-images"></i> Photos
+            </a>
+        </div>
+        <h4 class="content padding double-padding-x">Amigos que utilizan la Chaplist</h4>
+        <div class="list animate-fade-slide-in-right" ng-repeat="friend in facebookFriends">
+            <a class="item item-avatar item-icon-right">
+                <img ng-src="{{friend.picture.data.url}}">
+                <h2>{{friend.name}}</h2>
+                <i class="icon ion-chatbubble muted"></i>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
