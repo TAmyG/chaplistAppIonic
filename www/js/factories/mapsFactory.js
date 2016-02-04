@@ -7,14 +7,18 @@ angular.module('mapsFactory', [])
             name: 'latorre',
             latitude: 14.50453,
             longitude: -90.56674,
-            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454540994/torre_md6heb.png'
+            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454540994/torre_md6heb.png',
+            address: 'San miguel petapa, zona 10',
+            phoneNumber: '23095'
        },
         {
             id: 2,
             name: 'maxi',
             latitude: 14.50890,
             longitude: -90.57048,
-            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454542018/maxi_styw3c.png'
+            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454542018/maxi_styw3c.png',
+            address: 'San miguel petapa, semáforo',
+            phoneNumber: '23012'
        }];
     /*
         Función que inicia el proceso de construcción del mapa
@@ -102,13 +106,17 @@ angular.module('mapsFactory', [])
             // Add the markerto the map
             marker = new google.maps.Marker({
                 map: map,
+                title: record.name,
                 animation: google.maps.Animation.DROP,
                 position: markerPos,
                 icon: image
             });
 
-            infoWindowContent = "<h4>" + record.name + "</h4>";
-
+            infoWindowContent = '<div><p><h4>' + record.name + '</h4></p></div>'
+            if (record.name != 'Yo' ){
+                infoWindowContent += '<div id="bodyContent"><p><b>Dirección:</b> '+record.address+'<br><b>Número de teléfono:</b> '+
+                    record.phoneNumber+'</p>';
+            }
             addInfoWindow(marker, infoWindowContent, record);
         }
     }
@@ -116,9 +124,9 @@ angular.module('mapsFactory', [])
         Función para agregar información específica a cada marcador agregado al mapa
     */
     function addInfoWindow(marker, message, record) {
-
         var infoWindow = new google.maps.InfoWindow({
-            content: message
+            content: message,
+            maxWidth: 200
         });
 
         google.maps.event.addListener(marker, 'click', function () {
