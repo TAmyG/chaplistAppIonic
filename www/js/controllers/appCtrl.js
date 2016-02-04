@@ -97,7 +97,7 @@ angular.module('appCtrl', [])
     }
 })
 
-.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicLoading, ionicMaterialInk, FacebookFactory) {
+.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor) {
     $scope.$parent.clearFabs();
     $timeout(function () {
         $scope.$parent.hideHeader();
@@ -109,6 +109,13 @@ angular.module('appCtrl', [])
     /*----------------------------------------------------------------------------------*/
     $scope.facebookLogin = function () {
         if (!FacebookFactory.existFacebookToken()) {
+            if(ConnectivityMonitor.ifOffline()){
+                $ionicPopup.alert({
+                    title: 'Advertencia',
+                    template: 'Debe estar conectado a internet para usar esta funcionalidad'
+                });
+                return;
+            }
             $ionicLoading.show({
                 template: 'Autenticando...'
             });
@@ -120,12 +127,39 @@ angular.module('appCtrl', [])
                     $state.go('app.home');
                 });
             $ionicLoading.hide();
+
         } else {
             $state.go('app.profile');
             $ionicLoading.hide();
         }
     }
 })
+
+
+.controller('MapCtrl', function ($scope, $state, $timeout, $ionicPopup, GoogleMaps, ionicMaterialMotion, ionicMaterialInk) {
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = true;
+    $scope.$parent.setExpanded(true);
+    $scope.$parent.setHeaderFab('right');
+
+    $timeout(function () {
+        ionicMaterialMotion.fadeSlideIn({
+            selector: '.animate-fade-slide-in.item'
+        });
+    }, 200);
+
+    // Activate ink for controller
+    ionicMaterialInk.displayEffect();
+    if(!GoogleMaps.init()){
+        $ionicPopup.alert({
+            title: 'Advertencia',
+            template: 'Debe estar conectado a internet para usar esta funcionalidad'
+        });
+        $state.go('app.home');
+    }
+})
+
 
 .controller('btnLogoutCtrl', function ($scope, $state, $ionicActionSheet, $ionicLoading, FacebookFactory) {
     $scope.facebookLogout = function () {
@@ -167,29 +201,5 @@ angular.module('appCtrl', [])
             });
             $state.go('app.home');
         }
-    }
-})
-
-.controller('MapCtrl', function ($scope, $state, $timeout, $ionicPopup, GoogleMaps, ionicMaterialMotion, ionicMaterialInk) {
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = true;
-    $scope.$parent.setExpanded(true);
-    $scope.$parent.setHeaderFab('right');
-
-    $timeout(function () {
-        ionicMaterialMotion.fadeSlideIn({
-            selector: '.animate-fade-slide-in.item'
-        });
-    }, 200);
-
-    // Activate ink for controller
-    ionicMaterialInk.displayEffect();
-    if(!GoogleMaps.init()){
-        $ionicPopup.alert({
-            title: 'Advertencia',
-            template: 'Debe estar conectado a internet para usar esta funcionalidad'
-        });
-        $state.go('app.home');
     }
 })

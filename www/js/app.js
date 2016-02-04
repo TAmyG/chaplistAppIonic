@@ -21,7 +21,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
-
     $stateProvider.state('app', {
             url: '/app',
             abstract: true,
@@ -83,7 +82,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
-
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/home');
 })
