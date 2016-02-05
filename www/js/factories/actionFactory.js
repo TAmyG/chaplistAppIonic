@@ -4,17 +4,10 @@ angular.module('actionFactory', [])
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
         var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
-
         /*
             Función para verificar el token al primer inicio de la aplicación
         */
         comun.tokenVerified = function () {
-
-            $ionicPopup.alert({
-                title: 'resultado',
-                template: 'Estoy en token verified'
-        });
-
             var body = {};
             var tokenAux = {};
             if (comun.existsTokenAPI())
