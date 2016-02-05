@@ -4,36 +4,57 @@ angular.module('actionFactory', [])
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
         var secretKey = 'b3445460e0b140be4e1105eb8836b16fdcf88f0daa03ac231d14635515a49bbd';
-        //var secretKey = '8e9d6df96053b95a2677dc4a4e4bad4392d5';
 
         /*
             Función para verificar el token al primer inicio de la aplicación
         */
         comun.tokenVerified = function () {
-                var body = {};
-                var tokenAux = {};
-               /* if (comun.existsTokenAPI())
-                    return;*/
-                //de no existir un token se procede a solicitar uno a la API
-                body.packageName = packagaName;
-                body.secretKey = secretKey;
-                body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
+            var body = {};
+            var tokenAux = {};
+            if (comun.existsTokenAPI())
+                return;
+            //de no existir un token se procede a solicitar uno a la API
+            body.packageName = packagaName;
+            body.secretKey = secretKey;
+            body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
 
-                return $http.post('http://localhost:8080/api/Chap/tokenPetition', body)
-                    .then(function (res) {
-                        tokenAux = res.data.replace('"', '').replace('"', '');
-                        if (res.status = 200 && tokenAux != 'null') {
-                            $localStorage.tokenAPI = tokenAux;
-                            getSupermarketsAPI();//obtiene todos los supermercados actuales
-                            return tokenAux;
-                        } else {
-                            alert('Las credenciales de la app no existen en la API');
-                            return res;
-                        }
-                    }, function (err) {
-                        return err;
-                    });
-            }
+            return $http.post('http://localhost:8080/api/Chap/tokenPetition', body)
+                .then(function (res) {
+                    tokenAux = res.data.replace('"', '').replace('"', '');
+                    if (res.status = 200 && tokenAux != 'null') {
+                        $localStorage.tokenAPI = tokenAux;
+                        getSupermarketsAPI();//obtiene todos los supermercados actuales
+                        return tokenAux;
+                    } else {
+                        alert('Las credenciales de la app no existen en la API');
+                        return res;
+                    }
+                }, function (err) {
+                    return err;
+                });
+        }
+        /*
+            Función para obtener todas las tiendas de un supermercado específico
+        */
+        comun.getStoresAPI =  function(supermarketId){
+            var storesAux = [];
+            if(comun.existsTokenAPI())
+                return $http.get('http://localhost:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                .then(function (res) {
+                    if (res.status = 200) {
+                        storesAux = transformToJson(res.data);
+                        return storesAux;
+                    } else {
+                        alert('Las credenciales de la app no existen en la API');
+                        return res;
+                    }
+                }, function (err) {
+                    return err;
+                });
+            else
+                return [];
+        }
+
         /*
             Función que obtiene los supermercados desde la API
         */
@@ -91,18 +112,18 @@ angular.module('actionFactory', [])
                 setToken(newToken);
             }
         }
-
         /*
             Función para setear un token
         */
         function setToken(newToken) {
             $localStorage.tokenAPI = newToken;
         }
-
+        /*
+            Función que parsea un string a su formato JSON
+        */
         function transformToJson(data) {
             return JSON.parse(data);
         }
 
         return comun;
-
     })

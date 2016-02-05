@@ -1,6 +1,6 @@
 angular.module('offerCtrl', [])
 
-.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory) {
+.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory) {
 
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -20,11 +20,19 @@ angular.module('offerCtrl', [])
     /*----------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------*/
     $scope.get = function(){
-        FacebookFactory.getFacebookFriends(function(res){
+        factory.getStoresAPI(3)
+            .then(function(res){
             $ionicPopup.alert({
                 title: 'resultado',
                 template: JSON.stringify(res)
             });
+
         });
+        /*FacebookFactory.getFacebookFriends(function(res){
+            $ionicPopup.alert({
+                title: 'resultado',
+                template: JSON.stringify(res)
+            });
+        });*/
     }
 })

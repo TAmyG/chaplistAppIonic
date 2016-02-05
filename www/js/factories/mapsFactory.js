@@ -1,25 +1,8 @@
 angular.module('mapsFactory', [])
 
-.factory('GoogleMaps', function ($cordovaGeolocation, $q, $ionicLoading, $cordovaNetwork, ConnectivityMonitor) {
+.factory('GoogleMaps', function ($cordovaGeolocation, $q, $ionicLoading, $cordovaNetwork, ConnectivityMonitor, factory) {
     var comun = {};
-    var points = [{
-            id: 1,
-            name: 'latorre',
-            latitude: 14.50453,
-            longitude: -90.56674,
-            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454540994/torre_md6heb.png',
-            address: 'San miguel petapa, zona 10',
-            phoneNumber: '23095'
-       },
-        {
-            id: 2,
-            name: 'maxi',
-            latitude: 14.50890,
-            longitude: -90.57048,
-            image: 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454542018/maxi_styw3c.png',
-            address: 'San miguel petapa, semáforo',
-            phoneNumber: '23012'
-       }];
+    var myPosition = {};
     /*
         Función que inicia el proceso de construcción del mapa
     */
@@ -30,9 +13,9 @@ angular.module('mapsFactory', [])
             } else {
                 return false;
             }
-        }
+    }
     /*
-
+        Función que carga el mapa y bloque la pantalla mientras carga
     */
     function initMap() {
         $ionicLoading.show({
@@ -61,10 +44,12 @@ angular.module('mapsFactory', [])
             coords.longitude = position.coords.longitude;
             coords.name = 'Yo';
             coords.image = 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454544462/user_v4wbos.png'
-            points.push(coords);
+            myPosition = coords;
             callback(coords);
-        }, function (error) {
-            callback(points[0]);
+        }, function (error) {//coordenas de econosuper central
+            coords.latitude = 14.621280;
+            coords.longitude = -90.545005;
+            callback(coords);
         });
     }
     /*
@@ -90,35 +75,54 @@ angular.module('mapsFactory', [])
         Función para cargar todos los puntos en el mapa
     */
     function loadMarkers() {
+        if(myPosition.name){
+            createMarker(myPosition.name,'','', myPosition.latitude, myPosition.longitude, myPosition.image);
+        }
+        findAllStores();
+    }
+    /*
+        Función que busca todas las tiendas
+    */
+    function findAllStores(){
+        var supermarkets = factory.getSupermarkets();
+        supermarkets.forEach(function(supermarket){
+            factory.getStoresAPI(supermarket.id).then(function(stores){
+                stores.forEach(function(store){
+                    createMarker(store.name, store.address, store.phoneNumber, store.latitude, store.longitude, supermarket.image);
+                });
+            });
+        });
+    }
+    /*
+        Función que agrega el marcador al mapa
+    */
+    function createMarker(title, address, phoneNumber, latitude, longitude, image){
         var record = {};
         var markerPos, marker, infoWindowContent;
-        var image = {
+        var icon = {
             size: new google.maps.Size(40, 35),
             // The origin for this image is (0, 0).
             origin: new google.maps.Point(0, 0),
             // The anchor for this image is the base of the flagpole at (0, 32).
             anchor: new google.maps.Point(0, 32)
           };
-        for (var i = 0; i < points.length; i++) {
-            record = points[i];
-            markerPos = new google.maps.LatLng(record.latitude, record.longitude);
-            image.url = record.image;
+        markerPos = new google.maps.LatLng(latitude, longitude);
+            icon.url = image;
             // Add the markerto the map
             marker = new google.maps.Marker({
                 map: map,
-                title: record.name,
+                title: name,
                 animation: google.maps.Animation.DROP,
                 position: markerPos,
-                icon: image
+                icon: icon
             });
 
-            infoWindowContent = '<div><p><h4>' + record.name + '</h4></p></div>'
-            if (record.name != 'Yo' ){
-                infoWindowContent += '<div id="bodyContent"><p><b>Dirección:</b> '+record.address+'<br><b>Número de teléfono:</b> '+
-                    record.phoneNumber+'</p>';
+            infoWindowContent = '<div><p><h4>' + title + '</h4></p></div>'
+            if (title != 'Yo' ){
+                infoWindowContent += '<div id="bodyContent"><p><b>Dirección:</b> '+address+'<br><b>Número de teléfono:</b> '+
+                    phoneNumber+'</p>';
             }
             addInfoWindow(marker, infoWindowContent, record);
-        }
     }
     /*
         Función para agregar información específica a cada marcador agregado al mapa
