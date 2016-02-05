@@ -3,12 +3,18 @@ angular.module('actionFactory', [])
     .factory('factory', function ($http, $ionicPopup, $cordovaDevice, $localStorage) {
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
-        var secretKey = 'b3445460e0b140be4e1105eb8836b16fdcf88f0daa03ac231d14635515a49bbd';
+        var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
 
         /*
             Función para verificar el token al primer inicio de la aplicación
         */
         comun.tokenVerified = function () {
+
+            $ionicPopup.alert({
+                title: 'resultado',
+                template: 'Estoy en token verified'
+        });
+
             var body = {};
             var tokenAux = {};
             if (comun.existsTokenAPI())
@@ -18,7 +24,7 @@ angular.module('actionFactory', [])
             body.secretKey = secretKey;
             body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
 
-            return $http.post('http://localhost:8080/api/Chap/tokenPetition', body)
+            return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
                 .then(function (res) {
                     tokenAux = res.data.replace('"', '').replace('"', '');
                     if (res.status = 200 && tokenAux != 'null') {
@@ -39,7 +45,7 @@ angular.module('actionFactory', [])
         comun.getStoresAPI =  function(supermarketId){
             var storesAux = [];
             if(comun.existsTokenAPI())
-                return $http.get('http://localhost:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
                         storesAux = transformToJson(res.data);
@@ -82,7 +88,7 @@ angular.module('actionFactory', [])
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
-            return $http.get('http://localhost:8080/api/Chap/Supermarkets/' + getTokenAPI())
+            return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
                         result = transformToJson(res.data);
@@ -101,6 +107,9 @@ angular.module('actionFactory', [])
             Función para obtener el token actual en caso de existir sino, retorna null
         */
         function getTokenAPI() {
+            return $localStorage.tokenAPI;
+        }
+        comun.token = function(){
             return $localStorage.tokenAPI;
         }
         /*

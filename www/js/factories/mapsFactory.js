@@ -7,12 +7,16 @@ angular.module('mapsFactory', [])
         Función que inicia el proceso de construcción del mapa
     */
     comun.init = function () {
-            if (ConnectivityMonitor.isOnline()) {
+        if (ConnectivityMonitor.isOnline()) {
+            /*if (typeof google == "undefined" || typeof google.maps == "undefined") {
                 initMap();
-                return true;
-            } else {
-                return false;
-            }
+            }else
+                console.log('hola mundo');*/
+            initMap();
+            return true;
+        } else {
+            return false;
+        }
     }
     /*
         Función que carga el mapa y bloque la pantalla mientras carga

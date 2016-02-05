@@ -20,11 +20,16 @@ angular.module('offerCtrl', [])
     /*----------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------*/
     $scope.get = function(){
+        $ionicPopup.alert({
+                title: 'resultado',
+                template: factory.token()
+        });
+
         factory.getStoresAPI(3)
             .then(function(res){
             $ionicPopup.alert({
                 title: 'resultado',
-                template: JSON.stringify(res)
+                template: 'factory.token()'
             });
 
         });
