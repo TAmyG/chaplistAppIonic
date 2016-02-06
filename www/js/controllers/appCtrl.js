@@ -149,7 +149,6 @@ angular.module('appCtrl', [])
             selector: '.animate-fade-slide-in.item'
         });
     }, 200);
-
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
     if(!GoogleMaps.init()){
@@ -195,7 +194,7 @@ angular.module('appCtrl', [])
     }, 200);
 
     $scope.refreshMap = function() {
-        if(!GoogleMaps.init()){
+        if(!GoogleMaps.init(1)){
             $ionicPopup.alert({
                 title: 'Advertencia',
                 template: 'Debe estar conectado a internet para usar esta funcionalidad'

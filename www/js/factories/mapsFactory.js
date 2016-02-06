@@ -3,15 +3,24 @@ angular.module('mapsFactory', [])
 .factory('GoogleMaps', function ($cordovaGeolocation, $q, $ionicLoading, $cordovaNetwork, ConnectivityMonitor, factory) {
     var comun = {};
     var myPosition = {};
+    var markers = [];
+    var map = null;
+    var icon = {
+        size: new google.maps.Size(40, 35),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new google.maps.Point(0, 32)
+    };
     /*
         Función que inicia el proceso de construcción del mapa
     */
-    comun.init = function () {
+    comun.init = function (val) {
         if (ConnectivityMonitor.isOnline()) {
-            /*if (typeof google == "undefined" || typeof google.maps == "undefined") {
-                initMap();
-            }else
-                console.log('hola mundo');*/
+            if(val && val==1){
+                removeMarkers();
+                console.log('eliminacion de markers');
+            }
             initMap();
             return true;
         } else {
@@ -25,7 +34,7 @@ angular.module('mapsFactory', [])
         $ionicLoading.show({
             template: 'Cargando Google Maps...'
         });
-        getInitPosition(function(res){
+        getInitPosition(function (res) {
             printMap(res);
             $ionicLoading.hide();
         });
@@ -50,7 +59,7 @@ angular.module('mapsFactory', [])
             coords.image = 'http://res.cloudinary.com/dtzhkqqms/image/upload/v1454544462/user_v4wbos.png'
             myPosition = coords;
             callback(coords);
-        }, function (error) {//coordenas de econosuper central
+        }, function (error) { //coordenas de econosuper central
             coords.latitude = 14.621280;
             coords.longitude = -90.545005;
             callback(coords);
@@ -79,19 +88,19 @@ angular.module('mapsFactory', [])
         Función para cargar todos los puntos en el mapa
     */
     function loadMarkers() {
-        if(myPosition.name){
-            createMarker(myPosition.name,'','', myPosition.latitude, myPosition.longitude, myPosition.image);
+        if (myPosition.name) {
+            createMarker(myPosition.name, '', '', myPosition.latitude, myPosition.longitude, myPosition.image);
         }
         findAllStores();
     }
     /*
         Función que busca todas las tiendas
     */
-    function findAllStores(){
+    function findAllStores() {
         var supermarkets = factory.getSupermarkets();
-        supermarkets.forEach(function(supermarket){
-            factory.getStoresAPI(supermarket.id).then(function(stores){
-                stores.forEach(function(store){
+        supermarkets.forEach(function (supermarket) {
+            factory.getStoresAPI(supermarket.id).then(function (stores) {
+                stores.forEach(function (store) {
                     createMarker(store.name, store.address, store.phoneNumber, store.latitude, store.longitude, supermarket.image);
                 });
             });
@@ -100,33 +109,28 @@ angular.module('mapsFactory', [])
     /*
         Función que agrega el marcador al mapa
     */
-    function createMarker(title, address, phoneNumber, latitude, longitude, image){
+    function createMarker(title, address, phoneNumber, latitude, longitude, image) {
         var record = {};
         var markerPos, marker, infoWindowContent;
-        var icon = {
-            size: new google.maps.Size(40, 35),
-            // The origin for this image is (0, 0).
-            origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            anchor: new google.maps.Point(0, 32)
-          };
-        markerPos = new google.maps.LatLng(latitude, longitude);
-            icon.url = image;
-            // Add the markerto the map
-            marker = new google.maps.Marker({
-                map: map,
-                title: name,
-                animation: google.maps.Animation.DROP,
-                position: markerPos,
-                icon: icon
-            });
 
-            infoWindowContent = '<div><p><h4>' + title + '</h4></p></div>'
-            if (title != 'Yo' ){
-                infoWindowContent += '<div id="bodyContent"><p><b>Dirección:</b> '+address+'<br><b>Número de teléfono:</b> '+
-                    phoneNumber+'</p>';
-            }
-            addInfoWindow(marker, infoWindowContent, record);
+        markerPos = new google.maps.LatLng(latitude, longitude);
+        icon.url = image;
+        // Add the markerto the map
+        marker = new google.maps.Marker({
+            map: map,
+            title: name,
+            animation: google.maps.Animation.DROP,
+            position: markerPos,
+            icon: icon
+        });
+
+        infoWindowContent = '<div><p><h4>' + title + '</h4></p></div>'
+        if (title != 'Yo') {
+            infoWindowContent += '<div id="bodyContent"><p><b>Dirección:</b> ' + address + '<br><b>Número de teléfono:</b> ' +
+                phoneNumber + '</p>';
+        }
+        markers.push(marker);
+        addInfoWindow(marker, infoWindowContent, record);
     }
     /*
         Función para agregar información específica a cada marcador agregado al mapa
@@ -140,6 +144,18 @@ angular.module('mapsFactory', [])
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.open(map, marker);
         });
+    }
+    /*
+        Función para setear un mapa a un conjunto de markers
+    */
+    function setMarkersMap(map){
+        for(i = 0; i<markers.length; i++){
+            markers[i].setMap(map);
+        }
+    }
+    function removeMarkers(){
+        setMarkersMap(null);
+        markers = [];
     }
     return comun;
 })
