@@ -16,6 +16,13 @@ angular.module('offerCtrl', [])
 
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
+
+    ionicMaterialMotion.pushDown({
+        selector: '.push-down'
+    });
+    ionicMaterialMotion.fadeSlideInRight({
+        selector: '.animate-fade-slide-in .item'
+    });
     /*----------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------*/
