@@ -44,7 +44,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'OfferCtrl as offer'
                 },
                 'fabContent': {
-                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
+                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;" disabled><i class="icon ion-paper-airplane"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
                             document.getElementById('fab-activity').classList.toggle('on');
@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'ProfileCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-log-out"></i></button>',
+                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-energized-900" ><i class="icon ion-log-out"></i></button>',
                     controller: 'btnLogoutCtrl'
                 }
             }
