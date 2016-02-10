@@ -36,6 +36,30 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
+     .state('app.detalle', {
+            url: '/detalle',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/detalle.html',
+                    controller: 'DetalleCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+     .state('app.products', {
+            url: '/products',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/products.html',
+                    controller: 'ProductCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.offer', {
             url: '/offer',
             views: {
