@@ -1,5 +1,5 @@
 angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profileCtrl',
-                           'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage',
+                           'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage','jett.ionic.filter.bar',
                           'ionic-material'])
 
 .run(function ($ionicPlatform) { //agrego el factory de GoogleMaps
@@ -68,12 +68,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'OfferCtrl as offer'
                 },
                 'fabContent': {
-                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;" disabled><i class="icon ion-paper-airplane"></i></button>',
+                    template: ''/*'<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;" disabled><i class="icon ion-paper-airplane"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
                             document.getElementById('fab-activity').classList.toggle('on');
                         }, 200);
-                    }
+                    }*/
                 }
             }
         })

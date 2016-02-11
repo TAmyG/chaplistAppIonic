@@ -191,7 +191,7 @@ angular.module('appCtrl', [])
 .controller('btnRefreshCtrl', function ($scope, $state, $ionicPopup, $timeout, GoogleMaps) {
     $timeout(function () {
         document.getElementById('fab-activity').classList.toggle('on');
-    }, 200);
+    }, 300);
 
     $scope.refreshMap = function() {
         if(!GoogleMaps.init(1)){

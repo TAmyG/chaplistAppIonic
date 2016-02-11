@@ -1,72 +1,46 @@
 <ion-view view-title="Productos">
+    <button id="fab" class="button button-positive button-fab button-fab-bottom-right activated " style="display: block;" ng-click="showFilterBar()">
+        <i class="icon ion-search"></i>
+    </button>
+    <!--         <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
+  </ion-nav-buttons>-->
     <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
-       <div class="list half">
-            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap">
+        <div class="list half">
+            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
                 <div class="ink dark-bg">
-                    <h2>Where's Elsa?</h2>
-                    <img class="full-image" src="http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25562.png">
+                    <h2>{{product.name}}, {{product.description}}, {{product.category}}</h2>
+                    <img class="full-image" src={{product.image}}>
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i>
-                        4
+                        <i class="icon ion-heart"></i> 4
                     </a>
                     <a class="tab-item stable-bg positive-900">
-                        <i class="icon ion-chatbubbles"></i>
-                        2
-                    </a>
-                </div>
-            </div>
-            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap">
-                <div class="ink dark-bg">
-                    <h2>Hmm. Hope nobody destroys this!</h2>
-                    <img class="full-image" src="http://www.supermercadoslatorre.com/wp-content/uploads/2014/09/slidercarnes1-620x300.png">
-                </div>
-                <div class="item tabs tabs-secondary tabs-icon-left">
-                    <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i>
-                        6
-                    </a>
-                    <a class="tab-item stable-bg positive-900">
-                        <i class="icon ion-chatbubbles"></i>
-                        1
+                        <i class="icon ion-chatbubbles"></i> 2
                     </a>
                 </div>
             </div>
         </div>
         <div class="list half">
-            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap">
+            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$even">
                 <div class="ink dark-bg">
-                    <h2>Pollo Rey</h2>
-                    <img class="full-image" src="http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png">
+                    <h2>{{product.name}}, {{product.description}}, {{product.category}}</h2>
+                    <img class="full-image" src={{product.image}}>
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i>
-                        8
+                        <i class="icon ion-heart"></i> 4
                     </a>
                     <a class="tab-item stable-bg positive-900">
-                        <i class="icon ion-chatbubbles"></i>
-                        0
+                        <i class="icon ion-chatbubbles"></i> 2
                     </a>
                 </div>
             </div>
-            <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap">
-                <div class="ink dark-bg">
-                    <h2>Pollo Rey</h2>
-                    <img class="full-image" src="http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png">
-                </div>
-                <div class="item tabs tabs-secondary tabs-icon-left">
-                    <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i>
-                        8
-                    </a>
-                    <a class="tab-item stable-bg positive-900">
-                        <i class="icon ion-chatbubbles"></i>
-                        0
-                    </a>
-                </div>
-            </div>
+        </div>
+        <div ng-if="products !== undefined && !products.length" class="no-results">
+            <p>No Results</p>
         </div>
     </ion-content>
 </ion-view>
