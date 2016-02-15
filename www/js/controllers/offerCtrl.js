@@ -1,16 +1,16 @@
+var g;
 angular.module('offerCtrl', [])
 
 .controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
-        $scope.isExpanded = true;
-        $scope.$parent.setExpanded(true);
+        $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab('right');
 
         $timeout(function () {
             ionicMaterialMotion.fadeSlideIn({
-                selector: '.animate-fade-slide-in.item'
+                selector: '.animate-fade-slide-in .item'
             });
         }, 200);
 
@@ -20,9 +20,7 @@ angular.module('offerCtrl', [])
         ionicMaterialMotion.pushDown({
             selector: '.push-down'
         });
-        ionicMaterialMotion.fadeSlideInRight({
-            selector: '.animate-fade-slide-in .item'
-        });
+
         /*----------------------------------------------------------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
@@ -48,13 +46,13 @@ angular.module('offerCtrl', [])
             });*/
         }
     })
-    .controller('ProductCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar) {
+    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.isExpanded = true;
         $scope.$parent.setExpanded(true);
-        $scope.$parent.setHeaderFab(false);
+        $scope.$parent.setHeaderFab('right');
 
         // efects
         $scope.$on('ngLastRepeat.mylist', function (e) {
@@ -72,7 +70,7 @@ angular.module('offerCtrl', [])
             }, 0); // No timeout delay necessary.
         });
 
-        $scope.products = [{
+        $rootScope.products = [{
             "name": 'pollo rey',
             "description": 'el mejor sabor',
             "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
@@ -113,17 +111,6 @@ angular.module('offerCtrl', [])
             "image": 'http://www.supermercadoslatorre.com/wp-content/uploads/2014/09/slidercarnes1-620x300.png',
             "category": 'carnes'
         }];
-
-        $scope.showFilterBar = function () {
-            filterBarInstance = $ionicFilterBar.show({
-                items: $scope.products,
-                update: function (filteredItems) {
-                    $scope.products = filteredItems;
-                }
-            });
-        };
-
-
     })
 
 .controller('DetalleCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -149,6 +136,44 @@ angular.module('offerCtrl', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+    })
+    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Motion
+        $timeout(function () {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
+        }, 300);
+
+        $timeout(function () {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+    })
+    .controller('BuscarCtrl', function ($scope, $rootScope, $state, $ionicPopup, $timeout, $ionicFilterBar) {
+    $timeout(function () {
+            document.getElementById('fab-activity').classList.toggle('on');
+        }, 300);
+        $scope.showFilterBar = function () {
+            filterBarInstance = $ionicFilterBar.show({
+                items: $rootScope.products,
+                update: function (filteredItems) {
+                    $rootScope.products= filteredItems;
+                }
+            });
+        };
+
     })
     .directive('ngLastRepeat', function ($timeout) {
         return {

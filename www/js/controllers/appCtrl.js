@@ -98,12 +98,16 @@ angular.module('appCtrl', [])
     }
 })
 
-.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor) {
+.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion) {
     $scope.$parent.clearFabs();
     $timeout(function () {
         $scope.$parent.hideHeader();
-    }, 0);
-
+    },100);
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideIn({
+            selector: '.animate-fade-slide-in .item'
+        });
+    }, 200);
     ionicMaterialInk.displayEffect();
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
@@ -146,11 +150,12 @@ angular.module('appCtrl', [])
 
     $timeout(function () {
         ionicMaterialMotion.fadeSlideIn({
-            selector: '.animate-fade-slide-in.item'
+            selector: '.animate-fade-slide-in '
         });
     }, 200);
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
+
     if(!GoogleMaps.init()){
         $ionicPopup.alert({
             title: 'Advertencia',

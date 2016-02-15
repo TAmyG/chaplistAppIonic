@@ -1,5 +1,5 @@
 angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profileCtrl',
-                           'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage','jett.ionic.filter.bar',
+                           'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage', 'jett.ionic.filter.bar',
                           'ionic-material'])
 
 .run(function ($ionicPlatform) { //agrego el factory de GoogleMaps
@@ -11,14 +11,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
         }
         if (window.StatusBar) {
             StatusBar.styleDefault();
+            //$cordovaStatusbar.styleHex('#FF0000'); //red
         }
+
     });
 })
 
 .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
-    $stateProvider.state('app', {
+
+    $stateProvider
+        .state('app', {
             url: '/app',
             abstract: true,
             templateUrl: 'views/sidemenu.html',
@@ -36,7 +41,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
-     .state('app.detalle', {
+        .state('app.detalle', {
             url: '/detalle',
             views: {
                 'menuContent': {
@@ -48,7 +53,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
-     .state('app.products', {
+        .state('app.products', {
             url: '/products',
             views: {
                 'menuContent': {
@@ -56,7 +61,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'ProductCtrl'
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-calm  flap" ng-click="showFilterBar();"><i class="icon ion-search"></i></button>',
+                    controller: 'BuscarCtrl'
                 }
             }
         })
@@ -68,12 +74,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'OfferCtrl as offer'
                 },
                 'fabContent': {
-                    template: ''/*'<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap" style="color: transparent; background-color: transparent; border-color: transparent; cursor: default;" disabled><i class="icon ion-paper-airplane"></i></button>',
-                    controller: function ($timeout) {
-                        $timeout(function () {
-                            document.getElementById('fab-activity').classList.toggle('on');
-                        }, 200);
-                    }*/
+                    template: ''
+
                 }
             }
         })
@@ -103,6 +105,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
-    // if none of the above states are matched, use this as the fallback
+        .state('app.fav', {
+            url: '/fav',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/favorites.html',
+                    controller: 'FavCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/home');
 })
