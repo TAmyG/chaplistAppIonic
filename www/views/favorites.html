@@ -1,35 +1,41 @@
 <ion-view view-title="Favoritos">
-   <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
-    <div class="tabs tabs-positive">
-        <a class="tab-item active"> <i class="icon ion-home"></i> </a>
-        <a class="tab-item" ui-sref="app.products"> <i class="icon ion-star"></i> </a>
+    <ion-content ng-class="{expanded:isExpanded}">
+            <div class="list animate-fade-slide-in-right">
+               <a href="#/app/detalle" class="item item-avatar item-icon-right">
+                    <img src="img/snack1.png">
+                    <h2>Jon Snow</h2>
+                    <p>Da illest illegitimate</p>
+                    <i class="icon ion-heart"></i>
+                </a>
+                <a href="#/app/detalle" class="item item-avatar item-icon-right">
+                    <img src="img/snack1.png">
+                    <h2>Daenerys Targaryen</h2>
+                    <p>Dragon mommy</p>
+                    <i class="icon ion-heart"></i>
+                </a>
+                <a href="#/app/detalle" class="item item-avatar item-icon-right">
+                    <img src="img/snack1.png">
+                    <h2>Arya Stark</h2>
+                    <p>Is Chuck Norris' fear</p>
+                    <i class="icon ion-heart"></i>
+                </a>
+                <a href="#/app/detalle" class="item item-avatar item-icon-right">
+                    <img src="img/snack1.png">
+                    <h2>Sansa Stark</h2>
+                    <p>&amp; Joffrey <strike>sitting</strike> sat in a tree</p>
+                    <i class="icon ion-heart"></i>
+                </a>
+                <a href="#/app/detalle" class="item item-avatar item-icon-right">
+                    <img src="img/snack1.png">
+                    <h2>Tyrion Lannister</h2>
+                    <p>B.A.M.F. imp</p>
+                    <i class="icon ion-heart"></i>
+                </a>
+            </div>
+            <ion-footer-bar class="tabs tabs-positive">
+        <a class="tab-item" ui-sref="app.offer"> <i class="icon ion-home"></i> </a>
+        <a class="tab-item active" ui-sref="app.fav"> <i class="icon ion-star"></i> </a>
         <a class="tab-item"> <i class="icon ion-gear-a"></i> </a>
-    </div>
-    <div class="list">
-            <ion-item nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" style="transition-delay: 0.24s;">
-                <img src="img/snack1.png">
-                <h2>.animate-blinds</h2>
-                <p>ionicMaterialMotion.blinds();</p>
-                <i class="icon ion-heart"></i>
-            </ion-item>
-            <ion-item nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" style="transition-delay: 0.31s;">
-                <img src="img/snack1.png">
-                <h2>.animate-ripple</h2>
-                <p>ionicMaterialMotion.ripple();</p>
-                <i class="icon ion-heart"></i>
-            </ion-item>
-            <ion-item nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" style="transition-delay: 0.38s;">
-                <img src="img/snack1.png">
-                <h2>.animate-fade-slide-in</h2>
-                <p>ionicMaterialMotion.fadeSlideIn();</p>
-                <i class="icon ion-heart muted"></i>
-            </ion-item>
-            <ion-item nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" style="transition-delay: 0.46s;">
-                <img src="img/snack1.png">
-                <h2>.animate-fade-slide-in-right</h2>
-                <p>ionicMaterialMotion.fadeSlideInRight();</p>
-                <i class="icon ion-heart muted"></i>
-            </ion-item>
-        </div>
+    </ion-footer-bar>
     </ion-content>
 </ion-view>

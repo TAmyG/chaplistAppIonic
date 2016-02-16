@@ -128,12 +128,6 @@ angular.module('offerCtrl', [])
             });
         }, 300);
 
-        $timeout(function () {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
-
         // Set Ink
         ionicMaterialInk.displayEffect();
     })

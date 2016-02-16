@@ -2,7 +2,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                            'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage', 'jett.ionic.filter.bar',
                           'ionic-material'])
 
-.run(function ($ionicPlatform) { //agrego el factory de GoogleMaps
+.run(function ($ionicPlatform,$cordovaStatusbar) { //agrego el factory de GoogleMaps
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -11,9 +11,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
         }
         if (window.StatusBar) {
             StatusBar.styleDefault();
-            //$cordovaStatusbar.styleHex('#FF0000'); //red
         }
-
     });
 })
 
@@ -87,7 +85,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'ProfileCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-energized-900" ><i class="icon ion-log-out"></i></button>',
+                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-calm" ><i class="icon ion-log-out"></i></button>',
                     controller: 'btnLogoutCtrl'
                 }
             }
@@ -100,7 +98,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'MapCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-energized-900 flap" ng-click= "refreshMap()"><i class="icon ion-ios-refresh"></i></button>',
+                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-calm flap" ng-click= "refreshMap()"><i class="icon ion-ios-refresh"></i></button>',
                     controller: 'btnRefreshCtrl'
                 }
             }
