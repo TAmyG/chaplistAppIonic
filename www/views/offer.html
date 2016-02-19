@@ -8,7 +8,7 @@
         <!--ng-class="{expanded:isExpanded}"-->
         <div class="list condensed-space no-padding animate-blinds" ng-repeat="supermarket in supermarkets">
             <div class="card energized-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
+                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ng-click="setSupermarket(supermarket.id)" ui-sref="app.products">
                     <h2>{{supermarket.name}}</h2>
                      <!--<img ng-src={{supermarket.image}}>-->
                     <img src="img/portada_2.jpg">

@@ -1,4 +1,3 @@
-var g;
 angular.module('offerCtrl', [])
 
 .controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory) {
@@ -26,6 +25,10 @@ angular.module('offerCtrl', [])
         /*----------------------------------------------------------------------------------------*/
         $scope.supermarkets = [];
         $scope.supermarkets = factory.getSupermarkets();
+
+        $scope.setSupermarket = function(supermarketId){
+            factory.supermarketId = supermarketId;
+        }
     
         $scope.get = function () {
             $ionicPopup.alert({

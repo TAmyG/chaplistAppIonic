@@ -4,6 +4,7 @@ angular.module('actionFactory', [])
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
         var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
+        comun.supermarketId = 1;
         /*
             Función para verificar el token al primer inicio de la aplicación
         */
@@ -58,10 +59,10 @@ angular.module('actionFactory', [])
         /*
             Función para obtener los productos en oferta vigentes para un supermercado seleccionado
         */
-        comun.getProductsInOfferAPI = function(supermarketId){
+        comun.getProductsInOfferAPI = function(){
             if(comun.existsTokenAPI())
                 //return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
-                return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + supermarketId + '/' + getTokenAPI())
+                return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
                         products = transformToJson(res.data);
