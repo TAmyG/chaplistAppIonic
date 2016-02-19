@@ -26,7 +26,7 @@ angular.module('offerCtrl', [])
         $scope.supermarkets = [];
         $scope.supermarkets = factory.getSupermarkets();
 
-        $scope.setSupermarket = function(supermarketId){
+        $scope.setSupermarketId = function(supermarketId){
             factory.supermarketId = supermarketId;
         }
     
