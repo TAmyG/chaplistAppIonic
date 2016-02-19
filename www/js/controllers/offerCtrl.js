@@ -49,7 +49,7 @@ angular.module('offerCtrl', [])
             });*/
         }
     })
-    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar) {
+    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -72,7 +72,8 @@ angular.module('offerCtrl', [])
                 });
             }, 0); // No timeout delay necessary.
         });
-
+        /////////////////////////////////////////////////////////////////////////////////////
+        factory.getProductsInOfferAPI(1);
         $rootScope.products = [{
             "name": 'pollo rey',
             "description": 'el mejor sabor',

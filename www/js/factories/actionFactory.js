@@ -55,7 +55,28 @@ angular.module('actionFactory', [])
             else
                 return [];
         }
-
+        /*
+            Función para obtener los productos en oferta vigentes para un supermercado seleccionado
+        */
+        comun.getProductsInOfferAPI = function(supermarketId){
+            if(comun.existsTokenAPI())
+                //return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + supermarketId + '/' + getTokenAPI())
+                .then(function (res) {
+                    if (res.status = 200) {
+                        products = transformToJson(res.data);
+                        console.log(products)
+                        return products;
+                    } else {
+                        alert('Las credenciales de la app no existen en la API');
+                        return res;
+                    }
+                }, function (err) {
+                    return err;
+                });
+            else
+                alert('Las credenciales de la app no existen en la API');
+        }
         /*
             Función que obtiene los supermercados desde la API
         */
