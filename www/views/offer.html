@@ -6,41 +6,12 @@
     </ion-footer-bar>
     <ion-content class="animate-fade-slide-in">
         <!--ng-class="{expanded:isExpanded}"-->
-        <div class="list condensed-space no-padding animate-blinds">
+        <div class="list condensed-space no-padding animate-blinds" ng-repeat="supermarket in supermarkets">
             <div class="card energized-bg">
                 <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
-                    <h2>La Torre</h2>
-                    <p>Land of Unicorns</p>
-                    <!--<img src="img/la_torre.jpg" style="filter: blur(3px); -webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);">-->
+                    <h2>{{supermarket.name}}</h2>
+                     <!--<img ng-src={{supermarket.image}}>-->
                     <img src="img/portada_2.jpg">
-                </a>
-            </div>
-            <div class="card balanced-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
-                    <h2>WallMart</h2>
-                    <p>More Than the Other Down Under</p>
-                    <img src="img/wallmart.jpg" style="filter: blur(3px); -webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);">
-                </a>
-            </div>
-            <div class="card dark-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
-                    <h2>Econo Super</h2>
-                    <p>Drake's Raptastic Raptors</p>
-                    <img src="img/econo.jpg" style="filter: blur(3px); -webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);">
-                </a>
-            </div>
-            <div class="card assertive-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
-                    <h2>Paiz</h2>
-                    <p>Cultural Experience</p>
-                    <img src="img/paiz.jpg" style="filter: blur(3px); -webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);">
-                </a>
-            </div>
-            <div class="card balanced-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ui-sref="app.products">
-                    <h2>Maxi</h2>
-                    <p>More Than the Other Down Under</p>
-                    <img src="img/maxi.jpg" style="filter: blur(3px); -webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);">
                 </a>
             </div>
         </div>

@@ -10,6 +10,7 @@ angular.module('actionFactory', [])
         comun.tokenVerified = function () {
             var body = {};
             var tokenAux = {};
+            getSupermarketsAPI();//obtiene todos los supermercados actuales
             if (comun.existsTokenAPI())
                 return;
             //de no existir un token se procede a solicitar uno a la API
@@ -17,12 +18,12 @@ angular.module('actionFactory', [])
             body.secretKey = secretKey;
             body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
 
-            return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
+            //return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
+            return $http.post('http://192.168.0.14:8080/api/Chap/tokenPetition', body)
                 .then(function (res) {
                     tokenAux = res.data.replace('"', '').replace('"', '');
                     if (res.status = 200 && tokenAux != 'null') {
-                        $localStorage.tokenAPI = tokenAux;
-                        getSupermarketsAPI();//obtiene todos los supermercados actuales
+                        $localStorage.tokenAPI = tokenAux;                        
                         return tokenAux;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
@@ -38,7 +39,8 @@ angular.module('actionFactory', [])
         comun.getStoresAPI =  function(supermarketId){
             var storesAux = [];
             if(comun.existsTokenAPI())
-                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                //return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                return $http.get('http://192.168.0.14:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
                         storesAux = transformToJson(res.data);
@@ -81,7 +83,8 @@ angular.module('actionFactory', [])
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
-            return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
+            //return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
+            return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
                         result = transformToJson(res.data);
@@ -94,7 +97,6 @@ angular.module('actionFactory', [])
                     alert(getTokenAPI());
                     return err;
                 });
-
         }
         /*
             Función para obtener el token actual en caso de existir sino, retorna null
