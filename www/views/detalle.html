@@ -1,10 +1,7 @@
 <ion-view view-title="Carne">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
-        <div class="hero slide-up" style="background-image: url('http://www.supermercadoslatorre.com/wp-content/uploads/2014/09/slidercarnes1-620x300.png');">
-            <div class="content">
-                <h3><a class="light">Carnes</a></h3>
-                <h4>Combo Pack</h4>
-            </div>
+        <div class="hero slide-up" style="background-image: url({{productDetail.image}});">
+
         </div>
         <div class="tabs tabs-dark tabs-icon-top static">
             <a ng-click="facebookPost()" class="tab-item">
@@ -13,21 +10,20 @@
             <a ui-sref="app.friends" class="tab-item">
                 <i class="icon ion-android-people"></i> Compartir
             </a>
-            <a ui-sref="app.gallery" class="tab-item">
+            <a ui-sref="app.map" class="tab-item">
                 <i class="icon ion-android-pin"></i> Mapas
             </a>
         </div>
         <div class="list">
-            <a class="item item-icon-left"> <i class="icon ion-social-usd"></i> Precio Normal <span class="badge badge-assertive">50.23</span> </a>
-            <a class="item item-icon-left"> <i class="icon ion-social-usd"></i> Precio Oferta <span class="badge badge-balanced">40.20</span> </a>
+            <a class="item item-icon-left"> <i class="icon ion-social-usd"></i> Precio Normal <span class="badge badge-assertive">{{productDetail.ProductStore.normalPrice}}</span> </a>
+            <a class="item item-icon-left"> <i class="icon ion-social-usd"></i> Precio Oferta <span class="badge badge-balanced">{{productDetail.ProductStore.offerPrice}}</span> </a>
         </div>
         <div class="list card stable-bg">
-            <div class="item item-body"> The quickest way to a man's heart is through Arya's needle. She has two speeds: Walk and Kill, and is the reason why Waldo is still hiding.
-                <p> <a class="subdued">1 Like</a> <a class="subdued">5 Comments</a> </p>
+            <div class="item item-body">
+                {{productDetail.description}}
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5"> <i class="icon ion-thumbsup"></i> Like </a>
-                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5"> <i class="icon ion-chatbox"></i> Comment </a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5"> <i class="icon ion-thumbsup"></i>{{productDetail.ProductStore.likes}} Like </a>
             </div>
         </div>
 

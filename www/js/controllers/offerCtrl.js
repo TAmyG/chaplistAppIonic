@@ -30,7 +30,7 @@ angular.module('offerCtrl', [])
             factory.supermarketId = supermarketId;
         }
     })
-    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory) {
+    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory, offerFactory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -70,7 +70,7 @@ angular.module('offerCtrl', [])
             }
         },{
             description: 'tortrix',
-            image: 'img/ionic.png',
+            image: 'http://www.bbdo.com.gt/v2/images/clientes/tortrix.png',
             ProductStore: {
                 likes: 15,
                 normalPrice: 12.59,
@@ -81,10 +81,16 @@ angular.module('offerCtrl', [])
         /*factory.getProductsInOfferAPI().then(function(data){
             $rootScope.products = data;
         });*/
+        /*
+            Función para colocar un producto para su detalle
+        */
+        $scope.setProductDetail = function(productDetail){
+            offerFactory.setProductDetail(productDetail);
+        }
 
     })
 
-.controller('DetalleCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('DetalleCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -102,7 +108,7 @@ angular.module('offerCtrl', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
         //////////////////////////////////////////////////////////////////////////////////////
-
+        $scope.productDetail = offerFactory.getProductDetail();
     })
 
     .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
