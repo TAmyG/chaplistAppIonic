@@ -60,12 +60,27 @@ angular.module('offerCtrl', [])
             "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
             "category": 'carnes'
         }*/
-        factory.getProductsInOfferAPI(1);
-        $rootScope.products = [];
+        $rootScope.products = [{
+            description: 'carnes',
+            image: 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
+            ProductStore: {
+                likes: 15,
+                normalPrice: 12.59,
+                offerPrice: 10.52
+            }
+        },{
+            description: 'tortrix',
+            image: 'img/ionic.png',
+            ProductStore: {
+                likes: 15,
+                normalPrice: 12.59,
+                offerPrice: 10.52
+            }
+        }];
 
-        factory.getProductsInOfferAPI().then(function(data){
+        /*factory.getProductsInOfferAPI().then(function(data){
             $rootScope.products = data;
-        });
+        });*/
 
     })
 
@@ -87,6 +102,7 @@ angular.module('offerCtrl', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
     })
+
     .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
         $scope.$parent.showHeader();
@@ -111,6 +127,7 @@ angular.module('offerCtrl', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
     })
+
     .controller('BuscarCtrl', function ($scope, $rootScope, $state, $ionicPopup, $timeout, $ionicFilterBar) {
     $timeout(function () {
             document.getElementById('fab-activity').classList.toggle('on');
