@@ -1,36 +1,13 @@
 <ion-view view-title="Favoritos">
     <ion-content ng-class="{expanded:isExpanded}">
-            <div class="list animate-fade-slide-in-right">
+            <div class="list animate-fade-slide-in-right" ng-repeat="product in favorites">
                <a href="#/app/detalle" class="item item-avatar item-icon-right">
-                    <img src="img/snack1.png">
-                    <h2>Jon Snow</h2>
+                    <img ng-src="{{product.image}}">
+                    <h2>{{product.description}}</h2>
                     <p>Da illest illegitimate</p>
                     <i class="icon ion-heart"></i>
                 </a>
-                <a href="#/app/detalle" class="item item-avatar item-icon-right">
-                    <img src="img/snack1.png">
-                    <h2>Daenerys Targaryen</h2>
-                    <p>Dragon mommy</p>
-                    <i class="icon ion-heart"></i>
-                </a>
-                <a href="#/app/detalle" class="item item-avatar item-icon-right">
-                    <img src="img/snack1.png">
-                    <h2>Arya Stark</h2>
-                    <p>Is Chuck Norris' fear</p>
-                    <i class="icon ion-heart"></i>
-                </a>
-                <a href="#/app/detalle" class="item item-avatar item-icon-right">
-                    <img src="img/snack1.png">
-                    <h2>Sansa Stark</h2>
-                    <p>&amp; Joffrey <strike>sitting</strike> sat in a tree</p>
-                    <i class="icon ion-heart"></i>
-                </a>
-                <a href="#/app/detalle" class="item item-avatar item-icon-right">
-                    <img src="img/snack1.png">
-                    <h2>Tyrion Lannister</h2>
-                    <p>B.A.M.F. imp</p>
-                    <i class="icon ion-heart"></i>
-                </a>
+
             </div>
             <ion-footer-bar class="tabs tabs-positive">
         <a class="tab-item" ui-sref="app.offer"> <i class="icon ion-home"></i> </a>

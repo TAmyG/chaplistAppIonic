@@ -61,6 +61,7 @@ angular.module('offerCtrl', [])
             "category": 'carnes'
         }*/
         $rootScope.products = [{
+            id: 1,
             description: 'carnes',
             image: 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
             ProductStore: {
@@ -69,6 +70,7 @@ angular.module('offerCtrl', [])
                 offerPrice: 10.52
             }
         },{
+            id: 2,
             description: 'tortrix',
             image: 'http://www.bbdo.com.gt/v2/images/clientes/tortrix.png',
             ProductStore: {
@@ -108,10 +110,15 @@ angular.module('offerCtrl', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
         //////////////////////////////////////////////////////////////////////////////////////
+        $scope.favorites = [];
         $scope.productDetail = offerFactory.getProductDetail();
+
+        $scope.addFavorite = function(productDetail){
+            offerFactory.addFavorite(productDetail);
+        }
     })
 
-    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -134,6 +141,9 @@ angular.module('offerCtrl', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+        ////////////////////////////////////////////////////////////
+        $scope.favorites = offerFactory.getFavorites();
+
     })
 
     .controller('BuscarCtrl', function ($scope, $rootScope, $state, $ionicPopup, $timeout, $ionicFilterBar) {
