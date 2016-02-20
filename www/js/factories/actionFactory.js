@@ -70,10 +70,10 @@ angular.module('actionFactory', [])
                         return products;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
-                        return res;
+                        return [];
                     }
                 }, function (err) {
-                    return err;
+                    return [];
                 });
             else
                 alert('Las credenciales de la app no existen en la API');
