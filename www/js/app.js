@@ -1,6 +1,6 @@
 angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profileCtrl',
-                           'actionFactory', 'facebookFactory', 'mapsFactory', 'datatables', 'ngStorage', 'jett.ionic.filter.bar',
-                          'ionic-material'])
+                           'actionFactory', 'facebookFactory', 'offerFactory', 'mapsFactory',
+                           'ngStorage', 'jett.ionic.filter.bar', 'ionic-material'])
 
 .run(function ($ionicPlatform,$cordovaStatusbar) { //agrego el factory de GoogleMaps
     $ionicPlatform.ready(function () {

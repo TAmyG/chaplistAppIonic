@@ -101,6 +101,8 @@ angular.module('offerCtrl', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+        //////////////////////////////////////////////////////////////////////////////////////
+
     })
 
     .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {
