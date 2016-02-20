@@ -29,28 +29,6 @@ angular.module('offerCtrl', [])
         $scope.setSupermarketId = function(supermarketId){
             factory.supermarketId = supermarketId;
         }
-    
-        $scope.get = function () {
-            $ionicPopup.alert({
-                title: 'resultado',
-                template: factory.token()
-            });
-
-            factory.getStoresAPI(3)
-                .then(function (res) {
-                    $ionicPopup.alert({
-                        title: 'resultado',
-                        template: 'factory.token()'
-                    });
-
-                });
-            /*FacebookFactory.getFacebookFriends(function(res){
-                $ionicPopup.alert({
-                    title: 'resultado',
-                    template: JSON.stringify(res)
-                });
-            });*/
-        }
     })
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory) {
 
@@ -76,48 +54,19 @@ angular.module('offerCtrl', [])
             }, 0); // No timeout delay necessary.
         });
         /////////////////////////////////////////////////////////////////////////////////////
+        /*{
+            "name": 'pollo rey',
+            "description": 'el mejor sabor',
+            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
+            "category": 'carnes'
+        }*/
         factory.getProductsInOfferAPI(1);
-        $rootScope.products = [{
-            "name": 'pollo rey',
-            "description": 'el mejor sabor',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            "category": 'carnes'
-        }, {
-            "name": 'pollo king',
-            "description": 'el mejor pollo',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            "category": 'carnes'
-        }, {
-            "name": 'pollo rey',
-            "description": 'el mejor sabor',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            "category": 'carnes'
-        }, {
-            "name": 'pollo king',
-            "description": 'el mejor pollo',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            "category": 'carnes'
-        }, {
-            "name": 'Sabritas',
-            "description": 'las mejores papas',
-            "image": 'img/snack1.png',
-            "category": 'golosinas'
-        }, {
-            "name": 'Ganado jove',
-            "description": 'la mejor carne',
-            "image": 'http://www.supermercadoslatorre.com/wp-content/uploads/2014/09/slidercarnes1-620x300.png',
-            "category": 'carnes'
-        }, {
-            "name": 'Sabritas',
-            "description": 'las mejores papas',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25562.png',
-            "category": 'golosinas'
-        }, {
-            "name": 'Ganado jove',
-            "description": 'la mejor carne',
-            "image": 'http://www.supermercadoslatorre.com/wp-content/uploads/2014/09/slidercarnes1-620x300.png',
-            "category": 'carnes'
-        }];
+        $rootScope.products = [];
+
+        factory.getProductsInOfferAPI().then(function(data){
+            $rootScope.products = data;
+        });
+
     })
 
 .controller('DetalleCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk) {

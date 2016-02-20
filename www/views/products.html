@@ -10,12 +10,14 @@
         <div class="list half">
             <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
                 <div class="ink dark-bg">
-                    <h2>{{product.name}}, {{product.description}}, {{product.category}}</h2>
-                    <img class="full-image" src={{product.image}}>
+                    <h2>{{product.description}}</h2>
+                    <img ng-if="product.image" class="full-image" ng-src={{product.image}}>
+                    <img ng-if="!product.image" class="full-image" src="img/Portada.jpg">
+
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i> 4
+                        <i class="icon ion-heart"></i> {{product.ProductStore.likes}}
                     </a>
                     <a class="tab-item stable-bg positive-900">
                         <i class="icon ion-chatbubbles"></i> 2
@@ -26,12 +28,13 @@
         <div class="list half">
             <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$even">
                 <div class="ink dark-bg">
-                    <h2>{{product.name}}, {{product.description}}, {{product.category}}</h2>
-                    <img class="full-image" src={{product.image}}>
+                    <h2>{{product.description}}</h2>
+                    <img ng-if="!product.imgage" class="full-image" ng-src={{product.image}}>
+                    <img ng-if="!product.image" class="full-image" src="img/Portada.jpg">
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
-                        <i class="icon ion-heart"></i> 4
+                        <i class="icon ion-heart"></i> {{product.ProductStore.likes}}
                     </a>
                     <a class="tab-item stable-bg positive-900">
                         <i class="icon ion-chatbubbles"></i> 2
@@ -40,7 +43,7 @@
             </div>
         </div>
         <div ng-if="products !== undefined && !products.length" class="no-results">
-            <p>No Results</p>
+            <p>No existen productos en oferta</p>
         </div>
     </ion-content>
 </ion-view>
