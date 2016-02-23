@@ -1,7 +1,8 @@
 angular.module('appCtrl', [])
 
 
-.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout, FacebookFactory, factory) {
+.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout,
+                                  FacebookFactory, factory, ConnectivityMonitor) {
     // Form data for the login modal
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
@@ -95,6 +96,15 @@ angular.module('appCtrl', [])
             $state.go('app.home');
         } else
             $state.go('app.profile');
+    }
+
+    //función global para solicitar comprobación de internet
+    $scope.isOnline = function(){
+        return ConnectivityMonitor.isOnline();
+    }
+
+    $scope.isOffline = function(){
+        return ConnectivityMonitor.isOffline();
     }
 })
 
