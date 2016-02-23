@@ -60,29 +60,11 @@ angular.module('offerCtrl', [])
             "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
             "category": 'carnes'
         }*/
-        $rootScope.products = [{
-            id: 1,
-            description: 'carnes',
-            image: 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            ProductStore: {
-                likes: 15,
-                normalPrice: 12.59,
-                offerPrice: 10.52
-            }
-        },{
-            id: 2,
-            description: 'tortrix',
-            image: 'http://www.bbdo.com.gt/v2/images/clientes/tortrix.png',
-            ProductStore: {
-                likes: 15,
-                normalPrice: 12.59,
-                offerPrice: 10.52
-            }
-        }];
+        $rootScope.products = [];
 
-        /*factory.getProductsInOfferAPI().then(function(data){
+        factory.getProductsInOfferAPI().then(function(data){
             $rootScope.products = data;
-        });*/
+        });
         /*
             Función para colocar un producto para su detalle
         */
