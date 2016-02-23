@@ -124,9 +124,17 @@ angular.module('offerCtrl', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
         ////////////////////////////////////////////////////////////
+        $scope.favorites = [];
         $scope.favorites = offerFactory.getFavorites();
 
+        $scope.setProductDetail = function(productDetail){
+             offerFactory.setProductDetail(productDetail);
+        }
 
+        $scope.deleteProductFav = function(product){
+            var index = offerFactory.removeFavorite(product);
+            $scope.favorites.splice(index, 1);
+        }
     })
 
     .controller('BuscarCtrl', function ($scope, $rootScope, $state, $ionicPopup, $timeout, $ionicFilterBar) {
