@@ -66,9 +66,9 @@ angular.module('actionFactory', [])
         /*
             Función para obtener los productos en oferta vigentes para un supermercado seleccionado
         */
-        comun.getProductsInOfferAPI = function(){
+        comun.getProductsInOfferAPI = function(offset){
             if(comun.existsTokenAPI())
-                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
+                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/' + comun.supermarketId + '/' + offset +'/'+ getTokenAPI())
                 //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {

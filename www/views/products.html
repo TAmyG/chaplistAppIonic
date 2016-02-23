@@ -58,5 +58,7 @@
             <div ng-if="products !== undefined && !products.length" class="no-results">
                 <p>No existen productos en oferta</p>
             </div>
+            <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
+            </ion-infinite-scroll>
     </ion-content>
 </ion-view>

@@ -30,8 +30,11 @@ angular.module('offerCtrl', [])
             factory.supermarketId = supermarketId;
         }
     })
-    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory, offerFactory) {
+    .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
+                                          ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory, offerFactory) {
+        $ionicLoading.show({template: 'Cargando blogs...'});
 
+        $scope.deviceReady=false;
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.isExpanded = true;
@@ -60,11 +63,40 @@ angular.module('offerCtrl', [])
             "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
             "category": 'carnes'
         }*/
+
+        $ionicPlatform.ready(function(){
+            $scope.deviceReady=true;
+        });
         $rootScope.products = [];
 
-        factory.getProductsInOfferAPI().then(function(data){
+        factory.getProductsInOfferAPI($rootScope.products.length).then(function(data){
             $rootScope.products = data;
+            $ionicLoading.hide();
         });
+
+        //monitor para scroll de páginación
+        $scope.$on('loadProducts', function(_, data){
+            data.forEach(function(b){
+                $rootScope.products.push({
+                    ProductStore: b.ProductStore,
+                    createdAt: b.createdAt,
+                    updatedAt: b.updatedAt,
+                    description: b.description,
+                    id: b.id,
+                    upc: b.upc
+                });
+            });
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            $scope.$broadcast('scroll.refreshComplete');
+        });
+        /*
+            Función para solicitar nueva tanda de productos
+        */
+        $scope.loadMore= function(){
+            factory.getProductsInOfferAPI($rootScope.products.length).then(function(data){
+                $rootScope.$broadcast('loadProducts',data);
+            });
+        };
         /*
             Función para colocar un producto para su detalle
         */
@@ -137,7 +169,8 @@ angular.module('offerCtrl', [])
         }
     })
 
-    .controller('BuscarCtrl', function ($scope, $rootScope, $state, $ionicPopup, $timeout, $ionicFilterBar) {
+    .controller('BuscarCtrl', function ($scope, $rootScope, $timeout, $ionicFilterBar) {
+
     $timeout(function () {
             document.getElementById('fab-activity').classList.toggle('on');
         }, 300);
@@ -152,6 +185,7 @@ angular.module('offerCtrl', [])
 
     })
     .directive('ngLastRepeat', function ($timeout) {
+
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
