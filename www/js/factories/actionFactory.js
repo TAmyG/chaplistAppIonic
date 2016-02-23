@@ -73,7 +73,6 @@ angular.module('actionFactory', [])
                 .then(function (res) {
                     if (res.status = 200) {
                         products = transformToJson(res.data);
-                        console.log(products)
                         return products;
                     } else {
                         alert('Las credenciales de la app no existen en la API');

@@ -8,10 +8,10 @@
         <!--ng-class="{expanded:isExpanded}"-->
         <div class="list condensed-space no-padding animate-blinds" ng-repeat="supermarket in supermarkets">
             <div class="card energized-bg">
-                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ng-click="setSupermarketId(supermarket.id)" ui-sref="app.products">
+                <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ng-click="setSupermarketId(supermarket.id, supermarket)" ui-sref="app.products">
                     <h2>{{supermarket.name}}</h2>
                      <!--<img ng-src={{supermarket.image}}>-->
-                    <img src="img/portada_2.jpg">
+                    <img ng-src="http://res.cloudinary.com/k3n3th/image/upload/v1455838822/unisuper/{{supermarket. categoriesImage}}">
                 </a>
             </div>
         </div>
