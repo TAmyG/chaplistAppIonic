@@ -4,7 +4,8 @@
             <div class="item item-button-right">
 
                 <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)" ui-sref="app.detalle">
-                    <img ng-src="http://res.cloudinary.com/k3n3th/image/upload/v1455838822/unisuper/{{product.ProductStore.image}}">
+                    <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/v1455838822/unisuper/{{product.ProductStore.image}}">
+                    <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg">
                     <p>{{product.description}}</p>
                     like {{product.ProductStore.likes}} PN Q. {{product.ProductStore.normalPrice}} PO Q. {{product.ProductStore.offerPrice}}
                 </div>

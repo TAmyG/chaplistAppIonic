@@ -104,7 +104,7 @@ angular.module('appCtrl', [])
     }
 
     $scope.isOffline = function(){
-        return ConnectivityMonitor.isOffline();
+        return ConnectivityMonitor.ifOffline();
     }
 })
 
