@@ -1,6 +1,6 @@
 angular.module('offerFactory', [])
 
-.factory('offerFactory', function ($localStorage) {
+.factory('offerFactory', function ($localStorage, factory) {
     var comun = {};
     var productDetail = {};
 
@@ -16,16 +16,19 @@ angular.module('offerFactory', [])
         verificando si existe el array de favoritos, de lo contrario lo crea
     */
     comun.addFavorite = function(product){
-
         if(!$localStorage.hasOwnProperty('favorites'))
             $localStorage.favorites = [];
 
         var cat =  $localStorage.favorites.filter(function( obj ) {
           return obj.id == product.id;
         });
-
-        if(cat.length == 0)
-            $localStorage.favorites.push(product);
+        if(cat.length == 0){
+            factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 1)
+            .then(function(res){
+                product.ProductStore.likes = res.likes
+                $localStorage.favorites.push(product);
+            });
+        }
     }
     /*
         Función para obtener un arreglo con todos los favoritos

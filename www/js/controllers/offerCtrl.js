@@ -100,7 +100,7 @@ angular.module('offerCtrl', [])
         }
     })
 
-    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory) {
+    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
@@ -125,6 +125,7 @@ angular.module('offerCtrl', [])
         ionicMaterialInk.displayEffect();
         ////////////////////////////////////////////////////////////
         $scope.favorites = offerFactory.getFavorites();
+
 
     })
 

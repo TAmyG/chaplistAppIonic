@@ -86,6 +86,35 @@ angular.module('actionFactory', [])
                 alert('Las credenciales de la app no existen en la API');
         }
         /*
+            Función para agregar o remover likes de una aplicación
+        */
+        comun.addOrRemoveLikes = function(offerId, productId, type){
+            var body = {};
+            var newOffer = {};
+            if(comun.existsTokenAPI()){
+                body = {
+                    offerId: offerId,
+                    productId: productId,
+                    type: type
+                };
+                return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/likes/' + getTokenAPI(), body)
+                //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
+                .then(function (res) {
+                    if (res.status = 200) {
+                        newOffer = transformToJson(res.data);
+                        return newOffer;
+                    } else {
+                        alert(res.data);
+                        return {};
+                    }
+                }, function (err) {
+                    return err;
+                });
+            }
+            else
+                alert('Las credenciales de la app no existen en la API');
+        }
+        /*
             Función que obtiene los supermercados desde la API
         */
         comun.getSupermarkets = function () {
