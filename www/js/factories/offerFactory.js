@@ -23,13 +23,11 @@ angular.module('offerFactory', [])
           return obj.id == product.id;
         });
         if(cat.length == 0){
+            product.ProductStore.likes = product.ProductStore.likes + 1;
+            $localStorage.favorites.push(product);
             //si se agrega un nuevo producto entonces se debe incrementar la cantidad de likes
             //de dicho producto en la oferta específica
-            factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 1)
-            .then(function(res){
-                product.ProductStore.likes = res.likes
-                $localStorage.favorites.push(product);
-            });
+            factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 1);
         }
     }
     /*
@@ -41,7 +39,6 @@ angular.module('offerFactory', [])
         var index =  $localStorage.favorites.indexOf(product);
 
         if(index > -1){//indica que se econtró el producto en el listado
-
             factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 2)
             .then(function(res){
                 $localStorage.favorites.splice(index, 1);
