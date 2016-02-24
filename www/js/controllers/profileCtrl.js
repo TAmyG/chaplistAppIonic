@@ -36,7 +36,6 @@ angular.module('profileCtrl', [])
         facebookConnectPlugin.showDialog({
                 method: 'share',
                 href: 'https://developers.facebook.com/docs/',
-                method: "feed",
                 name: 'Test Post',
                 message: 'First photo post',
                 caption: 'Testing using phonegap plugin',

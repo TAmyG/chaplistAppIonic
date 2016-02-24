@@ -1,7 +1,7 @@
 angular.module('appCtrl', [])
 
 
-.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout,
+.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout, $ionicLoading,
                                   FacebookFactory, factory, ConnectivityMonitor) {
     // Form data for the login modal
     $scope.isExpanded = false;
@@ -89,13 +89,35 @@ angular.module('appCtrl', [])
 
     $scope.facebook = function () {
         if (!FacebookFactory.existFacebookToken()) {
-            $ionicPopup.alert({
-                title: 'Mensaje',
-                template: 'Debe loguearse con su cuenta de Facebook.'
-            });
+            $scope.ionicMessage('Mensaje', 'Debe loguearse con su cuenta de Facebook.');
             $state.go('app.home');
         } else
             $state.go('app.profile');
+    }
+    /*
+        Función para compartir un producto específico mediante fb
+    */
+    $scope.shareProduct = function(product){
+        //compruebo que exista un usuario logueado de lo contrario se redirige a la pantalla de inicio
+        if(!FacebookFactory.existFacebookToken()){
+            if(ConnectivityMonitor.ifOffline()){
+                $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
+                return;
+            }
+            $ionicLoading.show({
+                template: 'Autenticando...'
+            });
+            FacebookFactory.facebookLogin().then(
+                function (res) {
+                    FacebookFactory.shareProductFacebook(product);
+                },
+                function (error) {
+                    $scope.ionicMessage('Error', 'Ha ocurrido un error durante la autenticación.');
+                });
+            $ionicLoading.hide();
+        }else{
+            FacebookFactory.shareProductFacebook(product);
+        }
     }
 
     //función global para solicitar comprobación de internet
@@ -105,6 +127,15 @@ angular.module('appCtrl', [])
 
     $scope.isOffline = function(){
         return ConnectivityMonitor.ifOffline();
+    }
+    /*
+        Función para mostrar un mensaje sencillo en la pantalla
+    */
+    $scope.ionicMessage = function(title, template){
+        $ionicPopup.alert({
+                title: title,
+                template: template
+            });
     }
 })
 

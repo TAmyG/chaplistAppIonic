@@ -10,7 +10,7 @@
             <a ng-click="addFavorite(productDetail)" ui-sref="app.fav" class="tab-item">
                 <i class="icon ion-heart"></i> Favoritos
             </a>
-            <a ui-sref="app.friends" ng-click="" class="tab-item">
+            <a ui-sref="app.friends" ng-click="$parent.shareProduct(productDetail)" class="tab-item">
                 <i class="icon ion-android-people"></i> Compartir
             </a>
             <a ui-sref="app.map" class="tab-item">

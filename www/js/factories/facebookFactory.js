@@ -59,6 +59,25 @@ angular.module('facebookFactory', [])
                 else
                     return false;
             }
+        /*
+            Función para realizar una publicación de un producto en el muro
+        */
+        comun.shareProductFacebook = function (product) {
+           facebookConnectPlugin.showDialog({
+                    method: 'feed',
+                    link: 'http://res.cloudinary.com/k3n3th/image/upload/v1455838760/unisuper/'+product.ProductStore.image,
+                    message: product.description,
+                    caption: 'ofertas en Chaplist',
+                    description: product.ProductStore.image+'XD'
+                },
+                function (response) {
+                    $ionicPopup.alert({
+                        title: 'resultado',
+                        template: JSON.stringify(result)
+                    });
+                }
+            );
+        }
             /*
 
             */

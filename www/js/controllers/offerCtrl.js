@@ -32,7 +32,7 @@ angular.module('offerCtrl', [])
     })
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
                                           ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory, offerFactory) {
-        $ionicLoading.show({template: 'Cargando blogs...'});
+        $ionicLoading.show({template: 'Cargando productos...'});
 
         $scope.deviceReady=false;
         $scope.$parent.showHeader();
@@ -130,6 +130,7 @@ angular.module('offerCtrl', [])
         $scope.addFavorite = function(productDetail){
             offerFactory.addFavorite(productDetail);
         }
+        //PARA COMPARTIR UN PRODUCTO LA FUNCIÓN ESTÁ ESPECIFICADA EN EL CONTROLADOR PADRE appCtrl
     })
 
     .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory) {
