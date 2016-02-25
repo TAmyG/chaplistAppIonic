@@ -6,7 +6,7 @@
     </ion-footer-bar>
     <ion-content class="animate-fade-slide-in">
         <!--ng-class="{expanded:isExpanded}"-->
-        <div class="list condensed-space no-padding animate-blinds" ng-repeat="supermarket in supermarkets">
+        <div class="list  no-padding animate-blinds" ng-repeat="supermarket in supermarkets">
             <div class="card energized-bg">
                 <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ng-click="setSupermarketId(supermarket.id, supermarket)" ui-sref="app.products">
                     <h2>{{supermarket.name}}</h2>

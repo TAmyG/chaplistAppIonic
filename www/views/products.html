@@ -1,12 +1,8 @@
 <ion-view view-title="Productos">
-    <!--<button id="fab" class="button button-positive button-fab button-fab-bottom-right activated " style="display: block;" ng-click="showFilterBar()">
-        <i class="icon ion-search"></i>
-    </button>-->
-    <!--         <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
-    </button>
-  </ion-nav-buttons>-->
     <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+        <div ng-if="products !== undefined && !products.length" class="no-results" align="center">
+            <p>No existen productos en oferta</p>
+        </div>
         <div class="list half">
             <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
                 <div ng-click="setProductDetail(product)">
@@ -53,12 +49,9 @@
                         </a>
                     </div>
                 </div>
-
             </div>
-            <div ng-if="products !== undefined && !products.length" class="no-results">
-                <p>No existen productos en oferta</p>
-            </div>
-            <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
-            </ion-infinite-scroll>
+        </div>
     </ion-content>
+    <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
+    </ion-infinite-scroll>
 </ion-view>

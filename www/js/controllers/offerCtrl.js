@@ -1,11 +1,16 @@
 angular.module('offerCtrl', [])
 
-.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory) {
+.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory, $ionicLoading, $ionicPlatform) {
+
+        $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+        });
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab('right');
+
 
         $timeout(function () {
             ionicMaterialMotion.fadeSlideIn({
@@ -26,15 +31,21 @@ angular.module('offerCtrl', [])
         $scope.supermarkets = [];
         $scope.supermarkets = factory.getSupermarkets();
 
-        $scope.setSupermarketId = function(supermarketId){
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 500);
+
+        $scope.setSupermarketId = function (supermarketId) {
             factory.supermarketId = supermarketId;
         }
     })
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
-                                          ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar,factory, offerFactory) {
-        $ionicLoading.show({template: 'Cargando blogs...'});
+        ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar, factory, offerFactory) {
+        $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+        });
 
-        $scope.deviceReady=false;
+        $scope.deviceReady = false;
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.isExpanded = true;
@@ -64,19 +75,19 @@ angular.module('offerCtrl', [])
             "category": 'carnes'
         }*/
 
-        $ionicPlatform.ready(function(){
-            $scope.deviceReady=true;
+        $ionicPlatform.ready(function () {
+            $scope.deviceReady = true;
         });
         $rootScope.products = [];
 
-        factory.getProductsInOfferAPI($rootScope.products.length).then(function(data){
+        factory.getProductsInOfferAPI($rootScope.products.length).then(function (data) {
             $rootScope.products = data;
             $ionicLoading.hide();
         });
 
         //monitor para scroll de páginación
-        $scope.$on('loadProducts', function(_, data){
-            data.forEach(function(b){
+        $scope.$on('loadProducts', function (_, data) {
+            data.forEach(function (b) {
                 $rootScope.products.push({
                     ProductStore: b.ProductStore,
                     createdAt: b.createdAt,
@@ -92,15 +103,15 @@ angular.module('offerCtrl', [])
         /*
             Función para solicitar nueva tanda de productos
         */
-        $scope.loadMore= function(){
-            factory.getProductsInOfferAPI($rootScope.products.length).then(function(data){
-                $rootScope.$broadcast('loadProducts',data);
+        $scope.loadMore = function () {
+            factory.getProductsInOfferAPI($rootScope.products.length).then(function (data) {
+                $rootScope.$broadcast('loadProducts', data);
             });
         };
         /*
             Función para colocar un producto para su detalle
         */
-        $scope.setProductDetail = function(productDetail){
+        $scope.setProductDetail = function (productDetail) {
             offerFactory.setProductDetail(productDetail);
         }
 
@@ -108,77 +119,77 @@ angular.module('offerCtrl', [])
 
 .controller('DetalleCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory) {
 
-        $scope.$parent.showHeader();
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-        // Set Motion
-        $timeout(function () {
-            ionicMaterialMotion.slideUp({
-                selector: '.slide-up'
-            });
-        }, 300);
+    // Set Motion
+    $timeout(function () {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
+        });
+    }, 300);
 
-        // Set Ink
-        ionicMaterialInk.displayEffect();
-        //////////////////////////////////////////////////////////////////////////////////////
-        $scope.favorites = [];
-        $scope.productDetail = offerFactory.getProductDetail();
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    //////////////////////////////////////////////////////////////////////////////////////
+    $scope.favorites = [];
+    $scope.productDetail = offerFactory.getProductDetail();
 
-        $scope.addFavorite = function(productDetail){
-            offerFactory.addFavorite(productDetail);
-        }
-    })
+    $scope.addFavorite = function (productDetail) {
+        offerFactory.addFavorite(productDetail);
+    }
+})
 
-    .controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory) {
+.controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory) {
 
-        $scope.$parent.showHeader();
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-        // Set Motion
-        $timeout(function () {
-            ionicMaterialMotion.slideUp({
-                selector: '.slide-up'
-            });
-        }, 300);
-
-        $timeout(function () {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
-
-        // Set Ink
-        ionicMaterialInk.displayEffect();
-        ////////////////////////////////////////////////////////////
-        $scope.favorites = [];
-        $scope.favorites = offerFactory.getFavorites();
-
-        $scope.setProductDetail = function(productDetail){
-             offerFactory.setProductDetail(productDetail);
-        }
-
-        $scope.deleteProductFav = function(product){
-            var index = offerFactory.removeFavorite(product);
-            $scope.favorites.splice(index, 1);
-        }
-    })
-
-    .controller('BuscarCtrl', function ($scope, $rootScope, $timeout, $ionicFilterBar) {
+    // Set Motion
+    $timeout(function () {
+        ionicMaterialMotion.slideUp({
+            selector: '.slide-up'
+        });
+    }, 300);
 
     $timeout(function () {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    ////////////////////////////////////////////////////////////
+    $scope.favorites = [];
+    $scope.favorites = offerFactory.getFavorites();
+
+    $scope.setProductDetail = function (productDetail) {
+        offerFactory.setProductDetail(productDetail);
+    }
+
+    $scope.deleteProductFav = function (product) {
+        var index = offerFactory.removeFavorite(product);
+        $scope.favorites.splice(index, 1);
+    }
+})
+
+.controller('BuscarCtrl', function ($scope, $rootScope, $timeout, $ionicFilterBar) {
+
+        $timeout(function () {
             document.getElementById('fab-activity').classList.toggle('on');
         }, 300);
         $scope.showFilterBar = function () {
             filterBarInstance = $ionicFilterBar.show({
                 items: $rootScope.products,
                 update: function (filteredItems) {
-                    $rootScope.products= filteredItems;
+                    $rootScope.products = filteredItems;
                 }
             });
         };
