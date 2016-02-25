@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'ProductCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-calm  flap" ng-click="showFilterBar();"><i class="icon ion-search"></i></button>',
+                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-assertive  flap" ng-click="showFilterBar();"><i class="icon ion-search"></i></button>',
                     controller: 'BuscarCtrl'
                 }
             }
@@ -85,7 +85,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'ProfileCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-calm" ><i class="icon ion-log-out"></i></button>',
+                    template: '<button id="fab-profile" ng-click="facebookLogout()" class="button button-fab button-fab-bottom-right button-assertive" ><i class="icon ion-log-out"></i></button>',
                     controller: 'btnLogoutCtrl'
                 }
             }
@@ -98,7 +98,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'MapCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-calm flap" ng-click= "refreshMap()"><i class="icon ion-ios-refresh"></i></button>',
+                    template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-assertive flap" ng-click= "refreshMap()"><i class="icon ion-ios-refresh"></i></button>',
                     controller: 'btnRefreshCtrl'
                 }
             }
