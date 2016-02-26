@@ -6,7 +6,7 @@
         </ion-footer-bar>
     <ion-content ng-class="{expanded:isExpanded}">
         <div class="list animate-fade-slide-in-right" ng-repeat="product in favorites">
-                <div class="item item-avatar item-icon-right  item in in done done" ng-click="setProductDetail(product)" ui-sref="app.detalle">
+                <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)" ui-sref="app.detalle">
                     <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/v1455838822/unisuper/{{product.ProductStore.image}}">
                     <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg">
                     <h2>{{product.description}}</h2>
