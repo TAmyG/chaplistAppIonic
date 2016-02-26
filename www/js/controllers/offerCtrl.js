@@ -1,17 +1,25 @@
 angular.module('offerCtrl', [])
 
-.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory) {
+.controller('OfferCtrl', function ($scope, $state, $ionicPopup, $timeout, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, factory, $ionicLoading) {
 
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab('right');
 
+        $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+        });
+
         $timeout(function () {
             ionicMaterialMotion.fadeSlideIn({
                 selector: '.animate-fade-slide-in .item'
             });
         }, 200);
+
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 500);
 
         // Activate ink for controller
         ionicMaterialInk.displayEffect();
@@ -33,7 +41,7 @@ angular.module('offerCtrl', [])
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
         ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar, factory, offerFactory) {
         $ionicLoading.show({
-            template: 'Cargando productos...'
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         });
 
         $scope.deviceReady = false;
