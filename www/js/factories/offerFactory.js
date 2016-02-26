@@ -1,6 +1,6 @@
 angular.module('offerFactory', [])
 
-.factory('offerFactory', function ($localStorage, factory) {
+.factory('offerFactory', function ($localStorage, ConnectivityMonitor,factory) {
     var comun = {};
     var productDetail = {};
 
@@ -16,6 +16,7 @@ angular.module('offerFactory', [])
         verificando si existe el array de favoritos, de lo contrario lo crea
     */
     comun.addFavorite = function(product){
+         //$localStorage.favorites = [];
         if(!$localStorage.hasOwnProperty('favorites'))
             $localStorage.favorites = [];
 
@@ -24,6 +25,7 @@ angular.module('offerFactory', [])
         });
         if(cat.length == 0){
             product.ProductStore.likes = product.ProductStore.likes + 1;
+            product.supermarketId = factory.supermarketId;
             $localStorage.favorites.push(product);
             //si se agrega un nuevo producto entonces se debe incrementar la cantidad de likes
             //de dicho producto en la oferta específica
@@ -50,8 +52,42 @@ angular.module('offerFactory', [])
     /*
         Función para obtener un arreglo con todos los favoritos
     */
-    comun.getFavorites = function(){
-        return $localStorage.favorites;
+    comun.getFavorites = function(callback){
+        var index = 0;
+        var product = {};
+        if(ConnectivityMonitor.ifOffline())
+            return callback($localStorage.favorites);
+
+        factory.getProductInOfferAPI(buildFavArray())
+            .then(function(res){
+            for(var i = 0; i <res.length; i++){
+                product =  $localStorage.favorites.filter(function( obj ) {
+                  return obj.id == res[i][0].id && obj.supermarketId == res[i][0].supermarketId;
+                })[0];
+                index = $localStorage.favorites.indexOf(product);
+                product.ProductStore = res[i][0].ProductStore;
+                product.description  = res[i][0].description;
+                product.updatedAt    = res[i][0].updatedAt;
+                product.createdAt    = res[i][0].createdAt;
+
+                $localStorage.favorites[index] = product;
+            }
+            callback($localStorage.favorites);
+        })
+    }
+
+    function buildFavArray(){
+        var size = $localStorage.favorites.length;
+        var actualFav = $localStorage.favorites;
+        var favArray = [];
+        for(var i = 0; i < size; i++){
+            favArray.push({
+                supermarketId: actualFav[i].supermarketId,
+                productId: actualFav[i].id,
+                offerId: actualFav[i].ProductStore.offerId
+            });
+        }
+        return favArray;
     }
 
     return comun;

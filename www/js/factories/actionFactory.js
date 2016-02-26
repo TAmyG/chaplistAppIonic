@@ -85,6 +85,31 @@ angular.module('actionFactory', [])
                 alert('Las credenciales de la app no existen en la API');
         }
         /*
+            Función para obtener un producto específico en oferta
+        */
+        comun.getProductInOfferAPI = function(arrayProducts){
+            var products = [];
+            var body = {
+                favProducts: arrayProducts
+            };
+            if(comun.existsTokenAPI())
+                return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/favproducts/'+ getTokenAPI(), body)
+                //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
+                .then(function (res) {
+                    if (res.status = 200) {
+                        products = transformToJson(res.data);
+                        return products;
+                    } else {
+                        alert('Las credenciales de la app no existen en la API');
+                        return [];
+                    }
+                }, function (err) {
+                    return [];
+                });
+            else
+                alert('Las credenciales de la app no existen en la API');
+        }
+        /*
             Función para agregar o remover likes de una aplicación
         */
         comun.addOrRemoveLikes = function(offerId, productId, type){

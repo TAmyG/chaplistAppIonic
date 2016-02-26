@@ -151,8 +151,21 @@ angular.module('offerCtrl', [])
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
 
+    $scope.$on('ngLastRepeat.mylist', function (e) {
+        $timeout(function () {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
+
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+
+        }, 0); // No timeout delay necessary.
+    });
+
     // Set Motion
-    $timeout(function () {
+    /*$timeout(function () {
         ionicMaterialMotion.slideUp({
             selector: '.slide-up'
         });
@@ -162,13 +175,15 @@ angular.module('offerCtrl', [])
         ionicMaterialMotion.fadeSlideInRight({
             startVelocity: 3000
         });
-    }, 700);
+    }, 700);*/
 
     // Set Ink
     ionicMaterialInk.displayEffect();
     ////////////////////////////////////////////////////////////
     $scope.favorites = [];
-    $scope.favorites = offerFactory.getFavorites();
+    offerFactory.getFavorites(function (res) {
+        $scope.favorites = res;
+    });
 
     $scope.setProductDetail = function (productDetail) {
         offerFactory.setProductDetail(productDetail);
