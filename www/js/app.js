@@ -29,11 +29,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
             templateUrl: 'views/sidemenu.html',
             controller: 'AppCtrl'
         })
-        .state('app.main', {
-            url: '/main',
-            abstract: true,
-            templateUrl: 'views/layoutTabs.html'
-        })
         .state('app.home', {
             url: '/home',
             views: {
