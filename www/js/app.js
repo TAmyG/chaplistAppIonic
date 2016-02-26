@@ -2,7 +2,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                            'actionFactory', 'facebookFactory', 'offerFactory', 'mapsFactory',
                            'ngStorage', 'jett.ionic.filter.bar', 'ionic-material'])
 
-.run(function ($ionicPlatform,$cordovaStatusbar) { //agrego el factory de GoogleMaps
+.run(function ($ionicPlatform, $cordovaStatusbar) { //agrego el factory de GoogleMaps
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -19,6 +19,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
+    $ionicConfigProvider.tabs.position("bottom"); //Places them at the bottom for all OS
+    $ionicConfigProvider.tabs.style("standard"); //Makes them all look the same across all OS
 
     $stateProvider
         .state('app', {
@@ -26,6 +28,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
             abstract: true,
             templateUrl: 'views/sidemenu.html',
             controller: 'AppCtrl'
+        })
+        .state('app.main', {
+            url: '/main',
+            abstract: true,
+            templateUrl: 'views/layoutTabs.html'
         })
         .state('app.home', {
             url: '/home',
@@ -73,11 +80,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 },
                 'fabContent': {
                     template: ''
-
                 }
             }
         })
-        .state('app.profile', {
+
+    .state('app.profile', {
             url: '/profile',
             views: {
                 'menuContent': {
