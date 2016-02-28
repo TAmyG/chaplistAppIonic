@@ -11,16 +11,15 @@ angular.module('offerCtrl', [])
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         });
 
-        $timeout(function () {
-            ionicMaterialMotion.fadeSlideIn({
-                selector: '.animate-fade-slide-in .item'
-            });
-        }, 200);
-
-        $timeout(function () {
-            $ionicLoading.hide();
-        }, 500);
-
+        // efects
+        $scope.$on('ngLastRepeat.mylist', function (e) {
+            $timeout(function () {
+                ionicMaterialMotion.fadeSlideIn({
+                    selector: '.animate-fade-slide-in .item'
+                });
+                $ionicLoading.hide();
+            }, 0); // No timeout delay necessary.
+        });
         // Activate ink for controller
         ionicMaterialInk.displayEffect();
 
@@ -32,7 +31,9 @@ angular.module('offerCtrl', [])
         /*----------------------------------------------------------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
         $scope.supermarkets = [];
-        $scope.supermarkets = factory.getSupermarkets();
+        factory.getSupermarketsAPI().then(function (data) {
+            $scope.supermarkets = data;
+        });
 
         $scope.setSupermarketId = function (supermarketId) {
             factory.supermarketId = supermarketId;

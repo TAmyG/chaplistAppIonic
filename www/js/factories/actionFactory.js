@@ -1,6 +1,6 @@
 angular.module('actionFactory', [])
     //*************************************************************************************************************************
-    .factory('factory', function ($http, $ionicPopup, $cordovaDevice, $localStorage) {
+    .factory('factory', function ($http, $ionicPopup, $q, $cordovaDevice, $localStorage, ConnectivityMonitor) {
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
         var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
@@ -14,7 +14,7 @@ angular.module('actionFactory', [])
             var existe = false;
 
             if (comun.existsTokenAPI()){
-                getSupermarketsAPI();//obtiene todos los supermercados actuales
+                comun.getSupermarketsAPI();//obtiene todos los supermercados actuales
                 existe = true;
                 return;
             }
@@ -32,7 +32,7 @@ angular.module('actionFactory', [])
                         $localStorage.tokenAPI = tokenAux;
                         $localStorage.favorites = [];
                         if(!existe)
-                            getSupermarketsAPI();//obtiene todos los supermercados actuales
+                            comun.getSupermarketsAPI();//obtiene todos los supermercados actuales
                         return tokenAux;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
@@ -140,12 +140,6 @@ angular.module('actionFactory', [])
                 alert('Las credenciales de la app no existen en la API');
         }
         /*
-            Función que obtiene los supermercados desde la API
-        */
-        comun.getSupermarkets = function () {
-            return $localStorage.supermarkets;
-        }
-        /*
             Función que verifica si existe un token válido
         */
         comun.existsTokenAPI = function () {
@@ -160,12 +154,18 @@ angular.module('actionFactory', [])
         /*
             Función para obtener los supermerdados del almacenamiento local
         */
-        function getSupermarketsAPI() {
+        comun.getSupermarketsAPI = function() {
             var result = {};
+            var deferred = $q.defer();
             if(!comun.existsTokenAPI()){
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
+            if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
+                 deferred.resolve( $localStorage.supermarkets);
+                return deferred.promise;
+            }
+
             return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
             //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                 .then(function (res) {
