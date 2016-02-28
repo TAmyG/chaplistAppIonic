@@ -14,7 +14,12 @@ Replace APP_ID and APP_NAME variables with your Facebook app values
  * $ cordova -d plugin add phonegap-facebook-plugin --variable APP_ID="439513662912425" --variable APP_NAME="social_movil"
  
  [Tutorial de Referencia](https://ionicthemes.com/tutorials/about/native-facebook-login-with-ionic-framework)
+ 
+## cordova-network-information 
+Plugin para una fácil interacción con el teclado. [link](https://github.com/driftyco/ionic-plugin-keyboard)
 
+ * $ cordova plugin add ionic-plugin-keyboard
+ 
 ## cordova-network-information
 Provee información sobre la conexión a internet que posee el dispositivo.
 
