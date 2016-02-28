@@ -67,12 +67,6 @@ angular.module('offerCtrl', [])
             }, 0); // No timeout delay necessary.
         });
         /////////////////////////////////////////////////////////////////////////////////////
-        /*{
-            "name": 'pollo rey',
-            "description": 'el mejor sabor',
-            "image": 'http://directorio.guatemala.com/custom/domain_1/image_files/sitemgr_photo_25624.png',
-            "category": 'carnes'
-        }*/
 
         $ionicPlatform.ready(function () {
             $scope.deviceReady = true;

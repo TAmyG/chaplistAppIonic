@@ -32,7 +32,7 @@ angular.module('mapsFactory', [])
     */
     function initMap() {
         $ionicLoading.show({
-            template: 'Cargando Google Maps...'
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         });
         getInitPosition(function (res) {
             printMap(res);

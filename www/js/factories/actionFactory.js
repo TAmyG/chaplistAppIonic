@@ -172,6 +172,7 @@ angular.module('actionFactory', [])
                         result = transformToJson(res.data);
                         compareToken(result.token);
                         $localStorage.supermarkets = result.supermarkets;
+                        $localStorage.favorites = [];
                         return result.supermarkets;
                     } else
                         return res.data.error;
