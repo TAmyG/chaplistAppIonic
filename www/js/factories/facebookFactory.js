@@ -70,10 +70,27 @@ angular.module('facebookFactory', [])
                     caption: 'ofertas en Chaplist',
                     description: product.ProductStore.image+'XD'
                 },
-                function (response) {
+                function (result) {
                     $ionicPopup.alert({
                         title: 'resultado',
-                        template: JSON.stringify(result)
+                        template: 'Producto compartido'
+                    });
+                }
+            );
+        }
+        /*
+            Función para realizar una publicación en el muro del usuario actual
+        */
+        comun.postFacebook = function () {
+           facebookConnectPlugin.showDialog({
+                    method: 'feed',
+                    message: 'posteado desde Chaplist',
+                    caption: 'ofertas en Chaplist',
+                },
+                function (result) {
+                    $ionicPopup.alert({
+                        title: 'resultado',
+                        template: 'Post realizado'
                     });
                 }
             );

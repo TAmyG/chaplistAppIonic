@@ -1,6 +1,6 @@
 angular.module('profileCtrl', [])
 
-.controller('ProfileCtrl', function ($scope, $state, $timeout, $ionicPopup, ionicMaterialMotion, ionicMaterialInk, FacebookFactory) {
+.controller('ProfileCtrl', function ($scope, $state, $timeout, $ionicPopup, ionicMaterialMotion, ionicMaterialInk, FacebookFactory, ConnectivityMonitor) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -33,32 +33,10 @@ angular.module('profileCtrl', [])
     });
 
     $scope.facebookPost = function () {
-        facebookConnectPlugin.showDialog({
-                method: 'share',
-                href: 'https://developers.facebook.com/docs/',
-                name: 'Test Post',
-                message: 'First photo post',
-                caption: 'Testing using phonegap plugin',
-                description: 'Posting photo using phonegap facebook plugin'
-            },
-            function (response) {
-                $ionicPopup.alert({
-                    title: 'resultado',
-                    template: JSON.stringify(result)
-                });
-            },
-            function (response) {
-                $ionicPopup.alert({
-                    title: 'Falló',
-                    template: error
-                });
-            },
-            function (response) {
-                alert(JSON.stringify(response))
-            },
-            function (response) {
-                alert(JSON.stringify(response) + 'error')
+        if(ConnectivityMonitor.ifOffline()){
+                $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
+                return;
             }
-        );
+        FacebookFactory.postFacebook();
     }
 })

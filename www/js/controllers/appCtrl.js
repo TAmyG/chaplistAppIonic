@@ -90,6 +90,10 @@ angular.module('appCtrl', [])
     /*----------------------------------------------------------------------------------*/
 
     $scope.facebook = function () {
+        if(ConnectivityMonitor.ifOffline()){
+            $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
+            return;
+        }
         if (!FacebookFactory.existFacebookToken()) {
             $scope.ionicMessage('Mensaje', 'Debe loguearse con su cuenta de Facebook.');
             $state.go('app.home');

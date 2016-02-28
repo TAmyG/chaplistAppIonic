@@ -48,6 +48,14 @@ angular.module('actionFactory', [])
         */
         comun.getStoresAPI =  function(supermarketId){
             var storesAux = [];
+            var deferred = {};
+
+            if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
+                deferred = $q.defer();
+                deferred.resolve([]);
+                return deferred.promise;
+            }
+
             if(comun.existsTokenAPI())
                 return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                 //return $http.get('http://192.168.0.14:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
@@ -69,6 +77,14 @@ angular.module('actionFactory', [])
             Función para obtener los productos en oferta vigentes para un supermercado seleccionado
         */
         comun.getProductsInOfferAPI = function(offset){
+            var deferred = {};
+
+            if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
+                deferred = $q.defer();
+                deferred.resolve([]);
+                return deferred.promise;
+            }
+
             if(comun.existsTokenAPI())
                 return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/' + comun.supermarketId + '/' + offset +'/'+ getTokenAPI())
                 //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
@@ -117,6 +133,11 @@ angular.module('actionFactory', [])
         comun.addOrRemoveLikes = function(offerId, productId, type){
             var body = {};
             var newOffer = {};
+            //En este caso no es necesario realizar una promesa ya que las funciones que llaman
+            //a esta funcionalidad no requieren un resultado de respuesta
+            if(ConnectivityMonitor.ifOffline())//verifico conectividad a internet
+                return;
+
             if(comun.existsTokenAPI()){
                 body = {
                     offerId: offerId,
@@ -162,7 +183,6 @@ angular.module('actionFactory', [])
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
-            console.log(ConnectivityMonitor.isOnline());
             if(!ConnectivityMonitor.isOnline()){//verifico conectividad a internet
                 deferred = $q.defer();
                 deferred.resolve( $localStorage.supermarkets);
