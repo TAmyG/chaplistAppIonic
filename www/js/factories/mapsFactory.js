@@ -162,7 +162,7 @@ angular.module('mapsFactory', [])
 
 //*************************************************************************************************************************
 
-.factory('ConnectivityMonitor', function ($cordovaNetwork) {
+.factory('ConnectivityMonitor',  ['$cordovaNetwork',function ($cordovaNetwork) {
     var comun = {};
 
     /*
@@ -188,4 +188,4 @@ angular.module('mapsFactory', [])
     }
 
     return comun;
-})
+}])

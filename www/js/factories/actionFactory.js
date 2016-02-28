@@ -14,7 +14,8 @@ angular.module('actionFactory', [])
             var existe = false;
 
             if (comun.existsTokenAPI()){
-                comun.getSupermarketsAPI();//obtiene todos los supermercados actuales
+                if(!existsSupermarketsLocal())
+                    comun.getSupermarketsAPI();//obtiene todos los supermercados actuales
                 existe = true;
                 return;
             }
@@ -156,13 +157,15 @@ angular.module('actionFactory', [])
         */
         comun.getSupermarketsAPI = function() {
             var result = {};
-            var deferred = $q.defer();
+            var deferred = {};
             if(!comun.existsTokenAPI()){
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
-            if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
-                 deferred.resolve( $localStorage.supermarkets);
+            console.log(ConnectivityMonitor.isOnline());
+            if(!ConnectivityMonitor.isOnline()){//verifico conectividad a internet
+                deferred = $q.defer();
+                deferred.resolve( $localStorage.supermarkets);
                 return deferred.promise;
             }
 
@@ -186,6 +189,12 @@ angular.module('actionFactory', [])
         */
         function getTokenAPI() {
             return $localStorage.tokenAPI;
+        }
+        function  existsSupermarketsLocal () {
+            if ($localStorage.hasOwnProperty("supermarkets") === true)
+                return true;
+            else
+                return false;
         }
         comun.token = function(){
             return $localStorage.tokenAPI;
