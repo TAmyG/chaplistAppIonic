@@ -30,6 +30,7 @@ angular.module('actionFactory', [])
                     tokenAux = res.data.replace('"', '').replace('"', '');
                     if (res.status = 200 && tokenAux != 'null') {
                         $localStorage.tokenAPI = tokenAux;
+                        $localStorage.favorites = [];
                         if(!existe)
                             getSupermarketsAPI();//obtiene todos los supermercados actuales
                         return tokenAux;
@@ -172,7 +173,6 @@ angular.module('actionFactory', [])
                         result = transformToJson(res.data);
                         compareToken(result.token);
                         $localStorage.supermarkets = result.supermarkets;
-                        $localStorage.favorites = [];
                         return result.supermarkets;
                     } else
                         return res.data.error;
