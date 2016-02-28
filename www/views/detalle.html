@@ -3,14 +3,14 @@
         <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/k3n3th/image/upload/w_250,h_250/v1455838822/unisuper/{{productDetail.ProductStore.image}});">
             <div class="content">
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart assertive pull-right text-white" ng-click="addFavorite(productDetail)"></button>
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white" ui-sref="app.friends" ng-click="$parent.shareProduct(productDetail)"></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white"  ng-click="$parent.shareProduct(productDetail)"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
         <div ng-if="$parent.isOffline()" class="hero has-mask slide-up" style="background-image: url(img/genericProduct.jpg);">
             <div class="content">
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart pull-right text-white" ng-click="addFavorite(productDetail)" ui-sref="app.fav"></button>
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white" ui-sref="app.friends" ng-click=""></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white" ></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
