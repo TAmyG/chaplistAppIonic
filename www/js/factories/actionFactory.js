@@ -190,6 +190,9 @@ angular.module('actionFactory', [])
         comun.token = function(){
             return $localStorage.tokenAPI;
         }
+        comun.getSupermarkets = function(){
+            return $localStorage.supermarkets
+        }
         /*
             Función para comparar el token actual y reemplazarlo en caso de que halla vencido
         */
