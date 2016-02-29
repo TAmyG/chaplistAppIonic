@@ -49,6 +49,7 @@ angular.module('actionFactory', [])
         comun.getStoresAPI =  function(supermarketId){
             var storesAux = [];
             var deferred = {};
+            var result = {};
 
             if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
                 deferred = $q.defer();
@@ -61,7 +62,9 @@ angular.module('actionFactory', [])
                 //return $http.get('http://192.168.0.14:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
-                        storesAux = transformToJson(res.data);
+                        result = transformToJson(res.data);
+                        storesAux = result.stores;
+                        compareToken(result.token);
                         return storesAux;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
@@ -78,6 +81,8 @@ angular.module('actionFactory', [])
         */
         comun.getProductsInOfferAPI = function(offset){
             var deferred = {};
+            var result = {};
+            var products = [];
 
             if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
                 deferred = $q.defer();
@@ -90,7 +95,9 @@ angular.module('actionFactory', [])
                 //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                 .then(function (res) {
                     if (res.status = 200) {
-                        products = transformToJson(res.data);
+                        result = transformToJson(res.data);
+                        products = result.products
+                        compareToken(result.token);
                         return products;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
