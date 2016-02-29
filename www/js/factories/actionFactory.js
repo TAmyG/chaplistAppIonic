@@ -20,6 +20,11 @@ angular.module('actionFactory', [])
                 return;
             }
 
+            if(ConnectivityMonitor.ifOffline()){//verifico conectividad a internet
+                alert('Para mejorar la experiencia, utilize internet');
+                return;
+            }
+
             //de no existir un token se procede a solicitar uno a la API
             body.packageName = packagaName;
             body.secretKey = secretKey;
