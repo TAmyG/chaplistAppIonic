@@ -29,14 +29,25 @@ angular.module('offerCtrl', [])
 
         /*----------------------------------------------------------------------------------------*/
         /*----------------------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------------------*/
+        /*-------   ---------------------------------------------------------------------------------*/
         $scope.supermarkets = [];
-        factory.getSupermarketsAPI().then(function (data) {
-            $scope.supermarkets = data;
-        });
+        getSupermarketsAPI();
+
+        $scope.reload= function(){
+           $scope.supermarkets = [];
+            getSupermarketsAPI();
+        };
 
         $scope.setSupermarketId = function (supermarketId) {
             factory.supermarketId = supermarketId;
+        }
+
+        function getSupermarketsAPI(){
+            factory.getSupermarketsAPI().then(function (data) {
+                $scope.supermarkets = data;
+                $scope.$broadcast('scroll.refreshComplete');
+                $scope.$broadcast('scroll.refreshComplete');
+            });
         }
     })
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
@@ -73,11 +84,22 @@ angular.module('offerCtrl', [])
             $scope.deviceReady = true;
         });
         $rootScope.products = [];
+        getProducts();
 
-        factory.getProductsInOfferAPI($rootScope.products.length).then(function (data) {
-            $rootScope.products = data;
-            $ionicLoading.hide();
-        });
+
+        $scope.reload= function(){
+           $rootScope.products = [];
+            getProducts();
+        };
+
+        function getProducts(){
+            factory.getProductsInOfferAPI($rootScope.products.length).then(function (data) {
+                $rootScope.products = data;
+                $ionicLoading.hide();
+                  $scope.$broadcast('scroll.refreshComplete');
+                  $scope.$broadcast('scroll.refreshComplete');
+            });
+        }
 
         //monitor para scroll de páginación
         $scope.$on('loadProducts', function (_, data) {
@@ -163,9 +185,14 @@ angular.module('offerCtrl', [])
     ionicMaterialInk.displayEffect();
     ////////////////////////////////////////////////////////////
     $scope.favorites = [];
-    offerFactory.getFavorites(function (res) {
-        $scope.favorites = res;
-    });
+    getFavorites();
+
+    $scope.reload= function(){
+       $scope.favorites = [];
+        getFavorites();
+        $scope.$broadcast('scroll.refreshComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+    };
 
     $scope.setProductDetail = function (productDetail) {
         offerFactory.setProductDetail(productDetail);
@@ -174,6 +201,12 @@ angular.module('offerCtrl', [])
     $scope.deleteProductFav = function (product) {
         var index = offerFactory.removeFavorite(product);
         $scope.favorites.splice(index, 1);
+    }
+
+    function getFavorites(){
+        offerFactory.getFavorites(function (res) {
+            $scope.favorites = res;
+        });
     }
 })
 

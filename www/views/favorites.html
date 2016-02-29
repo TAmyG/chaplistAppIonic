@@ -1,5 +1,6 @@
 <ion-view view-title="Favoritos">
     <ion-content ng-class="{expanded:isExpanded}">
+       <ion-refresher pulling-text="Recargado favoritos" on-refresh="reload()"></ion-refresher>
         <div class="list animate-fade-slide-in-right" ng-last-repeat="mylist" ng-repeat="product in favorites">
                 <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)" ui-sref="app.detalle">
                     <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_50,h_50/v1455838822/unisuper/{{product.ProductStore.image}}">

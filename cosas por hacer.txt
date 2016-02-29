@@ -3,6 +3,6 @@ Cosas para hacer:
 * Arreglar bug en la petición de amigos en el pérfil de facebook (+)
 * verificar internet cada vez que se realiza petición al servidor (+)
 * petición de imágenes pequeñas, medianas o normales, según la pantalla mostrar (+)
-* verificar token cada vez que se realiza petición al servidor 
+* verificar token cada vez que se realiza petición al servidor (+)
 * realizar refresh a la hora de hacer un pull-down a la pantalla con ion-refresher
 * estandarizar mensajes de alerta cambiándolos por ionic-popup
