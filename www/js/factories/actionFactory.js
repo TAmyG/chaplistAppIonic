@@ -212,6 +212,35 @@ angular.module('actionFactory', [])
                 });
         }
         /*
+            Función para obtener un top 5 de los favoritos en las ofertas vigentes
+        */
+        comun.getTopFavs = function() {
+            var result = {};
+            var deferred = {};
+            if(!comun.existsTokenAPI()){
+                alert('Esta app no tiene un token válido para el uso de la API');
+                return;
+            }
+            if(!ConnectivityMonitor.isOnline()){//verifico conectividad a internet
+                deferred = $q.defer();
+                deferred.resolve([]);
+                return deferred.promise;
+            }
+
+            return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/topfavs/')
+            //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
+                .then(function (res) {
+                    if (res.status = 200) {
+                        result = transformToJson(res.data);
+                        return result;
+                    } else
+                        return res.data.error;
+                }, function (err) {
+                    alert(JSON.stringify(err));
+                    return err;
+                });
+        }
+        /*
             Función para obtener el token actual en caso de existir sino, retorna null
         */
         function getTokenAPI() {
