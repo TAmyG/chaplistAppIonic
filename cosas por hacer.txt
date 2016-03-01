@@ -7,7 +7,7 @@ Cosas para hacer:
 * realizar refresh a la hora de hacer un pull-down a la pantalla con ion-refresher (+)
 * estandarizar mensajes de alerta cambiándolos por ionic-popup
 * top 5 favoritos en la pantalla home
-* verificar internet antes de validar o pedir token
+* verificar internet antes de validar o pedir token (+)
 
 
 {

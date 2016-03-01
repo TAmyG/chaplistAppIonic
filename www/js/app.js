@@ -2,7 +2,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                            'actionFactory', 'facebookFactory', 'offerFactory', 'mapsFactory',
                            'ngStorage', 'jett.ionic.filter.bar', 'ionic-material'])
 
-.run(function ($ionicPlatform, $cordovaStatusbar) { //agrego el factory de GoogleMaps
+.run(function ($ionicPlatform, $state, $cordovaStatusbar) { //agrego el factory de GoogleMaps
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -12,6 +12,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+        console.log($state.current.name);
     });
 })
 
@@ -118,5 +119,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
             }
         })
         // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.when('', '/app/home');
     $urlRouterProvider.otherwise('/app/home');
 })
