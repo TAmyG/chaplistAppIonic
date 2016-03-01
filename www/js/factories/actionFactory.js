@@ -37,6 +37,12 @@ angular.module('actionFactory', [])
                 body.secretKey = secretKey;
                 body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
 
+                if (ConnectivityMonitor.ifOffline()) { //verifico conectividad a internet
+                    ionicMessage('Mensaje', 'Para mejorar la experiencia, utilize internet');
+                    return;
+                }
+
+
                 return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
                     //return $http.post('http://192.168.0.14:8080/api/Chap/tokenPetition', body)
                     .then(function (res) {
@@ -48,7 +54,7 @@ angular.module('actionFactory', [])
                                 comun.getSupermarketsAPI(); //obtiene todos los supermercados actuales
                             return tokenAux;
                         } else {
-                            ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                            ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                             return res;
                         }
                     }, function (err) {
@@ -79,7 +85,7 @@ angular.module('actionFactory', [])
                                 compareToken(result.token);
                                 return storesAux;
                             } else {
-                                ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return res;
                             }
                         }, function (err) {
@@ -112,14 +118,14 @@ angular.module('actionFactory', [])
                                 compareToken(result.token);
                                 return products;
                             } else {
-                                ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return [];
                             }
                         }, function (err) {
                             return [];
                         });
                 else
-                    ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función para obtener un producto específico en oferta
@@ -137,14 +143,14 @@ angular.module('actionFactory', [])
                                 products = transformToJson(res.data);
                                 return products;
                             } else {
-                                ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return [];
                             }
                         }, function (err) {
                             return [];
                         });
                 else
-                    ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función para agregar o remover likes de una aplicación
@@ -170,14 +176,14 @@ angular.module('actionFactory', [])
                                 newOffer = transformToJson(res.data);
                                 return newOffer;
                             } else {
-                                ionicMessage('Advertencia','Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                                ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
                                 return {};
                             }
                         }, function (err) {
                             return err;
                         });
                 } else
-                    ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función que verifica si existe un token válido
@@ -198,7 +204,7 @@ angular.module('actionFactory', [])
                 var result = {};
                 var deferred = {};
                 if (!comun.existsTokenAPI()) {
-                    ionicMessage('Advertencia','Esta app no tiene un token válido para el uso de la API');
+                    ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API');
                     return;
                 }
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
@@ -206,7 +212,6 @@ angular.module('actionFactory', [])
                     deferred.resolve($localStorage.supermarkets);
                     return deferred.promise;
                 }
-
                 return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
                     //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                     .then(function (res) {
@@ -218,7 +223,36 @@ angular.module('actionFactory', [])
                         } else
                             return res.data.error;
                     }, function (err) {
-                        ionicMessage('Advertencia','Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                        ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                        return err;
+                    });
+            }
+            /*
+                Función para obtener un top 5 de los favoritos en las ofertas vigentes
+            */
+        comun.getTopFavs = function () {
+                var result = {};
+                var deferred = {};
+                if (!comun.existsTokenAPI()) {
+                    alert('Esta app no tiene un token válido para el uso de la API');
+                    return;
+                }
+                if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
+                    deferred = $q.defer();
+                    deferred.resolve([]);
+                    return deferred.promise;
+                }
+
+                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/topfavs/')
+                    //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
+                    .then(function (res) {
+                        if (res.status = 200) {
+                            result = transformToJson(res.data);
+                            return result;
+                        } else
+                            return res.data.error;
+                    }, function (err) {
+                        alert(JSON.stringify(err));
                         return err;
                     });
             }

@@ -145,7 +145,7 @@ angular.module('appCtrl', [])
     }
 })
 
-.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion) {
+.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion, factory) {
     $scope.$parent.clearFabs();
     $timeout(function () {
         $scope.$parent.hideHeader();
@@ -159,6 +159,12 @@ angular.module('appCtrl', [])
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
+    $scope.topOffers = [];
+
+    factory.getTopFavs().then(function(res){
+        $scope.topOffers = res;
+    });
+
     $scope.facebookLogin = function () {
         if (!FacebookFactory.existFacebookToken()) {
             if(ConnectivityMonitor.ifOffline()){
