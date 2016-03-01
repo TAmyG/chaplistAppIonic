@@ -28,8 +28,12 @@ angular.module('actionFactory', [])
             //de no existir un token se procede a solicitar uno a la API
             body.packageName = packagaName;
             body.secretKey = secretKey;
-            body.uuid = 'abcdefghijokl1234567' //$cordovaDevice.getUUID();
 
+            try{
+                body.uuid = $cordovaDevice.getUUID();
+            }catch(err){
+                body.uuid = 'abcdefghijokl1234567'
+            }
             return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
             //return $http.post('http://192.168.0.14:8080/api/Chap/tokenPetition', body)
                 .then(function (res) {
@@ -39,6 +43,7 @@ angular.module('actionFactory', [])
                         $localStorage.favorites = [];
                         if(!existe)
                             comun.getSupermarketsAPI();//obtiene todos los supermercados actuales
+                        comun.getTopFavsAPI();
                         return tokenAux;
                     } else {
                         alert('Las credenciales de la app no existen en la API');
@@ -219,17 +224,15 @@ angular.module('actionFactory', [])
         /*
             Función para obtener un top 5 de los favoritos en las ofertas vigentes
         */
-        comun.getTopFavs = function() {
-            var result = {};
+        comun.getTopFavsAPI = function() {
+            var result = [];
             var deferred = {};
             if(!comun.existsTokenAPI()){
                 alert('Esta app no tiene un token válido para el uso de la API');
                 return;
             }
             if(!ConnectivityMonitor.isOnline()){//verifico conectividad a internet
-                deferred = $q.defer();
-                deferred.resolve([]);
-                return deferred.promise;
+                return comun.getTopFavs();
             }
 
             return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/topfavs/')
@@ -237,6 +240,7 @@ angular.module('actionFactory', [])
                 .then(function (res) {
                     if (res.status = 200) {
                         result = transformToJson(res.data);
+                        $localStorage.topFavs = result;
                         return result;
                     } else
                         return res.data.error;
@@ -262,6 +266,11 @@ angular.module('actionFactory', [])
         }
         comun.getSupermarkets = function(){
             return $localStorage.supermarkets
+        }
+        comun.getTopFavs = function(){
+            if ($localStorage.hasOwnProperty("topFavs") === false)
+                $localStorage.topFavs = [];
+            return $localStorage.topFavs
         }
         /*
             Función para comparar el token actual y reemplazarlo en caso de que halla vencido

@@ -9,7 +9,7 @@ Cosas para hacer:
 * top 5 favoritos en la pantalla home
 * verificar internet antes de validar o pedir token (+)
 
-
+[
 {
     "id": 1,
     "upc": "'7401100809709",
@@ -33,3 +33,4 @@ Cosas para hacer:
       }
     ]
   }
+]

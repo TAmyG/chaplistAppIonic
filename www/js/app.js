@@ -2,7 +2,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                            'actionFactory', 'facebookFactory', 'offerFactory', 'mapsFactory',
                            'ngStorage', 'jett.ionic.filter.bar', 'ionic-material'])
 
-.run(function ($ionicPlatform, $state, $cordovaStatusbar) { //agrego el factory de GoogleMaps
+.run(function ($ionicPlatform, factory, $cordovaStatusbar) { //agrego el factory de GoogleMaps
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -12,7 +12,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        console.log($state.current.name);
+        factory.getTopFavsAPI();
     });
 })
 

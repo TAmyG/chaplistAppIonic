@@ -1,7 +1,7 @@
 angular.module('appCtrl', [])
 
 
-.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout, $ionicLoading,
+.controller('AppCtrl', function ($rootScope, $scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout, $ionicLoading,
                                   FacebookFactory, factory, ConnectivityMonitor) {
     // Form data for the login modal
     $scope.isExpanded = false;
@@ -145,7 +145,7 @@ angular.module('appCtrl', [])
     }
 })
 
-.controller('HomeCtrl', function ($scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion, factory) {
+.controller('HomeCtrl', function ($rootScope, $scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion, factory) {
     $scope.$parent.clearFabs();
     $timeout(function () {
         $scope.$parent.hideHeader();
@@ -159,11 +159,7 @@ angular.module('appCtrl', [])
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
-    $scope.topOffers = [];
-
-    factory.getTopFavs().then(function(res){
-        $scope.topOffers = res;
-    });
+    $scope.topOffers = factory.getTopFavs();
 
     $scope.facebookLogin = function () {
         if (!FacebookFactory.existFacebookToken()) {
