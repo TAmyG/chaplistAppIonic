@@ -24,12 +24,15 @@ angular.module('offerFactory', [])
           return obj.id == product.id;
         });
         if(cat.length == 0){
+            factory.ionicMessage('Atención', 'Su producto se ha añadido a su lista de favoritos');
             product.ProductStore.likes = product.ProductStore.likes + 1;
             product.supermarketId = factory.supermarketId;
             $localStorage.favorites.push(product);
             //si se agrega un nuevo producto entonces se debe incrementar la cantidad de likes
             //de dicho producto en la oferta específica
             factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 1);
+        }else{
+            factory.ionicMessage('Atención', 'Este producto ya está en sus favoritos.');
         }
     }
     /*

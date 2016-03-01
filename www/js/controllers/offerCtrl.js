@@ -33,8 +33,8 @@ angular.module('offerCtrl', [])
         $scope.supermarkets = [];
         getSupermarketsAPI();
 
-        $scope.reload= function(){
-           $scope.supermarkets = [];
+        $scope.reload = function () {
+            $scope.supermarkets = [];
             getSupermarketsAPI();
         };
 
@@ -42,7 +42,7 @@ angular.module('offerCtrl', [])
             factory.supermarketId = supermarketId;
         }
 
-        function getSupermarketsAPI(){
+        function getSupermarketsAPI() {
             factory.getSupermarketsAPI().then(function (data) {
                 $scope.supermarkets = data;
                 $scope.$broadcast('scroll.refreshComplete');
@@ -87,17 +87,17 @@ angular.module('offerCtrl', [])
         getProducts();
 
 
-        $scope.reload= function(){
-           $rootScope.products = [];
+        $scope.reload = function () {
+            $rootScope.products = [];
             getProducts();
         };
 
-        function getProducts(){
+        function getProducts() {
             factory.getProductsInOfferAPI($rootScope.products.length).then(function (data) {
                 $rootScope.products = data;
                 $ionicLoading.hide();
-                  $scope.$broadcast('scroll.refreshComplete');
-                  $scope.$broadcast('scroll.refreshComplete');
+                $scope.$broadcast('scroll.refreshComplete');
+                $scope.$broadcast('scroll.refreshComplete');
             });
         }
 
@@ -187,8 +187,8 @@ angular.module('offerCtrl', [])
     $scope.favorites = [];
     getFavorites();
 
-    $scope.reload= function(){
-       $scope.favorites = [];
+    $scope.reload = function () {
+        $scope.favorites = [];
         getFavorites();
         $scope.$broadcast('scroll.refreshComplete');
         $scope.$broadcast('scroll.refreshComplete');
@@ -203,7 +203,7 @@ angular.module('offerCtrl', [])
         $scope.favorites.splice(index, 1);
     }
 
-    function getFavorites(){
+    function getFavorites() {
         offerFactory.getFavorites(function (res) {
             $scope.favorites = res;
         });

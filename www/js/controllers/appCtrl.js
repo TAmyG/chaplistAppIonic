@@ -145,21 +145,35 @@ angular.module('appCtrl', [])
     }
 })
 
-.controller('HomeCtrl', function ($rootScope, $scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor, ionicMaterialMotion, factory, offerFactory) {
+.controller('HomeCtrl', function ($ionicPlatform, $scope, $timeout, $state, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor, ionicMaterialMotion, factory, offerFactory, $ionicSlideBoxDelegate, $ionicPlatform) {
+
     $scope.$parent.clearFabs();
-    $timeout(function () {
-        $scope.$parent.hideHeader();
-    }, 100);
-    $timeout(function () {
-        ionicMaterialMotion.fadeSlideIn({
-            selector: '.animate-fade-slide-in .item'
-        });
-    }, 200);
+    $scope.$on('ngLastRepeat.mylist', function (e) {
+        $timeout(function () {
+            $scope.$parent.hideHeader();
+            ionicMaterialMotion.fadeSlideIn({
+                selector: '.animate-fade-slide-in .item'
+            });
+            $ionicSlideBoxDelegate.update();/*NECESARIO PARA CARGA DE LOS SLIDE-BOX, SIN ESTO NO FUNCIONA*/
+        }, 0);
+    });
+
     ionicMaterialInk.displayEffect();
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------*/
-    $scope.topOffers = factory.getTopFavs();
+    $scope.topOffers = factory.topFavs; //factory.getTopFavs();
+
+    $ionicPlatform.ready(function () {
+        loadTopFav();
+    });
+
+    if(factory.topFavs.length < 1)
+       $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.');
+
+    $scope.reload= function(){
+        loadTopFav();
+    };
 
     $scope.facebookLogin = function () {
             if (!FacebookFactory.existFacebookToken()) {
@@ -196,11 +210,19 @@ angular.module('appCtrl', [])
                 image: productDetail.Offers[0].ProductStore.image,
                 normalPrice: productDetail.Offers[0].ProductStore.normalPrice,
                 offerPrice: productDetail.Offers[0].ProductStore.offerPrice,
-                likes : productDetail.Offers[0].ProductStore.likes
+                likes: productDetail.Offers[0].ProductStore.likes
             },
             description: productDetail.description
         }
         offerFactory.setProductDetail(productDetail);
+    }
+
+    function loadTopFav(){
+        factory.getTopFavsAPI().then(function(data) {
+            $scope.topOffers = data;
+            $scope.$broadcast('scroll.refreshComplete');
+            $scope.$broadcast('scroll.refreshComplete');
+        });
     }
 })
 
@@ -258,17 +280,30 @@ angular.module('appCtrl', [])
 })
 
 .controller('btnRefreshCtrl', function ($scope, $state, $ionicPopup, $timeout, GoogleMaps) {
-    $timeout(function () {
-        document.getElementById('fab-activity').classList.toggle('on');
-    }, 300);
+        $timeout(function () {
+            document.getElementById('fab-activity').classList.toggle('on');
+        }, 300);
 
-    $scope.refreshMap = function () {
-        if (!GoogleMaps.init(1)) {
-            $ionicPopup.alert({
-                title: 'Advertencia',
-                template: 'Debe estar conectado a internet para usar esta funcionalidad'
-            });
-            $state.go('app.home');
+        $scope.refreshMap = function () {
+            if (!GoogleMaps.init(1)) {
+                $ionicPopup.alert({
+                    title: 'Advertencia',
+                    template: 'Debe estar conectado a internet para usar esta funcionalidad'
+                });
+                $state.go('app.home');
+            }
         }
-    }
-})
+    })
+    .directive('ngLastRepeat', function ($timeout) {
+
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        scope.$emit('ngLastRepeat' + (attr.ngLastRepeat ? '.' + attr.ngLastRepeat : ''));
+                    });
+                }
+            }
+        };
+    })

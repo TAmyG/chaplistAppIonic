@@ -2,21 +2,20 @@ angular.module('actionFactory', [])
     //*************************************************************************************************************************
     .factory('factory', function ($http, $ionicPopup, $q, $cordovaDevice, $localStorage, ConnectivityMonitor) {
 
+        var comun = {};
+        var packagaName = 'com.ionicframework.betasocial427641';
+        var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
+        comun.topFavs = [];
+        comun.supermarketId = 1;
         /*
             Función para mostrar un mensaje sencillo en la pantalla
         */
-        var ionicMessage;
-        ionicMessage = function (title, template) {
+        comun.ionicMessage = function (title, template) {
             $ionicPopup.alert({
                 title: title,
                 template: template
             });
         }
-
-        var comun = {};
-        var packagaName = 'com.ionicframework.betasocial427641';
-        var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
-        comun.supermarketId = 1;
         /*
             Función para verificar el token al primer inicio de la aplicación
         */
@@ -35,9 +34,6 @@ angular.module('actionFactory', [])
                 //de no existir un token se procede a solicitar uno a la API
                 body.packageName = packagaName;
                 body.secretKey = secretKey;
-                //de no existir un token se procede a solicitar uno a la API
-                body.packageName = packagaName;
-                body.secretKey = secretKey;
 
                 try {
                     body.uuid = $cordovaDevice.getUUID();
@@ -53,10 +49,9 @@ angular.module('actionFactory', [])
                             $localStorage.favorites = [];
                             if (!existe)
                                 comun.getSupermarketsAPI(); //obtiene todos los supermercados actuales
-                            comun.getTopFavsAPI();
                             return tokenAux;
                         } else {
-                            ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
+                            comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                             return res;
                         }
                     }, function (err) {
@@ -71,7 +66,7 @@ angular.module('actionFactory', [])
                 var deferred = {};
                 var result = {};
                 if (ConnectivityMonitor.ifOffline()) { //verifico conectividad a internet
-                    ionicMessage('Mensaje', 'Para mejorar la experiencia, utilize internet');
+                    comun.ionicMessage('Mensaje', 'Para mejorar la experiencia, utilize internet');
                     return;
                 }
 
@@ -86,7 +81,7 @@ angular.module('actionFactory', [])
                                 comun.getSupermarketsAPI(); //obtiene todos los supermercados actuales
                             return tokenAux;
                         } else {
-                            ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                            comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                             return res;
                         }
                     }, function (err) {
@@ -117,7 +112,7 @@ angular.module('actionFactory', [])
                                 compareToken(result.token);
                                 return storesAux;
                             } else {
-                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                                comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return res;
                             }
                         }, function (err) {
@@ -150,14 +145,14 @@ angular.module('actionFactory', [])
                                 compareToken(result.token);
                                 return products;
                             } else {
-                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                                comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return [];
                             }
                         }, function (err) {
                             return [];
                         });
                 else
-                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                    comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función para obtener un producto específico en oferta
@@ -175,14 +170,14 @@ angular.module('actionFactory', [])
                                 products = transformToJson(res.data);
                                 return products;
                             } else {
-                                ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                                comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
                                 return [];
                             }
                         }, function (err) {
                             return [];
                         });
                 else
-                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                    comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función para agregar o remover likes de una aplicación
@@ -208,14 +203,14 @@ angular.module('actionFactory', [])
                                 newOffer = transformToJson(res.data);
                                 return newOffer;
                             } else {
-                                ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                                comun.ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
                                 return {};
                             }
                         }, function (err) {
                             return err;
                         });
                 } else
-                    ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                    comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
             }
             /*
                 Función que verifica si existe un token válido
@@ -255,35 +250,36 @@ angular.module('actionFactory', [])
                         } else
                             return res.data.error;
                     }, function (err) {
-                        ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                        comun.ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
                         return err;
                     });
             }
             /*
                 Función para obtener un top 5 de los favoritos en las ofertas vigentes
             */
-        comun.getTopFavsAPI = function () {
+        comun.getTopFavsAPI = function (callback) {
                 var result = [];
                 var deferred = {};
                 if (!comun.existsTokenAPI()) {
-                    ionicMessage('Advertencia','Esta app no tiene un token válido para el uso de la API');
+                    comun.ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API');
                     return;
                 }
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
-                    return comun.getTopFavs();
+                    deferred = $q.defer();
+                    deferred.resolve([]);
+                    return deferred.promise;
                 }
-
                 return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/topfavs/')
                     //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                     .then(function (res) {
                         if (res.status = 200) {
                             result = transformToJson(res.data);
-                            $localStorage.topFavs = result;
+                            comun.topFavs = result;
                             return result;
                         } else
                             return res.data.error;
                     }, function (err) {
-                        ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
+                        comun.ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
                         return err;
                     });
             }
@@ -292,6 +288,21 @@ angular.module('actionFactory', [])
             */
         function getTokenAPI() {
             return $localStorage.tokenAPI;
+        }
+
+        function setTopFavs(data) {
+            comun.topFavs = [];
+            data.forEach(function (offer) {
+                console.log(offer.Offers[0])
+                comun.topFavs.push({
+                    Offers: offer.Offers,
+                    createdAt: offer.createdAt,
+                    description: offer.description,
+                    id: offer.id,
+                    upc: offer.upc,
+                    updatedAt: offer.updatedAt,
+                });
+            });
         }
 
         function existsSupermarketsLocal() {
@@ -304,12 +315,7 @@ angular.module('actionFactory', [])
             return $localStorage.tokenAPI;
         }
         comun.getSupermarkets = function () {
-            return $localStorage.supermarkets
-        }
-        comun.getTopFavs = function () {
-                if ($localStorage.hasOwnProperty("topFavs") === false)
-                    $localStorage.topFavs = [];
-                return $localStorage.topFavs
+                return $localStorage.supermarkets
             }
             /*
                 Función para comparar el token actual y reemplazarlo en caso de que halla vencido

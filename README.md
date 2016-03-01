@@ -15,7 +15,7 @@ Replace APP_ID and APP_NAME variables with your Facebook app values
  
  [Tutorial de Referencia](https://ionicthemes.com/tutorials/about/native-facebook-login-with-ionic-framework)
  
-## cordova-network-information 
+## ionic-plugin-keyboard
 Plugin para una fácil interacción con el teclado. [link](https://github.com/driftyco/ionic-plugin-keyboard)
 
  * $ cordova plugin add ionic-plugin-keyboard

@@ -12,7 +12,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        factory.getTopFavsAPI();
     });
 })
 
