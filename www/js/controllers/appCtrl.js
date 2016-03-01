@@ -2,7 +2,7 @@ angular.module('appCtrl', [])
 
 
 .controller('AppCtrl', function ($rootScope, $scope, $ionicModal, $ionicPopup, $state, $ionicPopover, $timeout, $ionicLoading,
-                                  FacebookFactory, factory, ConnectivityMonitor) {
+    FacebookFactory, factory, ConnectivityMonitor) {
     // Form data for the login modal
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
@@ -90,23 +90,23 @@ angular.module('appCtrl', [])
     /*----------------------------------------------------------------------------------*/
 
     $scope.facebook = function () {
-        if(ConnectivityMonitor.ifOffline()){
-            $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
-            return;
+            if (ConnectivityMonitor.ifOffline()) {
+                $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
+                return;
+            }
+            if (!FacebookFactory.existFacebookToken()) {
+                $scope.ionicMessage('Mensaje', 'Debe loguearse con su cuenta de Facebook.');
+                $state.go('app.home');
+            } else
+                $state.go('app.profile');
         }
-        if (!FacebookFactory.existFacebookToken()) {
-            $scope.ionicMessage('Mensaje', 'Debe loguearse con su cuenta de Facebook.');
-            $state.go('app.home');
-        } else
-            $state.go('app.profile');
-    }
-    /*
-        Función para compartir un producto específico mediante fb
-    */
-    $scope.shareProduct = function(product){
+        /*
+            Función para compartir un producto específico mediante fb
+        */
+    $scope.shareProduct = function (product) {
         //compruebo que exista un usuario logueado de lo contrario se redirige a la pantalla de inicio
-        if(!FacebookFactory.existFacebookToken()){
-            if(ConnectivityMonitor.ifOffline()){
+        if (!FacebookFactory.existFacebookToken()) {
+            if (ConnectivityMonitor.ifOffline()) {
                 $scope.ionicMessage('Advertnecia', 'Debe estar conectado a internet para usar esta funcionalidad');
                 return;
             }
@@ -121,36 +121,36 @@ angular.module('appCtrl', [])
                     $scope.ionicMessage('Error', 'Ha ocurrido un error durante la autenticación.');
                 });
             $ionicLoading.hide();
-        }else{
+        } else {
             FacebookFactory.shareProductFacebook(product);
         }
     }
 
     //función global para solicitar comprobación de internet
-    $scope.isOnline = function(){
+    $scope.isOnline = function () {
         return ConnectivityMonitor.isOnline();
     }
 
-    $scope.isOffline = function(){
-        return ConnectivityMonitor.ifOffline();
-    }
-    /*
-        Función para mostrar un mensaje sencillo en la pantalla
-    */
-    $scope.ionicMessage = function(title, template){
+    $scope.isOffline = function () {
+            return ConnectivityMonitor.ifOffline();
+        }
+        /*
+            Función para mostrar un mensaje sencillo en la pantalla
+        */
+    $scope.ionicMessage = function (title, template) {
         $ionicPopup.alert({
-                title: title,
-                template: template
-            });
+            title: title,
+            template: template
+        });
     }
 })
 
-.controller('HomeCtrl', function ($rootScope, $scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor,ionicMaterialMotion, factory) {
+.controller('HomeCtrl', function ($rootScope, $scope, $timeout, $state, $ionicPopup, $ionicLoading, ionicMaterialInk, FacebookFactory, ConnectivityMonitor, ionicMaterialMotion, factory, offerFactory) {
     $scope.$parent.clearFabs();
     $timeout(function () {
         $scope.$parent.hideHeader();
-    },100);
-    $timeout(function() {
+    }, 100);
+    $timeout(function () {
         ionicMaterialMotion.fadeSlideIn({
             selector: '.animate-fade-slide-in .item'
         });
@@ -162,30 +162,45 @@ angular.module('appCtrl', [])
     $scope.topOffers = factory.getTopFavs();
 
     $scope.facebookLogin = function () {
-        if (!FacebookFactory.existFacebookToken()) {
-            if(ConnectivityMonitor.ifOffline()){
-                $ionicPopup.alert({
-                    title: 'Advertencia',
-                    template: 'Debe estar conectado a internet para usar esta funcionalidad'
+            if (!FacebookFactory.existFacebookToken()) {
+                if (ConnectivityMonitor.ifOffline()) {
+                    $ionicPopup.alert({
+                        title: 'Advertencia',
+                        template: 'Debe estar conectado a internet para usar esta funcionalidad'
+                    });
+                    return;
+                }
+                $ionicLoading.show({
+                    template: 'Autenticando...'
                 });
-                return;
-            }
-            $ionicLoading.show({
-                template: 'Autenticando...'
-            });
-            FacebookFactory.facebookLogin().then(
-                function (res) {
-                    $state.go('app.profile');
-                },
-                function (error) {
-                    $state.go('app.home');
-                });
-            $ionicLoading.hide();
+                FacebookFactory.facebookLogin().then(
+                    function (res) {
+                        $state.go('app.profile');
+                    },
+                    function (error) {
+                        $state.go('app.home');
+                    });
+                $ionicLoading.hide();
 
-        } else {
-            $state.go('app.profile');
-            $ionicLoading.hide();
+            } else {
+                $state.go('app.profile');
+                $ionicLoading.hide();
+            }
         }
+        /*
+                Función para colocar un producto para su detalle
+            */
+    $scope.setProductDetail = function (productDetail) {
+        var productDetail = {
+            ProductStore: {
+                image: productDetail.Offers[0].ProductStore.image,
+                normalPrice: productDetail.Offers[0].ProductStore.normalPrice,
+                offerPrice: productDetail.Offers[0].ProductStore.offerPrice,
+                likes : productDetail.Offers[0].ProductStore.likes
+            },
+            description: productDetail.description
+        }
+        offerFactory.setProductDetail(productDetail);
     }
 })
 
@@ -205,7 +220,7 @@ angular.module('appCtrl', [])
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 
-    if(!GoogleMaps.init()){
+    if (!GoogleMaps.init()) {
         $ionicPopup.alert({
             title: 'Advertencia',
             template: 'Debe estar conectado a internet para usar esta funcionalidad'
@@ -247,8 +262,8 @@ angular.module('appCtrl', [])
         document.getElementById('fab-activity').classList.toggle('on');
     }, 300);
 
-    $scope.refreshMap = function() {
-        if(!GoogleMaps.init(1)){
+    $scope.refreshMap = function () {
+        if (!GoogleMaps.init(1)) {
             $ionicPopup.alert({
                 title: 'Advertencia',
                 template: 'Debe estar conectado a internet para usar esta funcionalidad'

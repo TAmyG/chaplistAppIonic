@@ -56,7 +56,7 @@ angular.module('actionFactory', [])
                             comun.getTopFavsAPI();
                             return tokenAux;
                         } else {
-                            alert('Las credenciales de la app no existen en la API');
+                            ionicMessage('Advertencia','Las credenciales de la app no existen en la API');
                             return res;
                         }
                     }, function (err) {
@@ -266,7 +266,7 @@ angular.module('actionFactory', [])
                 var result = [];
                 var deferred = {};
                 if (!comun.existsTokenAPI()) {
-                    alert('Esta app no tiene un token válido para el uso de la API');
+                    ionicMessage('Advertencia','Esta app no tiene un token válido para el uso de la API');
                     return;
                 }
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
@@ -283,7 +283,7 @@ angular.module('actionFactory', [])
                         } else
                             return res.data.error;
                     }, function (err) {
-                        alert(JSON.stringify(err));
+                        ionicMessage('Advertencia', 'Ocurrio algun problema con el servidor, comunicarse con el administrador');
                         return err;
                     });
             }
