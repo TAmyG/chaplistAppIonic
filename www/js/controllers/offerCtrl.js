@@ -160,7 +160,7 @@ angular.module('offerCtrl', [])
         //PARA COMPARTIR UN PRODUCTO LA FUNCIÓN ESTÁ ESPECIFICADA EN EL CONTROLADOR PADRE appCtrl
 })
 
-.controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory) {
+.controller('FavCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
 
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -199,8 +199,11 @@ angular.module('offerCtrl', [])
     }
 
     $scope.deleteProductFav = function (product) {
+        $state.go('app.fav');
         var index = offerFactory.removeFavorite(product);
-        $scope.favorites.splice(index, 1);
+        if (index >= 0) {
+            $scope.favorites.splice(index, 1);
+        }
     }
 
     function getFavorites() {

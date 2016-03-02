@@ -6,8 +6,9 @@ Cosas para hacer:
 * verificar token cada vez que se realiza petición al servidor (+)
 * realizar refresh a la hora de hacer un pull-down a la pantalla con ion-refresher (+)
 * estandarizar mensajes de alerta cambiándolos por ionic-popup
-* top 5 favoritos en la pantalla home
+* top 5 favoritos en la pantalla home (+)
 * verificar internet antes de validar o pedir token (+)
+* arreglar footer favoritos y supermercados (+)
 
 [
 {
