@@ -4,7 +4,8 @@ angular.module('actionFactory', [])
 
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
-        var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';
+        var secretKey = 'b3445460e0b140be4e1105eb8836b16fdcf88f0daa03ac231d14635515a49bbd';
+        /*var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';*/
         comun.topFavs = [];
         comun.supermarketId = 1;
         /*
@@ -40,7 +41,7 @@ angular.module('actionFactory', [])
                 } catch (err) {
                     body.uuid = 'abcdefghijokl1234567'
                 }
-                return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
+                return $http.post('http://chaplist.oktacore.com/api/Chap/tokenPetition', body)
                     //return $http.post('http://192.168.0.14:8080/api/Chap/tokenPetition', body)
                     .then(function (res) {
                         tokenAux = res.data.replace('"', '').replace('"', '');
@@ -70,7 +71,7 @@ angular.module('actionFactory', [])
                     return;
                 }
 
-                return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/tokenPetition', body)
+                return $http.post('http://chaplist.oktacore.com/api/Chap/tokenPetition', body)
                     //return $http.post('http://192.168.0.14:8080/api/Chap/tokenPetition', body)
                     .then(function (res) {
                         tokenAux = res.data.replace('"', '').replace('"', '');
@@ -103,7 +104,7 @@ angular.module('actionFactory', [])
                 }
 
                 if (comun.existsTokenAPI())
-                    return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
+                    return $http.get('http://chaplist.oktacore.com/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                         //return $http.get('http://192.168.0.14:8080/api/Chap/Stores/' + supermarketId + '/' + getTokenAPI())
                         .then(function (res) {
                             if (res.status = 200) {
@@ -136,7 +137,7 @@ angular.module('actionFactory', [])
                 }
 
                 if (comun.existsTokenAPI())
-                    return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/' + comun.supermarketId + '/' + offset + '/' + getTokenAPI())
+                    return $http.get('http://chaplist.oktacore.com/api/Chap/Offer/' + comun.supermarketId + '/' + offset + '/' + getTokenAPI())
                         //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                         .then(function (res) {
                             if (res.status = 200) {
@@ -163,7 +164,7 @@ angular.module('actionFactory', [])
                     favProducts: arrayProducts
                 };
                 if (comun.existsTokenAPI())
-                    return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/favproducts/' + getTokenAPI(), body)
+                    return $http.post('http://chaplist.oktacore.com/api/Chap/Offer/favproducts/' + getTokenAPI(), body)
                         //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                         .then(function (res) {
                             if (res.status = 200) {
@@ -196,7 +197,7 @@ angular.module('actionFactory', [])
                         productId: productId,
                         type: type
                     };
-                    return $http.post('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/likes/' + getTokenAPI(), body)
+                    return $http.post('http://chaplist.oktacore.com/api/Chap/Offer/likes/' + getTokenAPI(), body)
                         //return $http.get('http://192.168.0.14:8080/api/Chap/Offer/' + comun.supermarketId + '/' + getTokenAPI())
                         .then(function (res) {
                             if (res.status = 200) {
@@ -239,7 +240,7 @@ angular.module('actionFactory', [])
                     deferred.resolve($localStorage.supermarkets);
                     return deferred.promise;
                 }
-                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Supermarkets/' + getTokenAPI())
+                return $http.get('http://chaplist.oktacore.com/api/Chap/Supermarkets/' + getTokenAPI())
                     //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                     .then(function (res) {
                         if (res.status = 200) {
@@ -269,7 +270,7 @@ angular.module('actionFactory', [])
                     deferred.resolve([]);
                     return deferred.promise;
                 }
-                return $http.get('https://api-chaplist-kuan.c9users.io/api/Chap/Offer/topfavs/')
+                return $http.get('http://chaplist.oktacore.com/api/Chap/Offer/topfavs/')
                     //return $http.get('http://192.168.0.14:8080/api/Chap/Supermarkets/' + getTokenAPI())
                     .then(function (res) {
                         if (res.status = 200) {

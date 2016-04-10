@@ -8,7 +8,7 @@
                 <a class="item clear-bg item-bg-image waves-effect waves-button waves-light has-mask-reverse" ng-click="setSupermarketId(supermarket.id, supermarket)" ui-sref="app.products">
                     <h2>{{supermarket.name}}</h2>
                      <!--<img ng-src={{supermarket.image}}>-->
-                    <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_300,h_150/v1455838822/unisuper/{{supermarket. categoriesImage}}">
+                    <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_300,h_150/v1455838822/{{supermarket. categoriesImage}}">
                     <img ng-if="$parent.isOffline()" src="img/genericProduct.jpg">
                 </a>
             </div>

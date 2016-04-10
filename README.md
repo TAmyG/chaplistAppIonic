@@ -23,7 +23,7 @@ Plugin para una fácil interacción con el teclado. [link](https://github.com/dr
 ## cordova-network-information
 Provee información sobre la conexión a internet que posee el dispositivo.
 
- * $ cordova plugin add org.apache.cordova.network-information
+ * $ cordova plugin add cordova-plugin-network-information
 
 
 ## cordova-plugin-geolocation
@@ -41,6 +41,11 @@ Provee información del dispositivo como su modelo, uuid, etc.
 Permite definir una lista de sitios por los que es seguro navegar, de lo contrario lanza una excepción de seguridad
 
  * $ cordova plugin add cordova-plugin-whitelist
+
+## cordova-plugin-statusbar
+Permite manipular la barra de estado del smartphone
+
+ * $ cordova plugin add cordova-plugin-statusbar
  
 ## ng storage
 Almacenamiento local especial para AngularJS
