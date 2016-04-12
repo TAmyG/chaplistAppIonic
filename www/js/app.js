@@ -117,6 +117,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 }
             }
         })
+        .state('app.about', {
+            url: '/about',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/about.html',
+                    controller: 'AboutCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.when('', '/app/home');
     $urlRouterProvider.otherwise('/app/home');

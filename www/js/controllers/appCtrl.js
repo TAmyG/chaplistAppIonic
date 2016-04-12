@@ -250,8 +250,14 @@ angular.module('appCtrl', [])
         $state.go('app.home');
     }
 })
+.controller('AboutCtrl', function ($scope, $state, $ionicPopup, ionicMaterialMotion, ionicMaterialInk) {
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab('right');
 
-
+})
 .controller('btnLogoutCtrl', function ($scope, $state, $ionicActionSheet, $ionicLoading, FacebookFactory) {
     $scope.facebookLogout = function () {
         $ionicActionSheet.show({
