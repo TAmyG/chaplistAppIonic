@@ -207,13 +207,14 @@ angular.module('appCtrl', [])
     $scope.setProductDetail = function (productDetail) {
         var productDetail = {
             ProductStore: {
-                image: productDetail.Offers[0].ProductStore.image,
-                normalPrice: productDetail.Offers[0].ProductStore.normalPrice,
-                offerPrice: productDetail.Offers[0].ProductStore.offerPrice,
-                likes: productDetail.Offers[0].ProductStore.likes
+                image: productDetail.image,
+                normalPrice: productDetail.normalPrice,
+                offerPrice: productDetail.offerPrice,
+                likes: productDetail.likes
             },
             description: productDetail.description
         }
+
         offerFactory.setProductDetail(productDetail);
     }
 
