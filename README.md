@@ -47,6 +47,21 @@ Permite manipular la barra de estado del smartphone
 
  * $ cordova plugin add cordova-plugin-statusbar
  
+## SocialSharing-PhoneGap-Plugin 
+ permite compartir por cualquier via
+ 
+ * cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
+ 
+ ## email-compose
+ permite acceder a la app de correos del smartphone
+ 
+ * cordova plugin add https://github.com/jcjee/email-composer.git
+ 
+ ## cordova-plugin-inappbrowser
+ permite acceder al navegador del smartphone
+ 
+ * ionic plugin add cordova-plugin-inappbrowser
+ 
 ## ng storage
 Almacenamiento local especial para AngularJS
 
