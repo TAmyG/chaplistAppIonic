@@ -241,3 +241,58 @@ angular.module('offerCtrl', [])
             }
         };
     })
+
+  .controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
+
+      $scope.$parent.showHeader();
+      $scope.$parent.clearFabs();
+      $scope.isExpanded = false;
+      $scope.$parent.setExpanded(false);
+      $scope.$parent.setHeaderFab(false);
+
+      $scope.$on('ngLastRepeat.mylist', function (e) {
+          $timeout(function () {
+              ionicMaterialMotion.slideUp({
+                  selector: '.slide-up'
+              });
+
+              ionicMaterialMotion.fadeSlideInRight({
+                  startVelocity: 3000
+              });
+
+          }, 0); // No timeout delay necessary.
+      });
+
+      // Set Ink
+      ionicMaterialInk.displayEffect();
+      ////////////////////////////////////////////////////////////
+      $scope.value = '';
+      $scope.products = [];
+      getAllOffers($scope.value);
+
+
+      $scope.reload = function () {
+          $scope.products = [];
+          getAllOffers();
+          $scope.$broadcast('scroll.refreshComplete');
+          $scope.$broadcast('scroll.refreshComplete');
+      };
+
+      $scope.setProductDetail = function (productDetail) {
+          productDetail.ProductStore = productDetail;
+          offerFactory.setProductDetail(productDetail);
+      }
+
+      function getAllOffers() {
+        if ($scope.value != '') {
+          factory.getAllOffers($scope.value, 0).then(function (res) {
+            $scope.products = res;
+            $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
+          });
+        } else {
+          $scope.products = [];
+        }
+      }
+
+      $scope.getAllOffers = getAllOffers;
+  })
