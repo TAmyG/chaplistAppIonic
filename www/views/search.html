@@ -1,0 +1,22 @@
+<ion-view view-title="Buscar">
+  <ion-content ng-class="{expanded:isExpanded}" ng-controller="SearchCtrl">
+    <div class="bar bar-header item-input-inset" >
+      <label class="item item-input">
+        <input type="text" name="value" value="" placeholder="Buscar" ng-model="value">
+      </label>
+      <button class="button button-positive icon-right ion-search" ng-click="getAllOffers(value)"> </button>
+    </div>
+    <ion-refresher pulling-text="Cargando busqueda" on-refresh="reload()"></ion-refresher>
+
+    <div class="list animate-fade-slide-in-right"ng-last-repeat="mylist" ng-repeat="product in products">
+      <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)">
+        <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_50,h_50/v1455838822/unisuper/{{product.image}}" ui-sref="app.detalle">
+        <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg" ui-sref="app.detalle">
+        <h2 ui-sref="app.detalle">{{product.description}}</h2>
+        <p ui-sref="app.detalle"> {{product.likes}}  PN Q. {{product.normalPrice}} PO Q. {{product.offerPrice}} </p>
+      </div>
+    </div>
+    <br>
+    <br>
+  </ion-content>
+</ion-view>

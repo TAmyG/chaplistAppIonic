@@ -345,5 +345,37 @@ angular.module('actionFactory', [])
             return JSON.parse(data);
         }
 
+        comun.getAllOffers = function (value, offset) {
+
+            var deferred = {};
+            var result = {};
+            var products = [];
+
+            if (ConnectivityMonitor.ifOffline()) { //verifico conectividad a internet
+                deferred = $q.defer();
+                deferred.resolve([]);
+                return deferred.promise;
+            }
+
+            if (comun.existsTokenAPI()){
+                return $http.get('http://chaplist.oktacore.com/api/Chap/getAllOffers/' + value + '/' + offset + '/' + getTokenAPI())
+                    .then(function (res) {
+                        if (res.status = 200) {
+                            result = transformToJson(res.data);
+                            products = result.products
+                            compareToken(result.token);
+                            return products;
+                        } else {
+                            comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+                            return [];
+                        }
+                    }, function (err) {
+                        return [];
+                    });
+                  }
+            else
+                comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
+        }
+
         return comun;
     })
