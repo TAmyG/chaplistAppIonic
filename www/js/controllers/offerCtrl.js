@@ -242,7 +242,7 @@ angular.module('offerCtrl', [])
         };
     })
 
-  .controller('SearchCtrl', function ($scope, $timeout, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
+  .controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
 
       $scope.$parent.showHeader();
       $scope.$parent.clearFabs();
@@ -279,6 +279,7 @@ angular.module('offerCtrl', [])
       };
 
       $scope.setProductDetail = function (productDetail) {
+          productDetail.ProductStore = productDetail;
           offerFactory.setProductDetail(productDetail);
       }
 
@@ -286,6 +287,7 @@ angular.module('offerCtrl', [])
         if ($scope.value != '') {
           factory.getAllOffers($scope.value, 0).then(function (res) {
             $scope.products = res;
+            $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
           });
         } else {
           $scope.products = [];
