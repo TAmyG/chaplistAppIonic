@@ -38,8 +38,9 @@ angular.module('offerCtrl', [])
             getSupermarketsAPI();
         };
 
-        $scope.setSupermarketId = function (supermarketId) {
+        $scope.setSupermarketId = function (supermarketId,supermarketName) {
             factory.supermarketId = supermarketId;
+            factory.supermarketName = supermarketName;
         }
 
         function getSupermarketsAPI() {
@@ -110,7 +111,10 @@ angular.module('offerCtrl', [])
                     updatedAt: b.updatedAt,
                     description: b.description,
                     id: b.id,
-                    upc: b.upc
+                    upc: b.upc,
+                    dateInit: b.dateInit,
+                    dateEnd: b.dateEnd,
+                    name: b.name
                 });
             });
             $scope.$broadcast('scroll.infiniteScrollComplete');

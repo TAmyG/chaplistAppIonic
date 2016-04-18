@@ -8,6 +8,7 @@ angular.module('actionFactory', [])
         /*var secretKey = 'ff19a665b11d832814bd6c94a89f5e921eb956ee0e9e63658571fada5759a4d9';*/
         comun.topFavs = [];
         comun.supermarketId = 1;
+        comun.supermarketName = "Generico";
         /*
             Función para mostrar un mensaje sencillo en la pantalla
         */
@@ -142,7 +143,12 @@ angular.module('actionFactory', [])
                         .then(function (res) {
                             if (res.status = 200) {
                                 result = transformToJson(res.data);
-                                products = result.products
+                                products = result.products;
+                                for(var i=0; i<products.length; i++){
+                                    products[i].dateInit = products[0].dateInit;
+                                    products[i].dateEnd = products[0].dateEnd;
+                                    products[i].name = comun.supermarketName;
+                                }
                                 compareToken(result.token);
                                 return products;
                             } else {

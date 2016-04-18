@@ -212,7 +212,10 @@ angular.module('appCtrl', [])
                 offerPrice: productDetail.offerPrice,
                 likes: productDetail.likes
             },
-            description: productDetail.description
+            description: productDetail.description,
+            dateEnd: productDetail.dateEnd,
+            dateInit: productDetail.dateInit,
+            name: productDetail.name
         }
 
         offerFactory.setProductDetail(productDetail);
