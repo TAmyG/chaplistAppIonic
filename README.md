@@ -52,16 +52,20 @@ Permite manipular la barra de estado del smartphone
  
  * cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
  
- ## email-compose
+## email-compose
  permite acceder a la app de correos del smartphone
  
  * cordova plugin add https://github.com/jcjee/email-composer.git
  
- ## cordova-plugin-inappbrowser
+## cordova-plugin-inappbrowser
  permite acceder al navegador del smartphone
  
  * ionic plugin add cordova-plugin-inappbrowser
  
+## cordova-plugin-splashscreen
+ permite mostrar pantalla splash al arrancar la app
+ 
+ * cordova plugin add cordova-plugin-splashscreen
 ## ng storage
 Almacenamiento local especial para AngularJS
 
@@ -87,13 +91,3 @@ mover a /root/.android/  (eliminar la que ya existe)
 
 ejecutar para ver el certificado, tener encuenta el alias y el correo con el que se creo anteriormente
 $ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -list -v
-
-
-### FACEBOOK PRUEBA
-
-kenethcapi@gmail.com
-A1b2c3d4E5
-
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmNkZWZnaGlqb2tsMTIzNDU2NyIsImlhdCI6MTQ1NDAzNjAwNiwiZXhwIjoxNDU0MTIyNDA2fQ.mgVUq14jgaUvJhRKIdr5erSFjXUClmq5BsfGDCT_748
-
-//07686089
