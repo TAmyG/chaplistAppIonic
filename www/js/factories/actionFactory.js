@@ -238,7 +238,7 @@ angular.module('actionFactory', [])
                 var result = {};
                 var deferred = {};
                 if (!comun.existsTokenAPI()) {
-                    ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API');
+                    ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API supermarkets');
                     return;
                 }
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
@@ -265,10 +265,11 @@ angular.module('actionFactory', [])
                 Función para obtener un top 5 de los favoritos en las ofertas vigentes
             */
         comun.getTopFavsAPI = function (callback) {
+            if(comun.topFavs.length < 1) comun.tokenVerified();
                 var result = [];
                 var deferred = {};
                 if (!comun.existsTokenAPI()) {
-                    comun.ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API');
+                    comun.ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API top');
                     return;
                 }
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
