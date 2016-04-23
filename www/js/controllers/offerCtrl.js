@@ -283,7 +283,20 @@ angular.module('offerCtrl', [])
       };
 
       $scope.setProductDetail = function (productDetail) {
-          productDetail.ProductStore = productDetail;
+          productDetail = {
+            '$$hashKey': productDetail['$$hashKey'],
+            ProductStore: {
+              'image': productDetail['image'],
+              'likes': productDetail['likes'],
+              'normalPrice': productDetail['normalPrice'],
+              'offerId': productDetail['offerId'],
+              'offerPrice': productDetail['offerPrice'],
+              'productId': productDetail['productId'],
+              'offerPrice': productDetail['offerPrice']
+            },
+            'description': productDetail['description'],
+            'upc': productDetail['upc']
+          };
           offerFactory.setProductDetail(productDetail);
       }
 
