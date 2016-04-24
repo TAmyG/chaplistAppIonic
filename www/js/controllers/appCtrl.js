@@ -138,10 +138,10 @@ angular.module('appCtrl', [])
             Función para mostrar un mensaje sencillo en la pantalla
         */
     $scope.ionicMessage = function (title, template) {
-            $ionicPopup.alert({
-                title: title,
-                template: template
-            });
+        $ionicPopup.alert({
+            title: title,
+            template: template
+        });
     }
 })
 
@@ -168,10 +168,9 @@ angular.module('appCtrl', [])
         loadTopFav();
     });
 
-    $timeout(function () {
-        if (factory.topFavs.length < 1)
-            $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.').close();
-    }, 2000);
+    if (factory.topFavs.length < 1) {
+        $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.');
+    }
 
     $scope.reload = function () {
         loadTopFav();

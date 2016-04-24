@@ -1,6 +1,6 @@
 angular.module('actionFactory', [])
     //*************************************************************************************************************************
-    .factory('factory', function ($http, $ionicPopup, $q, $cordovaDevice, $localStorage, ConnectivityMonitor) {
+    .factory('factory', function ($http, $ionicPopup, $q, $cordovaDevice, $localStorage, ConnectivityMonitor, $timeout) {
 
         var comun = {};
         var packagaName = 'com.ionicframework.betasocial427641';
@@ -265,13 +265,18 @@ angular.module('actionFactory', [])
                 Función para obtener un top 5 de los favoritos en las ofertas vigentes
             */
         comun.getTopFavsAPI = function (callback) {
-            if(comun.topFavs.length < 1) comun.tokenVerified();
+            if(comun.topFavs.length < 1) {
+                comun.tokenVerified();
+            }
                 var result = [];
                 var deferred = {};
+            $timeout(function(){
                 if (!comun.existsTokenAPI()) {
-                    comun.ionicMessage('Advertencia', 'Esta app no tiene un token válido para el uso de la API top');
+                    comun.ionicMessage('Bievenido', 'Te damos la bienvenida a ChapList');
                     return;
                 }
+            },5000);
+
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
                     deferred = $q.defer();
                     deferred.resolve([]);
