@@ -218,7 +218,8 @@ angular.module('appCtrl', [])
             description: productDetail.description,
             dateEnd: productDetail.dateEnd,
             dateInit: productDetail.dateInit,
-            name: productDetail.name
+            name: productDetail.name,
+            id : productDetail['productId']
         }
 
         offerFactory.setProductDetail(productDetail);

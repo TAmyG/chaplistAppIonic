@@ -38,7 +38,7 @@ angular.module('offerCtrl', [])
             getSupermarketsAPI();
         };
 
-        $scope.setSupermarketId = function (supermarketId,supermarketName) {
+        $scope.setSupermarketId = function (supermarketId, supermarketName) {
             factory.supermarketId = supermarketId;
             factory.supermarketName = supermarketName;
         }
@@ -159,6 +159,7 @@ angular.module('offerCtrl', [])
     $scope.productDetail = offerFactory.getProductDetail();
 
     $scope.addFavorite = function (productDetail) {
+        console.log(productDetail);
             offerFactory.addFavorite(productDetail);
         }
         //PARA COMPARTIR UN PRODUCTO LA FUNCIÓN ESTÁ ESPECIFICADA EN EL CONTROLADOR PADRE appCtrl
@@ -246,70 +247,73 @@ angular.module('offerCtrl', [])
         };
     })
 
-  .controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
+.controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
 
-      $scope.$parent.showHeader();
-      $scope.$parent.clearFabs();
-      $scope.isExpanded = false;
-      $scope.$parent.setExpanded(false);
-      $scope.$parent.setHeaderFab(false);
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 
-      $scope.$on('ngLastRepeat.mylist', function (e) {
-          $timeout(function () {
-              ionicMaterialMotion.slideUp({
-                  selector: '.slide-up'
-              });
+    $scope.$on('ngLastRepeat.mylist', function (e) {
+        $timeout(function () {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
 
-              ionicMaterialMotion.fadeSlideInRight({
-                  startVelocity: 3000
-              });
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
 
-          }, 0); // No timeout delay necessary.
-      });
+        }, 0); // No timeout delay necessary.
+    });
 
-      // Set Ink
-      ionicMaterialInk.displayEffect();
-      ////////////////////////////////////////////////////////////
-      $scope.value = '';
-      $scope.products = [];
-      getAllOffers($scope.value);
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    ////////////////////////////////////////////////////////////
+    $scope.value = '';
+    $scope.products = [];
+    getAllOffers($scope.value);
 
 
-      $scope.reload = function () {
-          $scope.products = [];
-          getAllOffers();
-          $scope.$broadcast('scroll.refreshComplete');
-          $scope.$broadcast('scroll.refreshComplete');
-      };
+    $scope.reload = function () {
+        $scope.products = [];
+        getAllOffers();
+        $scope.$broadcast('scroll.refreshComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+    };
 
-      $scope.setProductDetail = function (productDetail) {
-          productDetail = {
+    $scope.setProductDetail = function (productDetail) {
+        productDetail = {
             '$$hashKey': productDetail['$$hashKey'],
             ProductStore: {
-              'image': productDetail['image'],
-              'likes': productDetail['likes'],
-              'normalPrice': productDetail['normalPrice'],
-              'offerId': productDetail['offerId'],
-              'offerPrice': productDetail['offerPrice'],
-              'productId': productDetail['productId'],
-              'offerPrice': productDetail['offerPrice']
+                'image': productDetail['image'],
+                'likes': productDetail['likes'],
+                'normalPrice': productDetail['normalPrice'],
+                'offerId': productDetail['offerId'],
+                'offerPrice': productDetail['offerPrice'],
+                'productId': productDetail['productId']
             },
             'description': productDetail['description'],
-            'upc': productDetail['upc']
-          };
-          offerFactory.setProductDetail(productDetail);
-      }
+            'upc': productDetail['upc'],
+            'dateEnd': productDetail['dateEnd'],
+            'dateInit': productDetail['dateInit'],
+            'name' : productDetail['name'],
+            'id' : productDetail['productId']
+        };
+        offerFactory.setProductDetail(productDetail);
+    }
 
-      function getAllOffers() {
+    function getAllOffers() {
         if ($scope.value != '') {
-          factory.getAllOffers($scope.value, 0).then(function (res) {
-            $scope.products = res;
-            $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
-          });
+            factory.getAllOffers($scope.value, 0).then(function (res) {
+                $scope.products = res;
+                $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
+            });
         } else {
-          $scope.products = [];
+            $scope.products = [];
         }
-      }
+    }
 
-      $scope.getAllOffers = getAllOffers;
-  })
+    $scope.getAllOffers = getAllOffers;
+})
