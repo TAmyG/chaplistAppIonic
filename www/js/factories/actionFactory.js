@@ -13,14 +13,14 @@ angular.module('actionFactory', [])
             Función para mostrar un mensaje sencillo en la pantalla
         */
         comun.ionicMessage = function (title, template) {
-            $ionicPopup.alert({
-                title: title,
-                template: template
-            });
-        }
-        /*
-            Función para verificar el token al primer inicio de la aplicación
-        */
+                $ionicPopup.alert({
+                    title: title,
+                    template: template
+                });
+            }
+            /*
+                Función para verificar el token al primer inicio de la aplicación
+            */
         comun.tokenVerified = function () {
                 var body = {};
                 var tokenAux = {};
@@ -144,7 +144,7 @@ angular.module('actionFactory', [])
                             if (res.status = 200) {
                                 result = transformToJson(res.data);
                                 products = result.products;
-                                for(var i=0; i<products.length; i++){
+                                for (var i = 0; i < products.length; i++) {
                                     products[i].dateInit = products[0].dateInit;
                                     products[i].dateEnd = products[0].dateEnd;
                                     products[i].name = comun.supermarketName;
@@ -265,17 +265,17 @@ angular.module('actionFactory', [])
                 Función para obtener un top 5 de los favoritos en las ofertas vigentes
             */
         comun.getTopFavsAPI = function (callback) {
-            if(comun.topFavs.length < 1) {
-                comun.tokenVerified();
-            }
+                if (comun.topFavs.length < 1) {
+                    comun.tokenVerified();
+                }
                 var result = [];
                 var deferred = {};
-            $timeout(function(){
-                if (!comun.existsTokenAPI()) {
-                    comun.ionicMessage('Bievenido', 'Te damos la bienvenida a ChapList');
-                    return;
-                }
-            },5000);
+                $timeout(function () {
+                    if (!comun.existsTokenAPI()) {
+                        comun.ionicMessage('Bievenido', 'Te damos la bienvenida a ChapList');
+                        return;
+                    }
+                }, 5000);
 
                 if (!ConnectivityMonitor.isOnline()) { //verifico conectividad a internet
                     deferred = $q.defer();
@@ -369,7 +369,7 @@ angular.module('actionFactory', [])
                 return deferred.promise;
             }
 
-            if (comun.existsTokenAPI()){
+            if (comun.existsTokenAPI()) {
                 return $http.get('http://chaplist.oktacore.com/api/Chap/getAllOffers/' + value + '/' + offset + '/' + getTokenAPI())
                     .then(function (res) {
                         if (res.status = 200) {
@@ -384,8 +384,7 @@ angular.module('actionFactory', [])
                     }, function (err) {
                         return [];
                     });
-                  }
-            else
+            } else
                 comun.ionicMessage('Advertencia', 'Las credenciales de la app no existen en la API');
         }
 
