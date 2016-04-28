@@ -159,7 +159,6 @@ angular.module('offerCtrl', [])
     $scope.productDetail = offerFactory.getProductDetail();
 
     $scope.addFavorite = function (productDetail) {
-        console.log(productDetail);
             offerFactory.addFavorite(productDetail);
         }
         //PARA COMPARTIR UN PRODUCTO LA FUNCIÓN ESTÁ ESPECIFICADA EN EL CONTROLADOR PADRE appCtrl

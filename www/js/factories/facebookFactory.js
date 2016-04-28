@@ -65,10 +65,10 @@ angular.module('facebookFactory', [])
         comun.shareProductFacebook = function (product) {
            facebookConnectPlugin.showDialog({
                     method: 'feed',
-                    link: 'http://res.cloudinary.com/k3n3th/image/upload/v1455838760/unisuper/'+product.ProductStore.image,
-                    message: product.description,
+                    link: 'http://res.cloudinary.com/oktacore/'+product.ProductStore.image,
+                    message: product.description ,
                     caption: 'ofertas en Chaplist',
-                    description: product.ProductStore.image+'XD'
+                    description: 'descarga la App en: https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016'
                 },
                 function (result) {
                     $ionicPopup.alert({

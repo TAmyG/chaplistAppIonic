@@ -6,7 +6,7 @@
 </style>
 <ion-view view-title="Detalle">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
-        <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/k3n3th/image/upload/w_250,h_250/v1455838822/unisuper/{{productDetail.ProductStore.image}});">
+        <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/oktacore/w_250,h_250/{{productDetail.ProductStore.image}});">
             <div class="content">
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart button-light pull-right text-white" ng-click="addFavorite(productDetail)"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people button-light pull-right text-white" ng-click="$parent.shareProduct(productDetail)"></button>
@@ -48,7 +48,7 @@
         </div>
         <div class="list">
                 <a class="item item-icon-left">
-                    <i class="icon ion-clock balanced"></i> Del <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b> al <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b>. <br>En <b>{{productDetail.name}}</b>
+                    <i class="icon ion-clock balanced"></i> Del <b>{{ productDetail.dateInit | date:'dd MMMM' }}</b> al <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b>. <br>En <b>{{productDetail.name}}</b>
                 </a>
             </div>
     </ion-content>
