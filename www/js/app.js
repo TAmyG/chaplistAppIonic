@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
             }
         })
 
-    .state('app.profile', {
+        .state('app.profile', {
             url: '/profile',
             views: {
                 'menuContent': {
@@ -114,6 +114,30 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                 },
                 'fabContent': {
                     template: ''
+                }
+            }
+        })
+        .state('app.about', {
+            url: '/about',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/about.html',
+                    controller: 'AboutCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.search', {
+            url: '/search',
+            views: {
+                'menuContent': {
+                    templateUrl: 'views/search.html',
+                    controller: 'SearchCtrl'
+                },
+                'fabContent': {
+                  template: ''
                 }
             }
         })

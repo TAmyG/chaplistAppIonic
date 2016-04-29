@@ -3,16 +3,17 @@
         <div ng-if="products.length < 1" class="no-results" align="center">
             <p>No existen productos en oferta</p>
         </div>
-
         <ion-refresher pulling-text="Recargado productos" on-refresh="reload()"></ion-refresher>
-
-          <div>
+        <div>
             <div class="list half">
                 <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
                     <div ng-click="setProductDetail(product)">
                         <div class="ink dark-bg">
                             <h2>{{product.description}}</h2>
-                            <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_250/v1455838760/unisuper/{{product.ProductStore.image}}">
+                            <a class="tab-item stable-bg balanced-900">
+                            Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}
+                        </a>
+                            <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/oktacore/w_250/{{product.ProductStore.image}}">
                             <img ng-if="$parent.isOffline()" class="full-image" src="img/genericProduct.jpg">
 
                         </div>
@@ -20,9 +21,9 @@
                             <a class="tab-item stable-bg positive">
                                 <i class="icon ion-thumbsup"></i> {{product.ProductStore.likes}}
                             </a>
-                            <a class="tab-item stable-bg assertive-900">
+                            <!--<a class="tab-item stable-bg assertive-900">
                             Q. {{product.ProductStore.normalPrice}}
-                        </a>
+                        </a>-->
                             <a class="tab-item stable-bg balanced-900">
                             Q. {{product.ProductStore.offerPrice}}
                         </a>
@@ -37,7 +38,10 @@
                     <div ng-click="setProductDetail(product)">
                         <div class="ink dark-bg">
                             <h2>{{product.description}}</h2>
-                            <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/k3n3th/image/upload/w_250/v1455838760/unisuper/{{product.ProductStore.image}}">
+                            <a class="tab-item stable-bg balanced-900">
+                            Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}
+                        </a>
+                            <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/oktacore/w_250/{{product.ProductStore.image}}">
                             <img ng-if="$parent.isOffline()" class="full-image" src="img/genericProduct.jpg">
 
                         </div>
@@ -45,9 +49,9 @@
                             <a class="tab-item stable-bg positive">
                                 <i class="icon ion-thumbsup"></i> {{product.ProductStore.likes}}
                             </a>
-                            <a class="tab-item stable-bg assertive-900">
+                            <!--<a class="tab-item stable-bg assertive-900">
                              Q. {{product.ProductStore.normalPrice}}
-                        </a>
+                        </a>-->
                             <a class="tab-item stable-bg balanced-900">
                              Q. {{product.ProductStore.offerPrice}}
                         </a>
@@ -56,7 +60,6 @@
                 </div>
             </div>
         </div>
-
     </ion-content>
     <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
     </ion-infinite-scroll>

@@ -1,4 +1,4 @@
-<ion-view view-title="Chaplist" align-title="left">
+<ion-view view-title="ChapList" align-title="left">
     <ion-content style="background: url(img/FondoPantallas.jpg) center; background-size: cover;">
 
         <ion-refresher pulling-text="" on-refresh="reload()"></ion-refresher>
@@ -6,7 +6,7 @@
         <div class="hero no-header flat">
             <div class="content">
                 <div class="app-icon"></div>
-                <h1>Chaplist</h1>
+                <h1>ChapList</h1>
             </div>
         </div>
         <ion-slide-box on-slide-changed="slideHasChanged($index)" class="animate-fade-slide-in">
@@ -14,24 +14,25 @@
                 <div class="item card-item" ng-click="setProductDetail(product)">
                     <div ui-sref="app.detalle" class="card stable-bg ink ink-dark">
                         <div class="item item-avatar item-text-wrap">
-                            <span class="avatar" style="background-image: url('http://res.cloudinary.com/k3n3th/image/upload/w_50/v1455838760/unisuper/{{product.Offers[0].ProductStore.image}}');"></span>
+                            <span class="avatar" style="background-image: url('http://res.cloudinary.com/oktacore/w_50/{{product.image}}');"></span>
                             <strong>{{product.description}}</strong>
                             <div class="item item-body">
                                 <strong>Precio</strong>
                                 <div class="list">
+                                    <!--<a class="item item-icon-right">
+                                        <i class="badge badge-assertive">Q.{{product.normalPrice}}</i>Normal
+                                    </a>-->
                                     <a class="item item-icon-right">
-                                        <i class="badge badge-assertive">Q.{{product.Offers[0].ProductStore.normalPrice}}</i>Normal
-                                    </a>
-                                    <a class="item item-icon-right">
-                                        <i class="badge badge-balanced">Q.{{product.Offers[0].ProductStore.offerPrice}}</i><strong> Oferta</strong>
+                                        <i class="badge badge-balanced">Q.{{product.offerPrice}}</i><strong> Oferta</strong>
                                     </a>
                                 </div>
                             </div>
                             <div class="card-footer text-right">
-                                <i class="icon ion-thumbsup positive"></i> {{product.Offers[0].ProductStore.likes}}
+                                <i class="icon ion-thumbsup positive"></i> {{product.likes}}
                                 <div class="pull-left">
-                                    <i class="icon ion-clock"></i> {{product.Offers[0].dateEnd.split('T')[0]}}
+                                    <i class="icon ion-clock"></i> {{ product.dateEnd | date:'dd MMMM yyyy' }}
                                 </div>
+                                <i class="icon ion-ios-cart"></i> {{product.name}}
                             </div>
                         </div>
                     </div>

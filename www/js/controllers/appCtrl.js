@@ -154,7 +154,7 @@ angular.module('appCtrl', [])
             ionicMaterialMotion.fadeSlideIn({
                 selector: '.animate-fade-slide-in .item'
             });
-            $ionicSlideBoxDelegate.update();/*NECESARIO PARA CARGA DE LOS SLIDE-BOX, SIN ESTO NO FUNCIONA*/
+            $ionicSlideBoxDelegate.update(); /*NECESARIO PARA CARGA DE LOS SLIDE-BOX, SIN ESTO NO FUNCIONA*/
         }, 0);
     });
 
@@ -168,10 +168,11 @@ angular.module('appCtrl', [])
         loadTopFav();
     });
 
-    if(factory.topFavs.length < 1)
-       $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.');
+    /*if (factory.topFavs.length < 1) {
+        $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.');
+    }*/
 
-    $scope.reload= function(){
+    $scope.reload = function () {
         loadTopFav();
     };
 
@@ -207,18 +208,25 @@ angular.module('appCtrl', [])
     $scope.setProductDetail = function (productDetail) {
         var productDetail = {
             ProductStore: {
-                image: productDetail.Offers[0].ProductStore.image,
-                normalPrice: productDetail.Offers[0].ProductStore.normalPrice,
-                offerPrice: productDetail.Offers[0].ProductStore.offerPrice,
-                likes: productDetail.Offers[0].ProductStore.likes
+                image: productDetail.image,
+                normalPrice: productDetail.normalPrice,
+                offerPrice: productDetail.offerPrice,
+                likes: productDetail.likes,
+                offerId: productDetail.offerId,
+                productId: productDetail.productId
             },
-            description: productDetail.description
+            description: productDetail.description,
+            dateEnd: productDetail.dateEnd,
+            dateInit: productDetail.dateInit,
+            name: productDetail.name,
+            id : productDetail['productId']
         }
+
         offerFactory.setProductDetail(productDetail);
     }
 
-    function loadTopFav(){
-        factory.getTopFavsAPI().then(function(data) {
+    function loadTopFav() {
+        factory.getTopFavsAPI().then(function (data) {
             $scope.topOffers = data;
             $scope.$broadcast('scroll.refreshComplete');
             $scope.$broadcast('scroll.refreshComplete');
@@ -228,56 +236,87 @@ angular.module('appCtrl', [])
 
 
 .controller('MapCtrl', function ($scope, $state, $timeout, $ionicPopup, GoogleMaps, ionicMaterialMotion, ionicMaterialInk) {
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = true;
-    $scope.$parent.setExpanded(true);
-    $scope.$parent.setHeaderFab('right');
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = true;
+        $scope.$parent.setExpanded(true);
+        $scope.$parent.setHeaderFab('right');
 
-    $timeout(function () {
-        ionicMaterialMotion.fadeSlideIn({
-            selector: '.animate-fade-slide-in '
-        });
-    }, 200);
-    // Activate ink for controller
-    ionicMaterialInk.displayEffect();
+        $timeout(function () {
+            ionicMaterialMotion.fadeSlideIn({
+                selector: '.animate-fade-slide-in '
+            });
+        }, 200);
+        // Activate ink for controller
+        ionicMaterialInk.displayEffect();
 
-    if (!GoogleMaps.init()) {
-        $ionicPopup.alert({
-            title: 'Advertencia',
-            template: 'Debe estar conectado a internet para usar esta funcionalidad'
-        });
-        $state.go('app.home');
-    }
-})
+        if (!GoogleMaps.init()) {
+            $ionicPopup.alert({
+                title: 'Advertencia',
+                template: 'Debe estar conectado a internet para usar esta funcionalidad'
+            });
+            $state.go('app.home');
+        }
+    })
+    .controller('AboutCtrl', function ($scope, $state, $ionicPopup, ionicMaterialMotion, ionicMaterialInk) {
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab('right');
 
+        $scope.openInExternalBrowser = function (url) {
+            // Open in external browser
+            window.open(url, '_system', 'location=yes');
+        };
 
-.controller('btnLogoutCtrl', function ($scope, $state, $ionicActionSheet, $ionicLoading, FacebookFactory) {
-    $scope.facebookLogout = function () {
-        $ionicActionSheet.show({
-            destructiveText: 'Salir',
-            titleText: '¿Está seguro que desea salir?',
-            cancelText: 'Cancel',
-            cancel: function () {},
-            buttonClicked: function (index) {
-                return true;
-            },
-            destructiveButtonClicked: function () {
-                $ionicLoading.show({
-                    template: 'Logging out...'
-                });
-                facebookConnectPlugin.logout(function () {
-                        $ionicLoading.hide();
-                        FacebookFactory.facebookLogout();
-                        $state.go('app.home');
+        $scope.sendFeedback = function () {
+            if (window.plugins && window.plugins.emailComposer) {
+                window.plugins.emailComposer.showEmailComposerWithCallback(function (result) {
+                        console.log("Response -> " + result);
                     },
-                    function (fail) {
-                        $ionicLoading.hide();
-                    });
+                    "Retroalimentacion ChapList", // Subject
+                    "", // Body
+            ["oktacore.team@gmail.com"], // To
+                    null, // CC
+                    null, // BCC
+                    false, // isHTML
+                    null, // Attachments
+                    null); // Attachment Data
             }
-        });
-    }
-})
+        }
+
+        $scope.OtherShare = function () {
+            window.plugins.socialsharing.share('Descarga ChapList desde la Play Store', null, null, 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016');
+        }
+
+    })
+    .controller('btnLogoutCtrl', function ($scope, $state, $ionicActionSheet, $ionicLoading, FacebookFactory) {
+        $scope.facebookLogout = function () {
+            $ionicActionSheet.show({
+                destructiveText: 'Salir',
+                titleText: '¿Está seguro que desea salir?',
+                cancelText: 'Cancel',
+                cancel: function () {},
+                buttonClicked: function (index) {
+                    return true;
+                },
+                destructiveButtonClicked: function () {
+                    $ionicLoading.show({
+                        template: 'Logging out...'
+                    });
+                    facebookConnectPlugin.logout(function () {
+                            $ionicLoading.hide();
+                            FacebookFactory.facebookLogout();
+                            $state.go('app.home');
+                        },
+                        function (fail) {
+                            $ionicLoading.hide();
+                        });
+                }
+            });
+        }
+    })
 
 .controller('btnRefreshCtrl', function ($scope, $state, $ionicPopup, $timeout, GoogleMaps) {
         $timeout(function () {

@@ -23,7 +23,7 @@ Plugin para una fácil interacción con el teclado. [link](https://github.com/dr
 ## cordova-network-information
 Provee información sobre la conexión a internet que posee el dispositivo.
 
- * $ cordova plugin add org.apache.cordova.network-information
+ * $ cordova plugin add cordova-plugin-network-information
 
 
 ## cordova-plugin-geolocation
@@ -41,7 +41,31 @@ Provee información del dispositivo como su modelo, uuid, etc.
 Permite definir una lista de sitios por los que es seguro navegar, de lo contrario lanza una excepción de seguridad
 
  * $ cordova plugin add cordova-plugin-whitelist
+
+## cordova-plugin-statusbar
+Permite manipular la barra de estado del smartphone
+
+ * $ cordova plugin add cordova-plugin-statusbar
  
+## SocialSharing-PhoneGap-Plugin 
+ permite compartir por cualquier via
+ 
+ * cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
+ 
+## email-compose
+ permite acceder a la app de correos del smartphone
+ 
+ * cordova plugin add https://github.com/jcjee/email-composer.git
+ 
+## cordova-plugin-inappbrowser
+ permite acceder al navegador del smartphone
+ 
+ * ionic plugin add cordova-plugin-inappbrowser
+ 
+## cordova-plugin-splashscreen
+ permite mostrar pantalla splash al arrancar la app
+ 
+ * cordova plugin add cordova-plugin-splashscreen
 ## ng storage
 Almacenamiento local especial para AngularJS
 
@@ -67,13 +91,3 @@ mover a /root/.android/  (eliminar la que ya existe)
 
 ejecutar para ver el certificado, tener encuenta el alias y el correo con el que se creo anteriormente
 $ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -list -v
-
-
-### FACEBOOK PRUEBA
-
-kenethcapi@gmail.com
-A1b2c3d4E5
-
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYmNkZWZnaGlqb2tsMTIzNDU2NyIsImlhdCI6MTQ1NDAzNjAwNiwiZXhwIjoxNDU0MTIyNDA2fQ.mgVUq14jgaUvJhRKIdr5erSFjXUClmq5BsfGDCT_748
-
-//07686089

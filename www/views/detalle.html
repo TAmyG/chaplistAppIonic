@@ -1,28 +1,31 @@
 <style>
-.custom-icon {
-  font-size: 64px;
-  color : red;
-}
+    .custom-icon {
+        font-size: 64px;
+        color: red;
+    }
 </style>
-   <ion-view view-title="Detalle">
+<ion-view view-title="Detalle">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
-        <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/k3n3th/image/upload/w_250,h_250/v1455838822/unisuper/{{productDetail.ProductStore.image}});">
+        <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/oktacore/w_250,h_250/{{productDetail.ProductStore.image}});">
             <div class="content">
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart button-light pull-right text-white" ng-click="addFavorite(productDetail)"></button>
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people button-light pull-right text-white"  ng-click="$parent.shareProduct(productDetail)"></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people button-light pull-right text-white" ng-click="$parent.shareProduct(productDetail)"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map button-light pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
         <div ng-if="$parent.isOffline()" class="hero has-mask slide-up" style="background-image: url(img/genericProduct.jpg);">
             <div class="content">
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart pull-right text-white" ng-click="addFavorite(productDetail)" ui-sref="app.fav"></button>
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white" ></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
         <div class="mid-bar dark-bg z1 padding">
-            <h3><i class="icon ion-social-usd"> </i>Precio</h3>
-            <div class="row">
+           <div class="list">
+            <a class="item item-icon-left"><h3><i class="icon ion-social-usd"> </i>Precio</h3>
+            <span class="badge badge-balanced">Q.{{productDetail.ProductStore.offerPrice}}</span></a>
+            </div>
+            <!--<div class="row">
                 <div class="col">
                     <p style="color:white;">Normal</p>
                 </div>
@@ -35,7 +38,7 @@
                 <div class="col">
                     <span class="badge badge-balanced">Q.{{productDetail.ProductStore.offerPrice}}</span>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="content double-padding">
             <h4 class="positive">Producto</h4>
@@ -44,7 +47,12 @@
             </p>
             <h3 class="outline padding balanced inline img-rounded">
         {{ productDetail.ProductStore.likes}} <i class="icon ion-thumbsup"></i>
-      </h3>
+               </h3>
         </div>
+        <div class="list">
+                <a class="item item-icon-left">
+                    <i class="icon ion-clock balanced"></i> Del <b>{{ productDetail.dateInit | date:'dd MMMM' }}</b> al <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b>. <br>En <b>{{productDetail.name}}</b>
+                </a>
+            </div>
     </ion-content>
 </ion-view>

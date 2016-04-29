@@ -38,8 +38,9 @@ angular.module('offerCtrl', [])
             getSupermarketsAPI();
         };
 
-        $scope.setSupermarketId = function (supermarketId) {
+        $scope.setSupermarketId = function (supermarketId, supermarketName) {
             factory.supermarketId = supermarketId;
+            factory.supermarketName = supermarketName;
         }
 
         function getSupermarketsAPI() {
@@ -110,7 +111,10 @@ angular.module('offerCtrl', [])
                     updatedAt: b.updatedAt,
                     description: b.description,
                     id: b.id,
-                    upc: b.upc
+                    upc: b.upc,
+                    dateInit: b.dateInit,
+                    dateEnd: b.dateEnd,
+                    name: b.name
                 });
             });
             $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -241,3 +245,74 @@ angular.module('offerCtrl', [])
             }
         };
     })
+
+.controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
+
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
+
+    $scope.$on('ngLastRepeat.mylist', function (e) {
+        $timeout(function () {
+            ionicMaterialMotion.slideUp({
+                selector: '.slide-up'
+            });
+
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+
+        }, 0); // No timeout delay necessary.
+    });
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    ////////////////////////////////////////////////////////////
+    $scope.value = '';
+    $scope.products = [];
+    getAllOffers($scope.value);
+
+
+    $scope.reload = function () {
+        $scope.products = [];
+        getAllOffers();
+        $scope.$broadcast('scroll.refreshComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    $scope.setProductDetail = function (productDetail) {
+        productDetail = {
+            '$$hashKey': productDetail['$$hashKey'],
+            ProductStore: {
+                'image': productDetail['image'],
+                'likes': productDetail['likes'],
+                'normalPrice': productDetail['normalPrice'],
+                'offerId': productDetail['offerId'],
+                'offerPrice': productDetail['offerPrice'],
+                'productId': productDetail['productId']
+            },
+            'description': productDetail['description'],
+            'upc': productDetail['upc'],
+            'dateEnd': productDetail['dateEnd'],
+            'dateInit': productDetail['dateInit'],
+            'name' : productDetail['name'],
+            'id' : productDetail['productId']
+        };
+        offerFactory.setProductDetail(productDetail);
+    }
+
+    function getAllOffers() {
+        if ($scope.value != '') {
+            factory.getAllOffers($scope.value, 0).then(function (res) {
+                $scope.products = res;
+                $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
+            });
+        } else {
+            $scope.products = [];
+        }
+    }
+
+    $scope.getAllOffers = getAllOffers;
+})
