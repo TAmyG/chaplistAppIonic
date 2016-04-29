@@ -6,7 +6,7 @@
                 <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/oktacore/w_50,h_50/{{product.ProductStore.image}}" ui-sref="app.detalle">
                 <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg" ui-sref="app.detalle">
                 <h2 ui-sref="app.detalle">{{product.description}}</h2>
-                <p ui-sref="app.detalle">PN Q. {{product.ProductStore.normalPrice}} <b>PO Q. {{product.ProductStore.offerPrice}} Hasta {{ product.dateEnd | date:"dd/MM/yyyy" }}</b></p>
+                <p ui-sref="app.detalle"><b>PO Q.{{product.ProductStore.offerPrice}} Hasta {{ product.dateEnd | date:"dd/MM/yyyy" }}</b></p>
                 <i align="left" class="icon ion-android-delete" ng-click="deleteProductFav(product)"></i>
             </div>
         </div>

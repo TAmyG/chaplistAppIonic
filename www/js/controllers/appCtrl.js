@@ -168,9 +168,9 @@ angular.module('appCtrl', [])
         loadTopFav();
     });
 
-    if (factory.topFavs.length < 1) {
+    /*if (factory.topFavs.length < 1) {
         $scope.$parent.ionicMessage('Bienvenido', 'Tire de la pantalla para ver nuestro top de ofertas.');
-    }
+    }*/
 
     $scope.reload = function () {
         loadTopFav();
@@ -287,7 +287,7 @@ angular.module('appCtrl', [])
         }
 
         $scope.OtherShare = function () {
-            window.plugins.socialsharing.share('Descarga ChapList desde la Play Store', null, null, 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist518635');
+            window.plugins.socialsharing.share('Descarga ChapList desde la Play Store', null, null, 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016');
         }
 
     })
