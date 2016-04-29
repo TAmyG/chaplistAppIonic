@@ -287,7 +287,7 @@ angular.module('appCtrl', [])
         }
 
         $scope.OtherShare = function () {
-            window.plugins.socialsharing.share('Descarga ChapList desde la Play Store', null, null, 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist518635');
+            window.plugins.socialsharing.share('Descarga ChapList desde la Play Store', null, null, 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016');
         }
 
     })
