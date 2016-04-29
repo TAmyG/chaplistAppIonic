@@ -64,11 +64,12 @@ angular.module('facebookFactory', [])
         */
         comun.shareProductFacebook = function (product) {
            facebookConnectPlugin.showDialog({
-                    method: 'feed',
-                    link: 'http://res.cloudinary.com/oktacore/'+product.ProductStore.image,
+                    method: 'share',
+                    picture: 'http://res.cloudinary.com/oktacore/'+product.ProductStore.image,
+                    link: 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016',
                     message: product.description ,
-                    caption: 'ofertas en Chaplist',
-                    description: 'descarga la App en: https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016'
+                    caption: 'ofertas en ChapList',
+                    description: 'sigenos en https://www.facebook.com/ChapList/'
                 },
                 function (result) {
                     $ionicPopup.alert({
