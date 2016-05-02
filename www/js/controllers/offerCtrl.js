@@ -52,7 +52,7 @@ angular.module('offerCtrl', [])
         }
     })
     .controller('ProductCtrl', function ($scope, $rootScope, $timeout, $ionicLoading, $ionicPlatform,
-        ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar, factory, offerFactory) {
+        ionicMaterialMotion, ionicMaterialInk, $ionicFilterBar, factory, offerFactory, $ionicPopup) {
         $ionicLoading.show({
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         });
@@ -132,7 +132,23 @@ angular.module('offerCtrl', [])
             Función para colocar un producto para su detalle
         */
         $scope.setProductDetail = function (productDetail) {
-            offerFactory.setProductDetail(productDetail);
+                offerFactory.setProductDetail(productDetail);
+            }
+            /*
+                Función para agregar a favoritos desde catalogo
+            */
+        $scope.addFavorite = function (productDetail) {
+            $ionicPopup.confirm({
+                title: 'Agregar favorito',
+                template: '¿Realmente desea agregar el producto a su lista?'
+            }).then(function (res) {
+                if (res) {
+                    //agrego el favorito
+                    $scope.fav = offerFactory.addFavorite(productDetail, true);
+                } else {
+                    return -1
+                }
+            })
         }
 
     })
@@ -144,6 +160,7 @@ angular.module('offerCtrl', [])
     $scope.isExpanded = false;
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
+    $scope.fav = "light";
 
     // Set Motion
     $timeout(function () {
@@ -158,8 +175,12 @@ angular.module('offerCtrl', [])
     $scope.favorites = [];
     $scope.productDetail = offerFactory.getProductDetail();
 
+    $scope.$watch('$viewContentLoaded', function () {
+        $scope.fav = offerFactory.addFavorite($scope.productDetail, false);
+    });
+
     $scope.addFavorite = function (productDetail) {
-            offerFactory.addFavorite(productDetail);
+            $scope.fav = offerFactory.addFavorite(productDetail, true);
         }
         //PARA COMPARTIR UN PRODUCTO LA FUNCIÓN ESTÁ ESPECIFICADA EN EL CONTROLADOR PADRE appCtrl
 })
@@ -217,14 +238,13 @@ angular.module('offerCtrl', [])
     }
 })
 
-.controller('BuscarCtrl', function ($scope, $rootScope, $timeout, $ionicFilterBar) {
-
+.controller('BuscarCtrl', function ($scope, $rootScope, $timeout, $ionicFilterBar,factory) {
         $timeout(function () {
             document.getElementById('fab-activity').classList.toggle('on');
         }, 300);
         $scope.showFilterBar = function () {
             filterBarInstance = $ionicFilterBar.show({
-                items: $rootScope.products,
+                items: $scope.products,
                 update: function (filteredItems) {
                     $rootScope.products = filteredItems;
                 }
@@ -248,71 +268,83 @@ angular.module('offerCtrl', [])
 
 .controller('SearchCtrl', function ($scope, $timeout, $ionicScrollDelegate, ionicMaterialMotion, ionicMaterialInk, offerFactory, factory, $state) {
 
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = false;
-    $scope.$parent.setExpanded(false);
-    $scope.$parent.setHeaderFab(false);
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
 
-    $scope.$on('ngLastRepeat.mylist', function (e) {
-        $timeout(function () {
-            ionicMaterialMotion.slideUp({
-                selector: '.slide-up'
-            });
+        $scope.$on('ngLastRepeat.mylist', function (e) {
+            $timeout(function () {
+                ionicMaterialMotion.slideUp({
+                    selector: '.slide-up'
+                });
 
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
+                ionicMaterialMotion.fadeSlideInRight({
+                    startVelocity: 3000
+                });
 
-        }, 0); // No timeout delay necessary.
-    });
+            }, 0); // No timeout delay necessary.
+        });
 
-    // Set Ink
-    ionicMaterialInk.displayEffect();
-    ////////////////////////////////////////////////////////////
-    $scope.value = '';
-    $scope.products = [];
-    getAllOffers($scope.value);
-
-
-    $scope.reload = function () {
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+        ////////////////////////////////////////////////////////////
+        $scope.value = '';
         $scope.products = [];
-        getAllOffers();
-        $scope.$broadcast('scroll.refreshComplete');
-        $scope.$broadcast('scroll.refreshComplete');
-    };
+        getAllOffers($scope.value);
 
-    $scope.setProductDetail = function (productDetail) {
-        productDetail = {
-            '$$hashKey': productDetail['$$hashKey'],
-            ProductStore: {
-                'image': productDetail['image'],
-                'likes': productDetail['likes'],
-                'normalPrice': productDetail['normalPrice'],
-                'offerId': productDetail['offerId'],
-                'offerPrice': productDetail['offerPrice'],
-                'productId': productDetail['productId']
-            },
-            'description': productDetail['description'],
-            'upc': productDetail['upc'],
-            'dateEnd': productDetail['dateEnd'],
-            'dateInit': productDetail['dateInit'],
-            'name' : productDetail['name'],
-            'id' : productDetail['productId']
-        };
-        offerFactory.setProductDetail(productDetail);
-    }
 
-    function getAllOffers() {
-        if ($scope.value != '') {
-            factory.getAllOffers($scope.value, 0).then(function (res) {
-                $scope.products = res;
-                $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
-            });
-        } else {
+        $scope.reload = function () {
             $scope.products = [];
-        }
-    }
+            getAllOffers();
+            $scope.$broadcast('scroll.refreshComplete');
+            $scope.$broadcast('scroll.refreshComplete');
+        };
 
-    $scope.getAllOffers = getAllOffers;
+        $scope.setProductDetail = function (productDetail) {
+            productDetail = {
+                '$$hashKey': productDetail['$$hashKey'],
+                ProductStore: {
+                    'image': productDetail['image'],
+                    'likes': productDetail['likes'],
+                    'normalPrice': productDetail['normalPrice'],
+                    'offerId': productDetail['offerId'],
+                    'offerPrice': productDetail['offerPrice'],
+                    'productId': productDetail['productId']
+                },
+                'description': productDetail['description'],
+                'upc': productDetail['upc'],
+                'dateEnd': productDetail['dateEnd'],
+                'dateInit': productDetail['dateInit'],
+                'name': productDetail['name'],
+                'id': productDetail['productId']
+            };
+            offerFactory.setProductDetail(productDetail);
+        }
+
+        function getAllOffers() {
+            if ($scope.value != '') {
+                factory.getAllOffers($scope.value, 0).then(function (res) {
+                    $scope.products = res;
+                    $ionicScrollDelegate.$getByHandle('')['_instances'][0].freezeScroll(true);
+                });
+            } else {
+                $scope.products = [];
+            }
+        }
+
+        $scope.getAllOffers = getAllOffers;
+    })
+.controller('ShareCtrl', function ($scope, offerFactory) {
+
+        $scope.productDetail = offerFactory.getProductDetail();
+
+        $scope.OtherShare = function () {
+
+             window.plugins.socialsharing
+                .share($scope.productDetail.description+"\n Q."+$scope.productDetail.ProductStore.offerPrice+"\n https://res.cloudinary.com/oktacore/"+$scope.productDetail.ProductStore.image+" \n En: "+$scope.productDetail.name+"\n ",null, null,"Ofertas ChapList descargar en https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016");
+
+        }
+
 })

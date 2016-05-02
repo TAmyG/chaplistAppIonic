@@ -64,7 +64,7 @@ angular.module('facebookFactory', [])
         */
         comun.shareProductFacebook = function (product) {
            facebookConnectPlugin.showDialog({
-                    method: 'share',
+                    method: 'feed',
                     picture: 'http://res.cloudinary.com/oktacore/'+product.ProductStore.image,
                     link: 'https://play.google.com/store/apps/details?id=com.ionicframework.chaplist21042016',
                     message: product.description ,
