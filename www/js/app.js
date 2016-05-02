@@ -49,7 +49,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'DetalleCtrl'
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-profile" ng-click="OtherShare()" class="button button-fab button-fab-bottom-right button-assertive" ><i class="icon ion-share"></i></button>',
+                    controller: 'ShareCtrl'
                 }
             }
         })
@@ -79,7 +80,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
             }
         })
 
-        .state('app.profile', {
+    .state('app.profile', {
             url: '/profile',
             views: {
                 'menuContent': {
@@ -137,7 +138,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'appCtrl', 'offerCtrl', 'profil
                     controller: 'SearchCtrl'
                 },
                 'fabContent': {
-                  template: ''
+                    template: ''
                 }
             }
         })

@@ -2,11 +2,11 @@
     <ion-content ng-class="{expanded:isExpanded}">
         <ion-refresher pulling-text="Recargado favoritos" on-refresh="reload()"></ion-refresher>
         <div class="list animate-fade-slide-in-right" ng-last-repeat="mylist" ng-repeat="product in favorites">
-            <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)">
-                <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/oktacore/w_50,h_50/{{product.ProductStore.image}}" ui-sref="app.detalle">
+            <div class="item item-thumbnail-left item-icon-right" ng-click="setProductDetail(product)">
+                <img style="border-radius: 0;" ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/oktacore/w_50,h_50/{{product.ProductStore.image}}" ui-sref="app.detalle">
                 <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg" ui-sref="app.detalle">
                 <h2 ui-sref="app.detalle">{{product.description}}</h2>
-                <p ui-sref="app.detalle"><b>PO Q.{{product.ProductStore.offerPrice}} Hasta {{ product.dateEnd | date:"dd/MM/yyyy" }}</b></p>
+                <p ui-sref="app.detalle"><b> Q.{{product.ProductStore.offerPrice}} Hasta {{ product.dateEnd | date:"dd/MM/yyyy" }}</b></p>
                 <i align="left" class="icon ion-android-delete" ng-click="deleteProductFav(product)"></i>
             </div>
         </div>

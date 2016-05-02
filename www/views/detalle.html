@@ -8,51 +8,38 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}">
         <div ng-if="$parent.isOnline()" class="hero has-mask slide-up" style="background-image: url(http://res.cloudinary.com/oktacore/w_250,h_250/{{productDetail.ProductStore.image}});">
             <div class="content">
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart button-light pull-right text-white" ng-click="addFavorite(productDetail)"></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart button-{{fav}} pull-right text-white" ng-click="addFavorite(productDetail)"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people button-light pull-right text-white" ng-click="$parent.shareProduct(productDetail)"></button>
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map button-light pull-right text-white" ui-sref="app.map"></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map button-energized pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
         <div ng-if="$parent.isOffline()" class="hero has-mask slide-up" style="background-image: url(img/genericProduct.jpg);">
             <div class="content">
-                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart pull-right text-white" ng-click="addFavorite(productDetail)" ui-sref="app.fav"></button>
+                <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-heart button-{{fav}} pull-right text-white" ng-click="addFavorite(productDetail)"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-android-people pull-right text-white"></button>
                 <button class="button button-large button-clear flat waves-effect waves-button waves-light icon ion-map pull-right text-white" ui-sref="app.map"></button>
             </div>
         </div>
         <div class="mid-bar dark-bg z1 padding">
-           <div class="list">
-            <a class="item item-icon-left"><h3><i class="icon ion-social-usd"> </i>Precio</h3>
-            <span class="badge badge-balanced">Q.{{productDetail.ProductStore.offerPrice}}</span></a>
-            </div>
-            <!--<div class="row">
-                <div class="col">
-                    <p style="color:white;">Normal</p>
-                </div>
-                <div class="col">
-                    <span class="badge badge-assertive">Q.{{productDetail.ProductStore.normalPrice}}</span>
-                </div>
-                <div class="col">
-                    <p style="color:white;">Oferta</p>
-                </div>
-                <div class="col">
-                    <span class="badge badge-balanced">Q.{{productDetail.ProductStore.offerPrice}}</span>
-                </div>
-            </div>-->
+
+            <h4>{{productDetail.description}}</h4>
         </div>
         <div class="content double-padding">
-            <h4 class="positive">Producto</h4>
+            <!--<h4 class="positive">Producto</h4>-->
             <p class="text-muted">
-                {{productDetail.description}}
-            </p>
-            <h3 class="outline padding balanced inline img-rounded">
-        {{ productDetail.ProductStore.likes}} <i class="icon ion-thumbsup"></i>
+                <div class="list">
+                    <a class="item item-icon-left"><h3><i class="icon ion-pricetag"> </i>Precio de oferta</h3>
+            <span class="badge badge-balanced">Q.{{productDetail.ProductStore.offerPrice}}</span></a>
+                </div </p>
+                <h3 class="outline padding balanced inline img-rounded">
+        {{ productDetail.ProductStore.likes}} <i class="icon ion-heart assertive"></i>
                </h3>
         </div>
         <div class="list">
-                <a class="item item-icon-left">
-                    <i class="icon ion-clock balanced"></i> Del <b>{{ productDetail.dateInit | date:'dd MMMM' }}</b> al <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b>. <br>En <b>{{productDetail.name}}</b>
-                </a>
-            </div>
+            <a class="item item-icon-left">
+                <i class="icon ion-clock balanced"></i> Del <b>{{ productDetail.dateInit | date:'dd MMMM' }}</b> al <b>{{ productDetail.dateEnd | date:'dd MMMM yyyy' }}</b>.
+                <br>En <b>{{productDetail.name}}</b>
+            </a>
+        </div>
     </ion-content>
 </ion-view>

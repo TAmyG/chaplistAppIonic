@@ -9,14 +9,15 @@
         <ion-scroll zooming="false" direction="y" style="height: 100%;">
             <ion-refresher pulling-text="Cargando busqueda" on-refresh="reload()"></ion-refresher>
             <div class="list animate-fade-slide-in-right" ng-last-repeat="mylist" ng-repeat="product in products">
-                <div class="item item-avatar item-icon-right" ng-click="setProductDetail(product)">
-                    <img ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/oktacore/w_50,h_50/{{product.image}}" ui-sref="app.detalle">
+                <div class="item item-thumbnail-left" ng-click="setProductDetail(product)">
+                    <img style="border-radius: 0;" ng-if="$parent.isOnline()" ng-src="http://res.cloudinary.com/oktacore/w_50,h_50/{{product.image}}" ui-sref="app.detalle">
                     <img ng-if="$parent.isOffline()" ng-src="img/genericProduct.jpg" ui-sref="app.detalle">
                     <h2 ui-sref="app.detalle">{{product.description}}</h2>
-                    <p ui-sref="app.detalle"> <b>{{product.name}}</b> -- {{product.likes}} <b>PO Q.{{product.offerPrice}}</b>
+                    <p ui-sref="app.detalle"> <b>{{product.name}}</b> <i class="icon ion-heart assertive"></i> {{product.likes}}<b> <i class ="icon ion-pricetag balanced"></i> Q.{{product.offerPrice}}</b>
                         <br><b>Hasta {{ product.dateEnd | date:'fullDate' }}<b></p>
                 </div>
             </div>
+            <br>
             <br>
             <br>
             <br>
