@@ -15,7 +15,7 @@ angular.module('offerFactory', [])
             Función para agregar un nuevo producto a la lista de favoritos
             verificando si existe el array de favoritos, de lo contrario lo crea
         */
-    comun.addFavorite = function (product) {
+    comun.addFavorite = function (product, validate) {
             //$localStorage.favorites = [];
             if (!$localStorage.hasOwnProperty('favorites'))
                 $localStorage.favorites = [];
@@ -23,7 +23,7 @@ angular.module('offerFactory', [])
             var cat = $localStorage.favorites.filter(function (obj) {
                 return obj.id == product.id;
             });
-            if (cat.length == 0) {
+            if (cat.length == 0 && validate) {
                 factory.ionicMessage('Atención', 'Su producto se ha añadido a su lista de favoritos');
                 product.ProductStore.likes = product.ProductStore.likes + 1;
                 product.supermarketId = factory.supermarketId;
@@ -31,8 +31,16 @@ angular.module('offerFactory', [])
                 //si se agrega un nuevo producto entonces se debe incrementar la cantidad de likes
                 //de dicho producto en la oferta específica
                 factory.addOrRemoveLikes(product.ProductStore.offerId, product.ProductStore.productId, 1);
+                return "assertive";
             } else {
-                factory.ionicMessage('Atención', 'Este producto ya está en sus favoritos.');
+                if (validate) {
+                    factory.ionicMessage('Atención', 'Este producto ya está en sus favoritos.');
+                    return "assertive";
+                } else if (cat.length == 0) {
+                    return "light";
+                } else {
+                    return "assertive";
+                }
             }
         }
         /*

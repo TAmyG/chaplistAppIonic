@@ -17,18 +17,13 @@
                             <span class="avatar" style="background-image: url('http://res.cloudinary.com/oktacore/w_50/{{product.image}}');"></span>
                             <strong>{{product.description}}</strong>
                             <div class="item item-body">
-                                <strong>Precio</strong>
-                                <div class="list">
-                                    <!--<a class="item item-icon-right">
-                                        <i class="badge badge-assertive">Q.{{product.normalPrice}}</i>Normal
-                                    </a>-->
-                                    <a class="item item-icon-right">
-                                        <i class="badge badge-balanced">Q.{{product.offerPrice}}</i><strong> Oferta</strong>
-                                    </a>
-                                </div>
+                                <i class="icon ion-pricetag balanced"></i> <strong>Precio</strong>
+                                <a class="item item-icon-right">
+                                    <i class="badge badge-balanced">Q.{{product.offerPrice}}</i><strong>Oferta</strong>
+                                </a>
                             </div>
                             <div class="card-footer text-right">
-                                <i class="icon ion-thumbsup positive"></i> {{product.likes}}
+                                <i class="icon ion-heart assertive"></i> {{product.likes}}
                                 <div class="pull-left">
                                     <i class="icon ion-clock"></i> {{ product.dateEnd | date:'dd MMMM yyyy' }}
                                 </div>
@@ -45,6 +40,6 @@
     <div class="button-bar  social-login">
         <button class="button button-small button-border icon-left ion-social-google button-assertive-900" ui-sref="app.map">Mapa</button>
         <button class="button button-small button-border icon-left ion-social-facebook button-positive-900" ng-click="facebookLogin()">Facebook</button>
-        <button class="button button-small button-border icon-left  button-calm-900" ui-sref="app.offer">Ofertas</button>
+        <button class="button button-small button-border icon-left ion-ios-cart button-calm-900" ui-sref="app.offer">Ofertas</button>
     </div>
 </ion-view>

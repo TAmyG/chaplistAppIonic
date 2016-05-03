@@ -6,61 +6,46 @@
         <ion-refresher pulling-text="Recargado productos" on-refresh="reload()"></ion-refresher>
         <div>
             <div class="list half">
-                <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
-                    <div ng-click="setProductDetail(product)">
-                        <div class="ink dark-bg">
-                            <h2>{{product.description}}</h2>
-                            <a class="tab-item stable-bg balanced-900">
-                            Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}
-                        </a>
+                <div class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$odd">
+                    <div align="center">
+                        <div class="ink stable-bg" ng-click="setProductDetail(product)" ui-sref="app.detalle">
+                            <h3 class="">Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}</h3>
                             <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/oktacore/w_250/{{product.ProductStore.image}}">
                             <img ng-if="$parent.isOffline()" class="full-image" src="img/genericProduct.jpg">
-
                         </div>
                         <div class="item tabs tabs-secondary tabs-icon-left">
-                            <a class="tab-item stable-bg positive">
-                                <i class="icon ion-thumbsup"></i> {{product.ProductStore.likes}}
+                            <a class="tab-item stable-bg assertive" ng-click="addFavorite(product)">
+                                <i class="icon ion-heart"></i> <b>{{product.ProductStore.likes}}</b>
                             </a>
-                            <!--<a class="tab-item stable-bg assertive-900">
-                            Q. {{product.ProductStore.normalPrice}}
-                        </a>-->
-                            <a class="tab-item stable-bg balanced-900">
-                            Q. {{product.ProductStore.offerPrice}}
-                        </a>
+                            <a class="tab-item stable-bg balanced-900" ng-click="setProductDetail(product)" ui-sref="app.detalle">
+                                <b><p>Q. {{product.ProductStore.offerPrice}}</p></b>
+                            </a>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="list half">
-                <div ui-sref="app.detalle" class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$even">
+                <div class="card card-gallery item item-text-wrap" ng-repeat="product in products" ng-last-repeat="mylist" ng-if="$even">
 
-                    <div ng-click="setProductDetail(product)">
-                        <div class="ink dark-bg">
-                            <h2>{{product.description}}</h2>
-                            <a class="tab-item stable-bg balanced-900">
-                            Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}
-                        </a>
+                    <div align="center">
+                        <div class="ink stable-bg" ng-click="setProductDetail(product)" ui-sref="app.detalle">
+                            <h3 class="">Hasta {{ product.dateEnd | date:'dd MMMM yyyy' }}</h3>
                             <img ng-if="$parent.isOnline()" class="full-image" ng-src="http://res.cloudinary.com/oktacore/w_250/{{product.ProductStore.image}}">
                             <img ng-if="$parent.isOffline()" class="full-image" src="img/genericProduct.jpg">
-
                         </div>
                         <div class="item tabs tabs-secondary tabs-icon-left">
-                            <a class="tab-item stable-bg positive">
-                                <i class="icon ion-thumbsup"></i> {{product.ProductStore.likes}}
+                            <a class="tab-item stable-bg assertive" ng-click="addFavorite(product)">
+                                <i class="icon ion-heart"></i> <b>{{product.ProductStore.likes}}</b>
                             </a>
-                            <!--<a class="tab-item stable-bg assertive-900">
-                             Q. {{product.ProductStore.normalPrice}}
-                        </a>-->
-                            <a class="tab-item stable-bg balanced-900">
-                             Q. {{product.ProductStore.offerPrice}}
-                        </a>
+                            <a class="tab-item stable-bg balanced-900" ng-click="setProductDetail(product)" ui-sref="app.detalle">
+                                <b><p>Q. {{product.ProductStore.offerPrice}}</p></b>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
+        </ion-infinite-scroll>
     </ion-content>
-    <ion-infinite-scroll on-infinite="loadMore()" ng-if="deviceReady">
-    </ion-infinite-scroll>
 </ion-view>
